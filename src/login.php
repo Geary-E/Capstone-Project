@@ -39,17 +39,20 @@ if (isset($_POST['submit'])) {
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style2.css">
     <title>Login</title>
 
 </head>
 
 <body>
-    <div class="form-container">
+    <div class="form-container2">
 
         <form action="" method="post">
+          
+        <div class="login-bar">
+                <h3>Login now</h3>
+            </div>
 
-            <h3>Login now</h3>
             <?php
             if (isset($error)) {
                 foreach ($error as $error) {
@@ -57,10 +60,26 @@ if (isset($_POST['submit'])) {
                 };
             };
             ?>
+            <label for="email"><b>Email:</b></label><br>
             <input type="email" name="email" required placeholder="Enter your Email">
+            <br>
+
+            <label for="password"><b>Password:</b></label><br>
             <input type="password" name="password" required placeholder="Enter a password">
+            <br>
+
+            <!--
             <input type="submit" name="submit" value="Click here to login" class="form-btn">
-            <p>Don't have an account? <a href="registration.php">Click here to register</a></p>
+            -->
+
+            <div class="button-list">
+                <button class="btn1"> Cancel </button>
+                <button class="btn2"> Log In </button>
+        </div>
+
+            <p>Don't have an account? <a href="registration.php">Click here to register</a></p><br>
+
+
         </form>
 
     </div>
