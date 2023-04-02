@@ -1,0 +1,100 @@
+.form-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    /*align-items: flex-start;*/
+    justify-content: center;
+    padding: 20px;
+    padding-bottom: 60px;
+    background: #D3D3D3;
+}
+
+.form-container form {
+    padding: 30px; 
+    border-radius: 25px;
+    box-shadow: 0 5px 20px #696969;
+    background: #f3f3f3;
+    top: 0;
+}
+
+/*
+.form-container form h3 {
+    font-size: 30px;
+    margin: 0;
+    /* margin-bottom: 10px; 
+}
+*/
+
+/*
+.form-container form .top-bar {
+    font-size: 30px;
+    text-align: center;
+    margin: 0px;
+    background-color: seagreen;
+}
+*/
+/*
+.form-container form .top-bar {
+    position: absolute;
+}
+*/
+.top-bar  {
+   /* display: flex; */
+    font-size: 30px;
+    text-align: center;
+    /*width: 100%;*/
+    margin-top: 0;
+    top: 0;
+    background-color: #00853E;
+    padding: 0px;
+}
+
+.top-bar h4 {
+    margin-top: 0;
+    padding: 10px;
+    color: #f3f3f3;
+} 
+.form-container form input,
+.form-container form select {
+   /* width: 100%; */
+    width: 90%;
+    padding: 15px 15px;
+    font-size: 15px;
+    margin: 8px 0;
+    background: #f3f3f3;
+    border-radius: 5px;
+}
+
+.form-container form select option {
+    background: #f3f3f3;
+}
+
+.form-container form .form-btn {
+    background: #00853E;
+    color: #f3f3f3;
+    font-size: 15px;
+}
+
+.form-container form .form-btn:hover {
+    background: #00853E;
+    color: #f3f3f3;
+}
+
+.form-container form p {
+    margin-top: 10px;
+    font-size: 15px;
+}
+
+.form-container form p a {
+    color: #00853E;
+}
+
+.form-container form .error-msg {
+    margin: 10px 0;
+    display: block;
+    background: #00853E;
+    color: #f3f3f3;
+    border-radius: 5px;
+    font-size: 15px;
+    padding: 10px;
+}
