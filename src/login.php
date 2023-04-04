@@ -5,7 +5,9 @@
 session_start();
 
 if (isset($_POST['submit'])) {
-    $name = mysqli_real_escape_string($conn, $_POST['name']);
+   // $name = mysqli_real_escape_string($conn, $_POST['name']);
+    $first_name = mysqli_real_escape_string($conn, $_POST['firstname']);
+    $last_name = mysqli_real_escape_string($conn, $_POST['lastname']);
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $pass = md5($_POST['password']);
     $confirmpass = md5($_POST['confirmpassword']);
@@ -19,11 +21,13 @@ if (isset($_POST['submit'])) {
 
         if ($row['user_type'] == 'researcher') {
 
-            $_SESSION['researcher_name'] = $row['name'];
+           // $_SESSION['researcher_name'] = $row['name'];
+           $_SESSION['researcher_name'] = $row['firstname'];
             header('location:dashboard.php');
         } elseif ($row['user_type'] == 'person') {
 
-            $_SESSION['person_name'] = $row['name'];
+           // $_SESSION['person_name'] = $row['name'];
+           $_SESSION['person_name'] = $row['firstname'];
             header('location:dashboard.php');
         }
     } else {
@@ -71,9 +75,9 @@ if (isset($_POST['submit'])) {
             <input type="password" name="password" required placeholder="Enter a password">
             <br>
 
-            <!--
+            <!-- Commented out
             <input type="submit" name="submit" value="Click here to login" class="form-btn">
-            -->
+        -->
             
             <br>
 
@@ -83,7 +87,7 @@ if (isset($_POST['submit'])) {
                     </div>   
                 <div class="button-list">
                     <button class="btn1"> Cancel </button>
-                    <button class="btn2"> Log In </button>
+                    <button class="btn2" name="submit"> Log In </button>
                 </div>
 
             </div>

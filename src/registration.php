@@ -4,7 +4,9 @@
 
 if (isset($_POST['submit'])) {
 
-    $name = mysqli_real_escape_string($conn, $_POST['name']);
+   // $name = mysqli_real_escape_string($conn, $_POST['name']);
+    $first_name = mysqli_real_escape_string($conn, $_POST['firstname']);
+    $last_name = mysqli_real_escape_string($conn, $_POST['lastname']);
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $pass = md5($_POST['password']);
     $confirmpass = md5($_POST['confirmpassword']);
@@ -19,7 +21,7 @@ if (isset($_POST['submit'])) {
         if ($pass != $confirmpass) {
             $error[] = 'Your passwords do not match';
         } else {
-            $insert = "INSERT INTO user_form(name,email,password,user_type) VALUES('$name','$email','$pass','$user_type')";
+            $insert = "INSERT INTO user_form(firstname, lastname, email,password,user_type) VALUES('$first_name', '$last_name','$email','$pass','$user_type')";
             mysqli_query($conn, $insert);
             header('location:login.php');
         }
