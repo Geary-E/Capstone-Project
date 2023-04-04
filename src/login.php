@@ -47,11 +47,11 @@ if (isset($_POST['submit'])) {
 <body>
     <div class="form-container2">
 
+    <div class="login-bar">
+                <h3>Log In</h3>
+            </div>
         <form action="" method="post">
           
-        <div class="login-bar">
-                <h3>Login now</h3>
-            </div>
 
             <?php
             if (isset($error)) {
@@ -60,8 +60,11 @@ if (isset($_POST['submit'])) {
                 };
             };
             ?>
+            <br>
+            <br>
             <label for="email"><b>Email:</b></label><br>
             <input type="email" name="email" required placeholder="Enter your Email">
+            <br>
             <br>
 
             <label for="password"><b>Password:</b></label><br>
@@ -71,11 +74,23 @@ if (isset($_POST['submit'])) {
             <!--
             <input type="submit" name="submit" value="Click here to login" class="form-btn">
             -->
+            
+            <br>
 
-            <div class="button-list">
-                <button class="btn1"> Cancel </button>
-                <button class="btn2"> Log In </button>
-        </div>
+            <div class="selection">
+                <div class="forgot-password">
+                    <a href="#">Forgot Password? </a>
+                    </div>   
+                <div class="button-list">
+                    <button class="btn1"> Cancel </button>
+                    <button class="btn2"> Log In </button>
+                </div>
+
+            </div>
+
+                <br>    <!-- line breaks -->
+                <br>    <!-- line breaks -->
+                <br>    <!-- line breaks -->
 
             <p>Don't have an account? <a href="registration.php">Click here to register</a></p><br>
 
