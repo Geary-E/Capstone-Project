@@ -1,0 +1,74 @@
+body {
+    margin: 0;
+}
+
+.dashboard-header {
+    background-color:  #00853E;
+    padding: 30px;
+    overflow: hidden;
+}
+
+ .logo {
+    float: left;
+    color: white;
+}
+
+.dashboard-header .buttons {
+    float: right;
+}
+
+h1 {
+    font-size: 50px;
+    padding: 10px;
+    text-align: center;
+    color: #00853E;
+}
+
+.btn1 {
+    margin-right: 25px;
+}
+
+.btn2 {
+    margin-left: 25px;
+}
+
+ .btn1, .btn2 {
+    text-align: center;
+    padding: 20px;
+    width: 150px;
+    color: white;
+    background-color: #00853E;
+    border: 5px solid white;
+    border-radius: 25%;
+    font-size: 20px;
+}
+
+.btn1:hover, .btn2:hover {
+    background-color: white;
+    color: #00853E;
+}
+
+.content {
+    color: #00853E;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    gap: 50px;
+}
+
+.flex1, .flex2, .flex3, .flex4, .flex5 {
+    color: #00853E;
+    flex-basis: 30%;
+    text-align: center;
+    align-self: center;
+    padding: 20px;
+    font-size: 25px;
+    border: 5px solid #00853E;
+    border-radius: 20%;
+}
+
+.flex1:hover, .flex2:hover, .flex3:hover, .flex4:hover, .flex5:hover {
+    background-color:#00853E;
+    color: white;
+}
+
