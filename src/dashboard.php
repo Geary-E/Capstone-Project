@@ -1,20 +1,46 @@
 <?php
 
+//Include database connection file
 @include 'config.php';
 
+//Start the session
 session_start();
 
-
+//If researcher_name is set make it name
 if (isset($_SESSION['researcher_name'])) {
     $name = $_SESSION['researcher_name'];
 }
 
-if (isset($_SESSION['person_name'])) {
+//If person_name is set make it name
+elseif (isset($_SESSION['person_name'])) {
     $name = $_SESSION['person_name'];
-} else {
-    $name = "______";
 }
 
+
+//Sends user to accountPage.php
+if (isset($_POST['Account_Page'])) {
+    header('location:accountPage.php');
+}
+
+//Sends user to supportGroup.php
+if (isset($_POST['Support_Groups'])) {
+    header('location:supportGroup.php');
+}
+
+//Sends user to surveys.php
+if (isset($_POST['Surveys'])) {
+    header('location:surveys.php');
+}
+
+//Sends user to studies.php
+if (isset($_POST['Studies'])) {
+    header('location:studies.php');
+}
+
+//Sends user to opportunities.php
+if (isset($_POST['Opportunities'])) {
+    header('location:opportunities.php');
+}
 ?>
 
 
@@ -50,29 +76,31 @@ if (isset($_SESSION['person_name'])) {
             <a href="logout.php" class="btn"> Logout</a>
             -->
 
-    <div class="content">
-            <div class="flex1">
-                Account Page
-                </div>
+    	<div class="content">
+    		<form action="" method="post">
+            	<div class="flex1">
+            		 <a href="accountPage.php" class="btn2"> Account Page</a>
+            	</div>
 
-            <div class="flex2">
-                Support Groups
-            </div>
+            	<div class="flex2">
+                	<a href="supportGroup.php" class="btn2"> Support Groups</a>
+            	</div>
             
-            <div class="flex3">
-                Surveys
-            </div>
+            	<div class="flex3">
+                	<a href="survey.php" class="btn2"> Surveys</a> 
+            	</div>
 
-            <div class="flex4">
-                Studies
-            </div>
+            	<div class="flex4">
+                	<a href="studies.php" class="btn2"> Studies</a>  
+            	</div>
 
-            <div class="flex5">
-                Opportunities
-            </div>
+            	<div class="flex5">
+                	<a href="opportunities.php" class="btn2"> Opportunities</a>
+            	</div>
 
         </div>
 
 </body>
+
 
 </html>
