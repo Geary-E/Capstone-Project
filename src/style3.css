@@ -53,6 +53,7 @@ h1 {
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
+    align-items: flex-start;
     gap: 50px;
 }
 
@@ -60,6 +61,7 @@ h1 {
     color: #00853E;
     flex-basis: 30%;
     text-align: center;
+    text-decoration: none;
     align-self: center;
     padding: 20px;
     font-size: 25px;
@@ -67,8 +69,15 @@ h1 {
     border-radius: 20%;
 }
 
+.flex1:link, .flex2:link, .flex3:link, .flex4:link, .flex5:link {
+    text-decoration: none;
+}
+
 .flex1:hover, .flex2:hover, .flex3:hover, .flex4:hover, .flex5:hover {
     background-color:#00853E;
     color: white;
 }
+
+ 
+
 
