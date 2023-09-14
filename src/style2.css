@@ -1,4 +1,8 @@
-body {
+
+/* Login Page styling: login.php */
+
+
+body {  /* Body of the page */
     margin: 0;
     padding: 0;
     background-color: #D3D3D3;
@@ -17,7 +21,7 @@ body {
     background-color: white;
 }
 
-.form-container2 .login-bar {
+.form-container2 .login-bar {   /* Part of the login that says log in */
     text-align: center; 
     padding: 0 0 20px 0;
     background-color: #00853E;
@@ -25,11 +29,11 @@ body {
     color: white;
 }
 
-.form-container2 .login-bar h3 {
+.form-container2 .login-bar h3 {    /* Words in the login */
     font-size: 30px;
 }
 
-.form-container2 form {
+.form-container2 form { /* Styling of form in the form container */
     padding: 0 40px;
     box-sizing: border-box;
 }
@@ -40,17 +44,17 @@ body {
     font-size: 15px;
 }
 
-.selection .forgot-password {
+.selection .forgot-password {   /* Forgot Password */
     float: left;
 }
 
-.selection .forgot-password a {
+.selection .forgot-password a { /* Styling of Forgot Password Link */
     text-decoration: none;
     color: black;
     font-size: 18px;
 }
 
-.selection .forgot-password a:hover {
+.selection .forgot-password a:hover { /* When you hover over forgot password link */
     color: #00853E;
 }
 
@@ -59,7 +63,7 @@ body {
     float: right;
 }
 
-.button-list .btn1 {
+.button-list .btn1 {    /* Styling of the Cancel button */
     background-color: #00853E;
     padding: 10px;
     color: white;
@@ -67,7 +71,7 @@ body {
     border-radius: 10px;
 }
 
-.button-list .btn2 {
+.button-list .btn2 {  /* Styling of the Log In button */
     background-color: #00853E;
     padding: 10px;
     color: white;

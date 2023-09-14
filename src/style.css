@@ -1,15 +1,16 @@
-.form-container {
+/* Registration Page: registration.php */
+
+.form-container { /* Styling for the size of the registration form */
     min-height: 100vh;
     display: flex;
     align-items: center;
-    /*align-items: flex-start;*/
     justify-content: center;
     padding: 20px;
     padding-bottom: 60px;
     background: #D3D3D3;
 }
 
-.form-container form {
+.form-container form {  /* Styling of the form information inside the registration form */
     padding: 30px; 
     border-radius: 25px;
     box-shadow: 0 5px 20px #696969;
@@ -38,7 +39,7 @@
     position: absolute;
 }
 */
-.top-bar  {
+.top-bar  { /* Styling for the top bar that says: Registration */
    /* display: flex; */
     font-size: 30px;
     text-align: center;
@@ -49,13 +50,13 @@
     padding: 0px;
 }
 
-.top-bar h4 {
+.top-bar h4 {   /* Styling of the words that are in the top bar section */
     margin-top: 0;
     padding: 10px;
     color: #f3f3f3;
 } 
 .form-container form input,
-.form-container form select {
+.form-container form select { /* Styling of the input buttons and the dropdown buttons in the registration form */
    /* width: 100%; */
     width: 90%;
     padding: 15px 15px;
@@ -65,31 +66,31 @@
     border-radius: 5px;
 }
 
-.form-container form select option {
+.form-container form select option { /* Option that reads during the dropdown */
     background: #f3f3f3;
 }
 
-.form-container form .form-btn {
+.form-container form .form-btn {    /* Submit button */
     background: #00853E;
     color: #f3f3f3;
     font-size: 15px;
 }
 
-.form-container form .form-btn:hover {
+.form-container form .form-btn:hover {  /* Submit button when you hover over it */
     background: #00853E;
     color: #f3f3f3;
 }
 
-.form-container form p {
+.form-container form p {    /* Bottom words of the registration form */
     margin-top: 10px;
     font-size: 15px;
 }
 
-.form-container form p a {
+.form-container form p a {  /* Link at the button of the registration form */
     color: #00853E;
 }
 
-.form-container form .error-msg {
+.form-container form .error-msg {  /* Error message */
     margin: 10px 0;
     display: block;
     background: #00853E;

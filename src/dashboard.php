@@ -56,41 +56,40 @@ if (isset($_POST['Opportunities'])) {
 </head>
 
 <body>
-        <div class="dashboard-header">
+        <div class="dashboard-header">  <!-- the dashboard header -->
             <div class="logo">
                <h2> Logo </h2> 
             </div>
             <div class="buttons">
-                <button class="btn1"> Dashboard </button>
-                <button class="btn2"> Logout </button>
+                <button class="btn1"> Dashboard </button>   <!-- Dashboard button -->
+                <button class="btn2"> Logout </button>      <!-- Logout button -->
             </div>
         </div>
 
-
+            <!-- Welcoming person to the dashboard -->
             <h1> Hello <span><?php echo"$name, Welcome to the Dashboard."?></h1><br>
             
         
 
     	<div class="content">
-    		<!-- <form action="" method="post"> -->
-                
-            	<a class="flex1" href="accountPage.php">
+    	        
+            	<a class="flex1" href="accountPage.php">  <!-- Account Page button -->
             		 Account Page 
                 </a>
 
-            <a class="flex2" href="supportGroup.php">
+            <a class="flex2" href="supportGroup.php">  <!-- Support Group button -->
                 Support Groups
                 </a>
             
-            <a class="flex3" href="survey.php">
+            <a class="flex3" href="survey.php">   <!-- Survey button -->
                 Surveys
                 </a>
 
-            <a class="flex4" href="studies.php">
+            <a class="flex4" href="studies.php">  <!-- Studies button -->
                 Studies
                 </a>	
 
-            <a class="flex5" href="opportunities.php">
+            <a class="flex5" href="opportunities.php">  <!-- Opportunities button -->
                 Opportunities
                 </a>	
 
