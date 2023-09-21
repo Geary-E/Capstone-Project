@@ -19,7 +19,7 @@ session_start();
 
     <div class="container">
         <div class="content">
-            <h1>Hello <span><?php echo $name ?></span> this is the Studies section</h1>
+            <h1>Hello <span><?php echo"$name"?></span>, this is the Studies section</h1>
             <a href="logout.php" class="btn"> Logout</a>
         </div>
     </div>
