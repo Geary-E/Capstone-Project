@@ -1,0 +1,43 @@
+/* * {
+    box-sizing: border-box;
+} */
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+.top-header {
+    margin: 0;
+    padding: 30px;
+    background-color:  #00853E;
+    text-align: center;
+    width: 100%;
+    color: white;
+    font-size: 25px;
+}
+
+.my-studies {
+    background-color: #00853E;
+    flex: 25;
+    height: 100vh;
+}
+
+.study-series {
+    flex: 80;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 20px 20px;
+}
+
+.study1, .study2, .study3, .study4, .study5 {
+    padding: 20px;
+    width: 50%;
+    height: 100px;
+    color:#00853E;
+    border: solid 1px black;
+    text-align: center;
+    font-size: 30px;
+}
