@@ -1,43 +1,64 @@
-/* * {
-    box-sizing: border-box;
-} */
-
-.container {
-    display: flex;
-    height: 100vh;
-}
 
 .top-header {
     margin: 0;
-    padding: 30px;
-    background-color:  #00853E;
+    padding: 20px;
     text-align: center;
-    width: 100%;
+    background-color: #00853E;
     color: white;
-    font-size: 25px;
+    font-size: 30px;
+}
+
+.content {
+    display: flex;
+    justify-content: center;
+    gap: 20px 20px;
 }
 
 .my-studies {
-    background-color: #00853E;
-    flex: 25;
-    height: 100vh;
+    flex: 20;
+    background-color:#00853E;
+    color: white;
+    padding: 30px;
+    height: 80vh;
+}
+
+.little-section {
+    margin: 0;
+    padding: 35px;
+    height: 50px;
+    width: 75%;
+    background-color:#00853E;
+    color: white;
+    font-size: 30px;
+}
+
+.little-section:hover {
+    background-color: white;
+    color: #00853E;
 }
 
 .study-series {
     flex: 80;
-    display: flex;
-    flex-flow: column wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 20px 20px;
+    height: 80vh;
 }
 
 .study1, .study2, .study3, .study4, .study5 {
-    padding: 20px;
+    margin: auto;
+    padding: 30px;
+    align-self: center;
+    text-decoration: none;
     width: 50%;
-    height: 100px;
     color:#00853E;
     border: solid 1px black;
     text-align: center;
     font-size: 30px;
+}
+
+.links:link {
+    color: #00853E;
+    text-decoration: none;
+}
+
+.links:visited {
+    color: #00853E;
 }

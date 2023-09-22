@@ -3,6 +3,17 @@
 
 session_start();
 
+//If researcher_name is set make it name
+if (isset($_SESSION['researcher_name'])) {
+    $name = $_SESSION['researcher_name'];
+}
+
+//If person_name is set make it name
+elseif (isset($_SESSION['person_name'])) {
+    $name = $_SESSION['person_name'];
+}
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,34 +31,32 @@ session_start();
  <div class="container">
         <div class="top-header">
             Studies
-        </div>
+        </div><br>
 
         <div class="content">
 
-            <div class="my-studies">
+        <div class="my-studies">
+            <div class="little-section">
                 My Studies 
+                </div>
             </div>
-
-            <!--
-            <h1>Hello <span><?php echo"$name"?></span>, this is the Studies section</h1>
-            <a href="logout.php" class="btn"> Logout</a>
-            <br>
--->
 
             <div class="study-series">
 
-            <h1 style="text-align: center">Hello <span><?php echo"$name"?></span>, this is the Studies section</h1>
-            <a href="logout.php" class="btn"> Logout</a>
-            <br>
+            <h1 style="text-align: center; color: #00853E"> Hello <span><?php echo"$name, Welcome to the Studies Section."?></h1><br>
+            
 
-                <div class="study1"> Study </div>
-                <div class="study2"> Study </div>
-                <div class="study3"> Study </div>
-                <div class="study4"> Study </div>
-                <div class="study5"> Study </div>
+                <div class="study1"><a class="links" href="#study1"> Study </a></div><br> <!-- originally divs -->
+                <div class="study2"><a class="links" href="#study2"> Study </a></div><br>
+                <div class="study3"><a class="links" href="#study3"> Study</a></div><br>
+                <div class="study4"><a class="links" href="#study4"> Study </a></div><br>
+                <div class="study5"><a class="links" href="#study5"> Study </a></div><br>
 
             </div>
+
+           
          </div>
+
     </div>
 </body>
 
