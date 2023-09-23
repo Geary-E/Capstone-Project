@@ -43,22 +43,38 @@
 }
 
 .study1, .study2, .study3, .study4, .study5 {
+    display: block;
     margin: auto;
-    padding: 30px;
-    align-self: center;
+    cursor: pointer;
+    font-size: 20px;
     text-decoration: none;
-    width: 50%;
-    color:#00853E;
-    border: solid 1px black;
     text-align: center;
-    font-size: 30px;
+    padding: 20px;
+    border: solid 1px black;
+    width: 50%;
+    color: #00853E;
 }
 
-.links:link {
-    color: #00853E;
+.load-more {
+    display: block;
+    cursor: pointer;
+    margin: auto;
+    font-size: 15px;
     text-decoration: none;
-}
-
-.links:visited {
+    text-align: center;
+    padding: 15px;
+    border: solid 1px black;
+    width: 50%;
     color: #00853E;
 }
+
+.study1:hover, .study2:hover, .study3:hover, .study4:hover, .study5:hover {
+    background-color: #00853E;
+    color: white;
+}
+
+.load-more:hover {
+    background-color: #00853E;
+    color: white;
+}
+

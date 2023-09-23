@@ -15,6 +15,7 @@ elseif (isset($_SESSION['person_name'])) {
 
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -46,11 +47,13 @@ elseif (isset($_SESSION['person_name'])) {
             <h1 style="text-align: center; color: #00853E"> Hello <span><?php echo"$name, Welcome to the Studies Section."?></h1><br>
             
 
-                <div class="study1"><a class="links" href="#study1"> Study </a></div><br> <!-- originally divs -->
-                <div class="study2"><a class="links" href="#study2"> Study </a></div><br>
-                <div class="study3"><a class="links" href="#study3"> Study</a></div><br>
-                <div class="study4"><a class="links" href="#study4"> Study </a></div><br>
-                <div class="study5"><a class="links" href="#study5"> Study </a></div><br>
+                <a class="study1" href="#study1"> Study </a><br> <!-- originally divs -->
+                <a class="study2" href="#study2"> Study </a><br>
+                <a class="study3" href="#study3"> Study </a> <br>
+                <a class="study4" href="#study4"> Study </a> <br>
+                <a class="study5" href="#study5"> Study </a><br>
+                <button class="load-more"> Load More </button>
+                <!-- <a class="study5" href="#study5"> Study </a> -->
 
             </div>
 
