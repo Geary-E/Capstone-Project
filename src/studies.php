@@ -46,6 +46,11 @@ elseif (isset($_SESSION['person_name'])) {
 
             <h1 style="text-align: center; color: #00853E"> Hello <span><?php echo"$name, Welcome to the Studies Section."?></h1><br>
             
+                <div class="search-section">
+                    <p style="display: block;">Search By:</p> <br><br>
+                    <div class="search-bar"><span><label for="search">Name:</label><input type="text" id="search"  name="search"></span></div>
+                    <div class="tag-bar"><span><label for="tag"> Tags:</label><input type="text" id="tag" name="tags"></span></div>
+                </div><br>
 
                 <a class="study1" href="#study1"> Study </a><br> <!-- originally divs -->
                 <a class="study2" href="#study2"> Study </a><br>

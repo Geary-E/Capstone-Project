@@ -11,8 +11,10 @@
 .content {
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 20px 20px;
 }
+
 
 .my-studies {
     flex: 20;
@@ -40,6 +42,27 @@
 .study-series {
     flex: 80;
     height: 80vh;
+}
+
+.search-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+ .search-bar, .tag-bar {
+    padding: 10px;
+}
+
+label {
+    font-size: 20px;
+}
+
+input {
+    border: solid 1px black;
+    font-size: 15px;
+    border-radius: 20%;
+    padding: 10px;
 }
 
 .study1, .study2, .study3, .study4, .study5 {
