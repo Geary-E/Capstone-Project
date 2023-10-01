@@ -13,6 +13,9 @@ elseif (isset($_SESSION['person_name'])) {
     $name = $_SESSION['person_name'];
 }
 
+	//accessing the study_form database
+	$sql = 'SELECT * FROM study_form';
+	$query = mysqli_query($conn,$sql);
 
 ?>
 
@@ -51,6 +54,27 @@ elseif (isset($_SESSION['person_name'])) {
                     <div class="search-bar"><span><label for="search">Name:</label><input type="text" id="search"  name="search"></span></div>
                     <div class="tag-bar"><span><label for="tag"> Tags:</label><input type="text" id="tag" name="tags"></span></div>
                 </div><br>
+				
+				
+				<!--Temporary code to test/show all the data from the study_form database
+				<?php
+					echo "<table class='table'>
+					<tr>
+					<th>Study Name</th>
+					<th>Study Description</th>
+					</tr>";
+					
+					while ($row = mysqli_fetch_array($query)){
+						echo " <tr>
+						<td>{$row['study_name']}</td>
+						<td>{$row['study_desc']}</td>
+						</tr>";
+					}
+					echo "</table>";
+				?>
+				<br>
+				-->
+
 
                 <a class="study1" href="#study1"> Study </a><br> <!-- originally divs -->
                 <a class="study2" href="#study2"> Study </a><br>
@@ -62,9 +86,9 @@ elseif (isset($_SESSION['person_name'])) {
 
             </div>
 
-           
+			
          </div>
-
+		<p><a href="studiesCreate.php">Click here to create a new study</a></p><br>
     </div>
 </body>
 
