@@ -59,8 +59,26 @@ if (isset($_POST['createStudy'])) {
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style4.css">
+    <!--<link rel="stylesheet" href="style4.css"> -->
     <title>Studies</title>
+	
+	<style>
+			.top-header {
+   					 		margin: 0;
+    					    padding: 20px;
+    						text-align: center;
+    						background-color: #00853E;
+    						color: white;
+    						font-size: 30px;
+						}
+
+			.content {
+    						display: flex;
+    						justify-content: center;
+    						align-items: center;
+    						gap: 20px 20px;
+					}	
+		</style>
 </head>
 
 <body>

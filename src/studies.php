@@ -42,6 +42,9 @@ elseif (isset($_SESSION['person_name'])) {
         <div class="my-studies">
             <div class="little-section">
                 My Studies 
+                </div><br><br>
+                <div class="second-section">
+                    <a href="studiesCreate.php">Manage Studies</a>
                 </div>
             </div>
 
@@ -54,8 +57,15 @@ elseif (isset($_SESSION['person_name'])) {
                     <div class="search-bar"><span><label for="search">Name:</label><input type="text" id="search"  name="search"></span></div>
                     <div class="tag-bar"><span><label for="tag"> Tags:</label><input type="text" id="tag" name="tags"></span></div>
                 </div><br>
-				
-				
+
+                <a class="study1" href="#study1"> Study </a><br> <!-- originally divs -->
+                <a class="study2" href="#study2"> Study </a><br>
+                <a class="study3" href="#study3"> Study </a> <br>
+                <a class="study4" href="#study4"> Study </a> <br>
+                <a class="study5" href="#study5"> Study </a><br>
+                <button class="load-more"> Load More </button><br>
+
+         		
 				<!--Temporary code to test/show all the data from the study_form database
 				<?php
 					echo "<table class='table'>
@@ -75,20 +85,10 @@ elseif (isset($_SESSION['person_name'])) {
 				<br>
 				-->
 
-
-                <a class="study1" href="#study1"> Study </a><br> <!-- originally divs -->
-                <a class="study2" href="#study2"> Study </a><br>
-                <a class="study3" href="#study3"> Study </a> <br>
-                <a class="study4" href="#study4"> Study </a> <br>
-                <a class="study5" href="#study5"> Study </a><br>
-                <button class="load-more"> Load More </button>
-                <!-- <a class="study5" href="#study5"> Study </a> -->
-
             </div>
 
 			
          </div>
-		<p><a href="studiesCreate.php">Click here to create a new study</a></p><br>
     </div>
 </body>
 

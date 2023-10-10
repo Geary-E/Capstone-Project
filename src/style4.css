@@ -39,6 +39,30 @@
     color: #00853E;
 }
 
+.second-section {
+    padding: 35px;
+    height: 50px;
+    width: 75%;
+    background-color:#00853E;
+    color: white;
+    font-size: 30px; 
+}
+
+
+.second-section a {
+    text-decoration: none;
+    color: white;
+} 
+
+.second-section a:hover {
+    color:#00853E;
+} 
+
+.second-section:hover {
+    background-color: white;
+    color: #00853E;
+}
+
 .study-series {
     flex: 80;
     height: 80vh;
