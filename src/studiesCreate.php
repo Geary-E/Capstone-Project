@@ -74,10 +74,29 @@ if (isset($_POST['createStudy'])) {
 
 			.content {
     						display: flex;
+							padding: 20px;
     						justify-content: center;
     						align-items: center;
     						gap: 20px 20px;
 					}	
+
+			 label {
+					font-size: 20px;
+			 }		
+
+			input {
+				width: 90vh;
+				padding: 10px;
+				font-size: 15px;
+			}		
+
+			.form-btn {
+				width: 55vh;
+			}
+
+			.cancel-link {
+				width: 35vh;
+			}
 		</style>
 </head>
 
@@ -102,38 +121,38 @@ if (isset($_POST['createStudy'])) {
 		
 				<label for="studyname"><b>Study Name:</b></label><br>
 				<input type="text" name="study_name" required placeholder="Enter the study name">
-				<br>
+				<br><br>
 		
 				<label for="studydescription"><b>Study Description:</b></label><br>
 				<input type="text" name="study_desc" required placeholder="Enter the study description">
-				<br>
+				<br><br>
 				
 				<label for="studylocation"><b>Study location:</b></label><br>
 				<input type="text" name="study_loc" required placeholder="Enter the study location">
-				<br>
+				<br><br>
 				
 				<label for="studytime"><b>Study time:</b></label><br>
 				<input type="text" name="study_time" required placeholder="Enter the study time">
-				<br>
+				<br><br>
 				
 				<label for="studytype"><b>Study type:</b></label><br>
 				<input type="text" name="study_type" required placeholder="Enter the study type">
-				<br>
+				<br><br>
 				
 				<label for="studytags"><b>Study tag(s):</b></label><br>
 				<input type="text" name="study_tags" value="tag1" required placeholder="Enter the study tag(s)">
-				<br>
+				<br><br>
 		
 				<label for="email"><b>Email:</b></label><br>
 				<input type="email" name="study_email" required placeholder="Enter an Email">
-				<br>
+				<br><br>
 		
 				<input type="submit" name="createStudy" value="Create new study" class="form-btn">
+				<input type="button" onClick="window.location.href='studies.php';" name="cancel" value="cancel" class="cancel-link"></input><br>
 				<br>
 			</form>
 			
          </div>
-		<p><a href="studies.php">Cancel</a></p><br>
     </div>
 </body>
 
