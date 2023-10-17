@@ -6,6 +6,26 @@
     background-color: #00853E;
     color: white;
     font-size: 30px;
+    overflow: hidden;
+}
+
+.logout-btn {
+    float: right;
+    cursor: pointer;
+    display: inline;
+    color: white;
+    background-color: #00853E;
+    padding: 20px;
+    width: 150px;
+    font-size: 20px;
+    border-radius: 25%;
+    border: solid 5px white;
+    margin-left: 25px;
+}   
+
+.logout-btn:hover {
+    background-color: white;
+    color:#00853E;
 }
 
 .content {

@@ -33,8 +33,10 @@ elseif (isset($_SESSION['person_name'])) {
 <body>
 
  <div class="container">
+
         <div class="top-header">
-            Studies
+            <p style="display: inline-block;text-align:center;">Studies</p>
+            <button class="logout-btn" onClick="window.location.href='logout.php'">Log Out</button>
         </div><br>
 
         <div class="content">
@@ -44,7 +46,7 @@ elseif (isset($_SESSION['person_name'])) {
                 My Studies 
                 </div><br><br>
                 <div class="second-section">
-                    <a href="studiesCreate.php">Manage Studies</a>
+                    <a href="manageStudies.php">Manage Studies</a>
                 </div>
             </div>
 

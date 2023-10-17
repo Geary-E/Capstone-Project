@@ -70,7 +70,27 @@ if (isset($_POST['createStudy'])) {
     						background-color: #00853E;
     						color: white;
     						font-size: 30px;
+							overflow: hidden;
 						}
+
+						.logout-btn {
+    						float: right;
+    						cursor: pointer;
+   							display: inline;
+   							color: white;
+    					    background-color: #00853E;
+    						padding: 20px;
+    						width: 150px;
+   							font-size: 20px;
+   						    border-radius: 25%;
+   							border: solid 5px white;
+   							margin-left: 25px;
+						}   
+
+				.logout-btn:hover {
+   							background-color: white;
+    					    color:#00853E;
+						}			
 
 			.content {
     						display: flex;
@@ -104,7 +124,8 @@ if (isset($_POST['createStudy'])) {
 
  <div class="container">
         <div class="top-header">
-            Create Study
+		<p style="display: inline-block;text-align:center;">Create Study</p>
+		<button class="logout-btn" onClick="window.location.href='logout.php'">Log Out</button>
         </div><br>
 
         <div class="content">
