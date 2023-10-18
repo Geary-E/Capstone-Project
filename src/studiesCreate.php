@@ -59,15 +59,73 @@ if (isset($_POST['createStudy'])) {
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style4.css">
+    <!--<link rel="stylesheet" href="style4.css"> -->
     <title>Studies</title>
+	
+	<style>
+			.top-header {
+   					 		margin: 0;
+    					    padding: 20px;
+    						text-align: center;
+    						background-color: #00853E;
+    						color: white;
+    						font-size: 30px;
+							overflow: hidden;
+						}
+
+						.logout-btn {
+    						float: right;
+    						cursor: pointer;
+   							display: inline;
+   							color: white;
+    					    background-color: #00853E;
+    						padding: 20px;
+    						width: 150px;
+   							font-size: 20px;
+   						    border-radius: 25%;
+   							border: solid 5px white;
+   							margin-left: 25px;
+						}   
+
+				.logout-btn:hover {
+   							background-color: white;
+    					    color:#00853E;
+						}			
+
+			.content {
+    						display: flex;
+							padding: 20px;
+    						justify-content: center;
+    						align-items: center;
+    						gap: 20px 20px;
+					}	
+
+			 label {
+					font-size: 20px;
+			 }		
+
+			input {
+				width: 90vh;
+				padding: 10px;
+				font-size: 15px;
+			}		
+
+			.form-btn {
+				width: 55vh;
+			}
+
+			.cancel-link {
+				width: 35vh;
+			}
+		</style>
 </head>
 
 <body>
 
  <div class="container">
         <div class="top-header">
-            Create Study
+		<p style="display: inline-block;text-align:center;">Create Study</p>
+		<button class="logout-btn" onClick="window.location.href='logout.php'">Log Out</button>
         </div><br>
 
         <div class="content">
@@ -84,38 +142,38 @@ if (isset($_POST['createStudy'])) {
 		
 				<label for="studyname"><b>Study Name:</b></label><br>
 				<input type="text" name="study_name" required placeholder="Enter the study name">
-				<br>
+				<br><br>
 		
 				<label for="studydescription"><b>Study Description:</b></label><br>
 				<input type="text" name="study_desc" required placeholder="Enter the study description">
-				<br>
+				<br><br>
 				
 				<label for="studylocation"><b>Study location:</b></label><br>
 				<input type="text" name="study_loc" required placeholder="Enter the study location">
-				<br>
+				<br><br>
 				
 				<label for="studytime"><b>Study time:</b></label><br>
 				<input type="text" name="study_time" required placeholder="Enter the study time">
-				<br>
+				<br><br>
 				
 				<label for="studytype"><b>Study type:</b></label><br>
 				<input type="text" name="study_type" required placeholder="Enter the study type">
-				<br>
+				<br><br>
 				
 				<label for="studytags"><b>Study tag(s):</b></label><br>
 				<input type="text" name="study_tags" value="tag1" required placeholder="Enter the study tag(s)">
-				<br>
+				<br><br>
 		
 				<label for="email"><b>Email:</b></label><br>
 				<input type="email" name="study_email" required placeholder="Enter an Email">
-				<br>
+				<br><br>
 		
 				<input type="submit" name="createStudy" value="Create new study" class="form-btn">
+				<input type="button" onClick="window.location.href='studies.php';" name="cancel" value="cancel" class="cancel-link"></input><br>
 				<br>
 			</form>
 			
          </div>
-		<p><a href="studies.php">Cancel</a></p><br>
     </div>
 </body>
 
