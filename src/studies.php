@@ -46,7 +46,11 @@ elseif (isset($_SESSION['person_name'])) {
                 My Studies 
                 </div><br><br>
                 <div class="second-section">
-                    <a href="manageStudies.php">Manage Studies</a>
+                <?php
+                if (isset($_SESSION['researcher_name'])) {
+                echo '<a href="manageStudies.php">Manage Studies</a>';
+                }
+                ?>
                 </div>
             </div>
 
