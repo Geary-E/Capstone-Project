@@ -1,7 +1,10 @@
 <?php
+//PHP coded by Connor
 
+//Include config file for database connection and functions
 @include 'config.php';
 
+//Start the session
 session_start();
 
 if (isset($_POST['createStudy'])) {
@@ -52,13 +55,14 @@ if (isset($_POST['createStudy'])) {
 }
 ?>
 
-<!DOCTYPE html>
+<!DOCTYPE html> <!--HTML coded by Connor -->
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<?php //Prints meta data
+    meta(); ?>
+
     <!--<link rel="stylesheet" href="style4.css"> -->
     <title>Studies</title>
 	
