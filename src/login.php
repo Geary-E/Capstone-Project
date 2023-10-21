@@ -1,48 +1,57 @@
 <?php
+//PHP coded by Jeremy Tollison
 
+//Include config file for database connection and functions
 @include 'config.php';
 
+//Start the session
 session_start();
 
+//If the form is submitted
 if (isset($_POST['submit'])) {
-   // $name = mysqli_real_escape_string($conn, $_POST['name']);
-    $first_name = mysqli_real_escape_string($conn, $_POST['firstname']);
-    $last_name = mysqli_real_escape_string($conn, $_POST['lastname']);
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $pass = md5($_POST['password']);
-    $confirmpass = md5($_POST['confirmpassword']);
-    $user_type = $_POST['user_type'];
 
-    $select = " SELECT * FROM user_form WHERE email = '$email' && password = '$pass' ";
-    $result = mysqli_query($conn, $select);
+    $result = validate($conn);
 
+    //If the user exists
     if (mysqli_num_rows($result) > 0) {
+
+        //Saves the row where user info is stored
         $row = mysqli_fetch_array($result);
 
+        //If the user_type is researcher 
         if ($row['user_type'] == 'researcher') {
 
-           // $_SESSION['researcher_name'] = $row['name'];
+            //Set the researcher_name to firstname 
            $_SESSION['researcher_name'] = $row['firstname'];
+
+           //Send to dashboard.php
             header('location:dashboard.php');
+
+        //If the user_type is person 
         } elseif ($row['user_type'] == 'person') {
 
-           // $_SESSION['person_name'] = $row['name'];
+           //Set the person_name to firstname
            $_SESSION['person_name'] = $row['firstname'];
+
+           //Send to dashboard.php
             header('location:dashboard.php');
         }
+    
+    //If user does not exist
     } else {
         $error[] = 'Incorrect email or password';
     }
 };
 ?>
 
-<!DOCTYPE html>
+<!DOCTYPE html> <!--HTML coded by Geary -->
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <?php //Prints meta data
+    meta(); ?>
+
     <link rel="stylesheet" href="style2.css">
     <title>Login</title>
 
@@ -55,7 +64,6 @@ if (isset($_POST['submit'])) {
                 <h3>Log In</h3>
             </div>
         <form action="" method="post">
-          
 
             <?php
             if (isset($error)) {
@@ -74,10 +82,6 @@ if (isset($_POST['submit'])) {
             <label for="password"><b>Password:</b></label><br>
             <input type="password" name="password" required placeholder="Enter a password">
             <br>
-
-            <!-- Commented out
-            <input type="submit" name="submit" value="Click here to login" class="form-btn">
-        -->
             
             <br>
 
@@ -86,8 +90,10 @@ if (isset($_POST['submit'])) {
                     <a href="#">Forgot Password? </a>
                     </div>   
                 <div class="button-list">
-                    <button class="btn1"> Cancel </button>
-                    <button class="btn2" name="submit"> Log In </button>
+                    <button class="btn1" name="submit"> Log In </button>
+                    <a href="login.php">
+                    <button class="btn2"> Cancel </button>
+                    </a>
                 </div>
 
             </div>
@@ -97,7 +103,6 @@ if (isset($_POST['submit'])) {
                 <br>    <!-- line breaks -->
 
             <p>Don't have an account? <a href="registration.php">Click here to register</a></p><br>
-
 
         </form>
 

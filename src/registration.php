@@ -1,41 +1,49 @@
 <?php
+//PHP coded by Jeremy Tollison
 
+//Include config file for database connection and functions
 @include 'config.php';
 
+//If the form is submitted
 if (isset($_POST['submit'])) {
 
-   // $name = mysqli_real_escape_string($conn, $_POST['name']);
-    $first_name = mysqli_real_escape_string($conn, $_POST['firstname']);
-    $last_name = mysqli_real_escape_string($conn, $_POST['lastname']);
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $pass = md5($_POST['password']);
-    $confirmpass = md5($_POST['confirmpassword']);
-    $user_type = $_POST['user_type'];
+    $result = validate($conn);
 
-    $select = " SELECT * FROM user_form WHERE email = '$email' && password = '$pass' ";
-    $result = mysqli_query($conn, $select);
-
+    //If the user exists stop
     if (mysqli_num_rows($result) > 0) {
         $error[] = 'This user already exists';
-    } else {
+    }
+
+    //If the user does not exist
+    else {
+
+        //If the passwords do not match
         if ($pass != $confirmpass) {
             $error[] = 'Your passwords do not match';
-        } else {
-            $insert = "INSERT INTO user_form(firstname, lastname, email,password,user_type) VALUES('$first_name', '$last_name','$email','$pass','$user_type')";
+        }
+
+        //If the passwords match
+        else {
+
+            //Creates insert to add data into user table via conn
+            $insert = "INSERT INTO user(firstname, lastname, email,password,user_type) VALUES('$first_name', '$last_name','$email','$pass','$user_type')";
             mysqli_query($conn, $insert);
+
+            //Send to login.php
             header('location:login.php');
         }
     }
 };
 ?>
 
-<!DOCTYPE html>
+<!DOCTYPE html> <!--HTML coded by Geary -->
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <?php //Prints meta data
+    meta(); ?>
+
     <link rel="stylesheet" href="style.css">
     <title>Registration</title>
 </head>
@@ -77,9 +85,9 @@ if (isset($_POST['submit'])) {
             <input type="password" name="password" required placeholder="Enter a password">
             <input type="password" name="confirmpassword" required placeholder="Re-enter the password">
             <br>
-              
-              <!-- End of code updates -->
-              
+
+            <!-- End of code updates -->
+
             <select name="user_type">
                 <option value="person">Person</option>
                 <option value="researcher">Researcher/Organization</option>

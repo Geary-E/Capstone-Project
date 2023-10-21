@@ -1,31 +1,29 @@
 <?php
+//PHP coded by Jeremy Tollison
+
+//Include config file for database connection and functions
 @include 'config.php';
 
+//Start the session
 session_start();
 
-//If researcher_name is set make it name
-if (isset($_SESSION['researcher_name'])) {
-    $name = $_SESSION['researcher_name'];
-}
+//Used to set name variable based on user_type stored in $_SESSION
+$name=nameType();
 
-//If person_name is set make it name
-elseif (isset($_SESSION['person_name'])) {
-    $name = $_SESSION['person_name'];
-}
-
+    //PHP added by Connor
 	//accessing the study_form database
 	$sql = 'SELECT * FROM study_form';
 	$query = mysqli_query($conn,$sql);
-
-
 ?>
-<!DOCTYPE html>
+
+<!DOCTYPE html> <!--HTML coded by Geary -->
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+    <?php //Prints meta data
+    meta(); ?>
+
     <link rel="stylesheet" href="style.css">
     <title>Manage Studies</title>
     
