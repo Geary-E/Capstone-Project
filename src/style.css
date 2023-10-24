@@ -1,4 +1,5 @@
 /* Registration Page: registration.php */
+/* Coded by Geary */
 
 .form-container { /* Styling for the size of the registration form */
     min-height: 100vh;
@@ -18,27 +19,6 @@
     top: 0;
 }
 
-/*
-.form-container form h3 {
-    font-size: 30px;
-    margin: 0;
-    /* margin-bottom: 10px; 
-}
-*/
-
-/*
-.form-container form .top-bar {
-    font-size: 30px;
-    text-align: center;
-    margin: 0px;
-    background-color: seagreen;
-}
-*/
-/*
-.form-container form .top-bar {
-    position: absolute;
-}
-*/
 .top-bar  { /* Styling for the top bar that says: Registration */
    /* display: flex; */
     font-size: 30px;
@@ -99,58 +79,3 @@
     font-size: 15px;
     padding: 10px;
 }
-
-/*
-.form-container2 {
-    min-height: 100vh;
-    min-width: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #D3D3D3;
-}
-
-.form-container2 form {
-    padding: 20px;
-    border-radius: 20px;
-    box-shadow: 0 5px 20px #696969;
-    background: #f3f3f3;
-}
-
-.form-container2 form .login-bar {
-    background-color:#00853E;
-    color: #f3f3f3;
-    width: 100%;
-}
-
-.form-container2 form .login-bar h3 {
-    padding: 20px;
-}
-
-.form-container2 form input {
-    width: 90%;
-    padding: 15px 15px;
-    font-size: 15px;
-    margin: 8px 0;
-    background: #f3f3f3;
-    border-radius: 5px;
-}
-
-.form-container2 form .button-list {
-    display: inline-block;
-}
-
-.form-container2 form .btn1 {
-    background-color: #00853E;
-    color: #f3f3f3;
-    font-size: 10px;
-    padding: 15px;
-}
-
-.form-container2 form .btn2 {
-    background-color: #00853E;
-    color: #f3f3f3;
-    font-size: 10px;
-    padding: 15px;
-}
-*/

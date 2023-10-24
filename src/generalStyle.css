@@ -1,0 +1,115 @@
+/* Coded by Jeremy */
+
+/***********/
+/*Variables*/
+/***********/
+
+:root {
+    --green: #00853E;
+}
+
+body {
+    margin: 0; /*Sets boundaries properly*/
+}
+/*********************************/
+/*Beginning of styling for header*/
+/*********************************/
+
+.page-header {
+    background-color: var(--green);
+    height: 80px;
+    padding: 30px;
+    overflow: hidden;
+    position: relative;
+}
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+ .page-logo {                
+    color: white;
+}
+
+/* page-header: buttons */
+.page-header .buttons {  
+    float: right;   /* puts the dashboard button to the right */
+}
+
+/* Styling for Dashboard button */
+.btn1 {     
+    margin-right: 25px;
+}
+
+/* Styling for Logout button */
+.btn2 {     
+    margin-left: 25px;
+}
+
+/* Styling for both Dashboard and Logout button */
+ .btn1, .btn2 {     
+    text-align: center;
+    padding: 20px;
+    width: 150px;
+    color: white;
+    background-color: var(--green);
+    border: 5px solid white;
+    border-radius: 25%;
+    font-size: 20px;
+}
+
+/* Styling for both Dashboard and Logout buttons when hovering*/
+.btn1:hover, .btn2:hover {      
+    background-color: white;
+    color: var(--green);
+}
+
+/*End of styling for header*/
+
+
+/*********************************/
+/*Beginning of styling for navbar*/
+/*********************************/
+
+/* Basic styles for the navbar */
+.navbar { 
+    width: 200px;
+    background-color: var(--green);
+    color: white;
+    padding: 20px;
+    position: relative;
+}
+
+/*Navbar anchor tag (hyperlink) styling*/
+.navbar a { 
+    display: block;
+    color: white;
+    text-decoration: none;
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+/* Styles for the content sections */
+.navbar-content {
+    padding: 20px;
+}
+
+/* Styling of h1 */
+h1 {
+    font-size: 20px;
+    padding: 10px;
+    text-align: center;
+    color: #00853E;
+}
+
+/*
+.search-surveys {
+
+} 
+*/
+
+.manage-surveys { 
+    display: none; /* Hidden by default */
+}
+
+/*End of styling for navbar*/

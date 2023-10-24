@@ -15,22 +15,18 @@ $name=nameType();
 <html lang="en">
 
 <head>
-        
+
     <?php //Prints meta data
     meta(); ?>
 
-    <link rel="stylesheet" href="style.css">
-    <title>Manage Opportunities</title>
+    <link rel="stylesheet" href="style3.css">
+    <link rel="stylesheet" href="generalStyle.css">
+    <title>manageOpportunity</title>
 </head>
 
 <body>
-
-    <div class="container">
-        <div class="content">
-            <h1>Hello <span><?php echo $name ?></span> this is the Opportunity section</h1>
-            <a href="logout.php" class="btn"> Logout</a>
-        </div>
-    </div>
+    <?php pageHeader(); //Displays the header
+    ?>
+    <h1>Hello <span><?php echo $name ?></span> this is the manage opportunity section</h1>
 </body>
-
 </html>

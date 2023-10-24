@@ -15,21 +15,18 @@ $name=nameType();
 <html lang="en">
 
 <head>
-    
+
     <?php //Prints meta data
     meta(); ?>
-    <link rel="stylesheet" href="style.css">
-    <title>Dashboard</title>
+
+    <link rel="stylesheet" href="style3.css">
+    <link rel="stylesheet" href="generalStyle.css">
+    <title>accountPage</title>
 </head>
 
 <body>
-
-    <div class="container">
-        <div class="content">
-            <h1>Hello <span><?php echo $name ?></span> this is the Account Page</h1>
-            <a href="logout.php" class="btn"> Logout</a>
-        </div>
-    </div>
+    <?php pageHeader(); //Displays the header
+    ?>
+    <h1>Hello <span><?php echo $name ?></span> welcome to the account page</h1><br>
 </body>
-
 </html>

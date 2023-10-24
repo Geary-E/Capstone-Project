@@ -16,24 +16,19 @@ $name=nameType();
 <html lang="en">
 
 <head>
-        
-    <?php //Prints meta data
-    meta(); ?>
-    
-    <link rel="stylesheet" href="style.css">
-    <title>Dashboard</title>
+
+    <?php meta(); ?> <!--Prints meta data-->
+
+    <link rel="stylesheet" href="generalStyle.css">
+    <title>manageSurvey</title>
 </head>
 
 <body>
+    <?php
+        pageHeader(); //Displays the header
+        pageNavbar($name); //Displays the navbar
+    ?>
 
-    <div class="container">
-        <div class="content">
-            <h1>Hello <span><?php echo $name ?></span> this is the Survey section</h1>
-            <a href="dashboard.php" class="btn"> Dashboard</a>
-            <a href="logout.php" class="btn"> Logout</a>
-        </div>
 
-    </div>
 </body>
-
 </html>

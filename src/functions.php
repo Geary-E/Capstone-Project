@@ -10,7 +10,8 @@
  * 
  * @return $name
  */
-function nameType() {
+function nameType()
+{
     //If researcher_name is set make it name
     if (isset($_SESSION['researcher_name'])) {
         $name = $_SESSION['researcher_name'];
@@ -29,7 +30,8 @@ function nameType() {
  * @param mixed $conn
  * @return bool|mysqli_result
  */
-function validate($conn){
+function validate($conn)
+{
     //Declares variables from the user table via $conn
     $first_name = mysqli_real_escape_string($conn, $_POST['firstname']);
     $last_name = mysqli_real_escape_string($conn, $_POST['lastname']);
@@ -49,23 +51,30 @@ function validate($conn){
 //**************************************************
 
 /**
- * Prints meta data
+ * Displays the meta data
  * 
  * @return void
  */
-function meta() {
-    echo'
+function meta()
+{
+    echo '
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     ';
 }
 
-//Module-Specific - Used in specific modules
-function pageHeader() {
-    echo'
-    <div class="dashboard-header">
-        <div class="logo">
+//Module-Specific - Used in dashboard module
+
+/**
+ * Displays the header
+ * @return void
+ */
+function pageHeader()
+{
+    echo '
+    <div class="page-header" id="header">
+        <div class="page-logo">
             <h2>Logo</h2>
         </div>
         <div class="buttons">
@@ -80,4 +89,72 @@ function pageHeader() {
     ';
 }
 
-?>
+/**
+ * Displays the navbar
+ * @return void
+ */
+function pageNavbar($name)
+{
+    echo '
+    <div class="navbar">
+    <a href="#" onclick="showSearch()">Search Surveys</a>
+    <a href="#" onclick="showManage()">Manage Surveys</a>
+    </div>
+
+    <!-- Content -->
+    <div class="navbar-content">
+    <div class="search-surveys">
+
+        ';
+    displaySearch($name);
+    echo '
+    </div>
+    <div class="manage-surveys">
+
+        ';
+    displayManage($name);
+    echo '
+    </div>
+    </div>
+    ';
+}
+
+/**
+ * Displays the search  content
+ * @param $name 
+ * @return void
+ */
+function displaySearch($name)
+{
+    echo '<h1>Hello <span>' . $name . '</span> this is the search survey section</h1>';
+    // Generate additional HTML content for the Search Surveys page here
+}
+
+/**
+ * Displays the manage content
+ * @param $name 
+ * @return void
+ */
+function displayManage($name)
+{
+    echo '<h1>Hello <span>' . $name . '</span> this is the manage survey section</h1>';
+    // Generate additional HTML content for the Manage Surveys page here
+}
+
+// JavaScript functions
+
+echo '
+<script>
+    function showSearch()
+    {
+        document.querySelector(\'.search-surveys\').style.display = \'block\';
+        document.querySelector(\'.manage-surveys\').style.display = \'none\';
+    }
+
+    function showManage()
+    {
+        document.querySelector(\'.search-surveys\').style.display = \'none\';
+        document.querySelector(\'.manage-surveys\').style.display = \'block\';
+    }
+</script>
+';

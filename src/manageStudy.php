@@ -19,43 +19,23 @@ $name=nameType();
 <!DOCTYPE html> <!--HTML coded by Geary -->
 <html lang="en">
 
+<!DOCTYPE html> <!--HTML coded by Geary -->
+<html lang="en">
+
 <head>
-        
+
     <?php //Prints meta data
     meta(); ?>
 
-    <link rel="stylesheet" href="style.css">
-    <title>Manage Studies</title>
-    
-    <style>
-            .top-header {
-   					 		margin: 0;
-    					    padding: 20px;
-    						text-align: center;
-    						background-color: #00853E;
-    						color: white;
-    						font-size: 30px;
-                            overflow: hidden;
-						}
+    <link rel="stylesheet" href="style3.css">
+    <link rel="stylesheet" href="generalStyle.css">
+    <title>manageStudy</title>
+</head>
 
-            .btn {
-                float: right;
-                cursor: pointer;
-                display: inline;
-                color: white;
-                background-color: #00853E;
-                padding: 20px;
-                width: 150px;
-                font-size: 20px;
-                border-radius: 25%;
-                border: solid 5px white;
-                margin-left: 25px;
-            }   
-            
-            .btn:hover {
-                background-color: white;
-                color:#00853E;
-            }
+<body>
+    <?php pageHeader(); //Displays the header
+    ?>    
+    <style>
 
             .content {
                 display: flex;
@@ -191,10 +171,7 @@ $name=nameType();
 
     <div class="container">
 
-        <div class="top-header">
-             <p style="display: inline-block;text-align:center;">Manage Studies</p>
-             <button class="btn" onClick="window.location.href='logout.php'">Log Out </button>
-            </div><br>
+
 
         <div class="content">
 
@@ -205,7 +182,7 @@ $name=nameType();
 
             <div class="study-section">
 
-            <h1 style="text-align: center; color: #00853E"> Hello <span><?php echo"$name, Welcome to the Managing Studies Section."?></h1>
+            <h1 style="text-align: center; color: #00853E"> Hello <span><?php echo"$name, Welcome to the Manage Study Section"?></h1>
             
                 <div class="search-section">
                         <p style="display: block;">Search By:</p> <br><br>

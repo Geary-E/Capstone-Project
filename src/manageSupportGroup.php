@@ -19,18 +19,14 @@ $name=nameType();
     <?php //Prints meta data
     meta(); ?>
 
-    <link rel="stylesheet" href="style.css">
-    <title>Manage Support Groups</title>
+    <link rel="stylesheet" href="style3.css">
+    <link rel="stylesheet" href="generalStyle.css">
+    <title>manageSupportGroup</title>
 </head>
 
 <body>
-
-    <div class="container">
-        <div class="content">
-            <h1>Hello <span><?php echo $name ?></span> this is the Support Group section</h1>
-            <a href="logout.php" class="btn"> Logout</a>
-        </div>
-    </div>
+    <?php pageHeader(); //Displays the header
+    ?>
+    <h1>Hello <span><?php echo $name ?></span> this is the manage support group section</h1>
 </body>
-
 </html>

@@ -1,53 +1,14 @@
 /* Styling of the dashboard page: Dashboard.php */
-
+/* Coded by Geary */
 
 body {
     margin: 0;
-}
-
-.dashboard-header {    /* The header for the dashboard */
-    background-color:  #00853E;
-    padding: 30px;
-    overflow: hidden;
-}
-
- .logo {                /* Logo sign */
-    float: left;        /* makes the logo button to the left of the page */
-    color: white;
-}
-
-.dashboard-header .buttons {  /* Dashboard header: buttons */
-    float: right;   /* makes the dashboard button to the right */
 }
 
 h1 {  /* Styling of h1 */
     font-size: 50px;
     padding: 10px;
     text-align: center;
-    color: #00853E;
-}
-
-.btn1 {     /* Styling for mainly Dashboard button */
-    margin-right: 25px;
-}
-
-.btn2 {     /* Styling for mainly Logout button */
-    margin-left: 25px;
-}
-
- .btn1, .btn2 {     /* Styling and customization for both Dashboard and Logout button */
-    text-align: center;
-    padding: 20px;
-    width: 150px;
-    color: white;
-    background-color: #00853E;
-    border: 5px solid white;
-    border-radius: 25%;
-    font-size: 20px;
-}
-
-.btn1:hover, .btn2:hover {      /* Styling for both Logout and Dashboard buttons when you hover */
-    background-color: white;
     color: #00853E;
 }
 
