@@ -19,17 +19,15 @@ $name=nameType();
     <?php //Prints meta data
     meta(); ?>
     <link rel="stylesheet" href="style4.css">
-    <title>Studies</title>
+    <link rel="stylesheet" href="generalStyle.css">
+    <title>Study</title>
 </head>
 
 <body>
+<?php pageHeader(); //Displays the header
+    ?>
 
  <div class="container">
-
-        <div class="top-header">
-            <p style="display: inline-block;text-align:center;">Studies</p>
-            <button class="logout-btn" onClick="window.location.href='logout.php'">Log Out</button>
-        </div><br>
 
         <div class="content">
 
@@ -38,7 +36,7 @@ $name=nameType();
                 My Studies 
                 </div><br><br>
                 <div class="second-section">
-                    <a href="manageStudies.php">Manage Studies</a>
+                    <a href="manageStudy.php">Manage Studies</a>
                 </div>
             </div>
 
