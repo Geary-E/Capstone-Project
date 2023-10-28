@@ -25,8 +25,11 @@ $name=nameType();
 </head>
 
 <body>
-    <?php pageHeader(); //Displays the header
+<?php
+    $pageName = 'Opportunities';
+        pageHeader(); //Displays the header
+        pageNavbar($name, $pageName); //Displays the navbar
     ?>
-    <h1>Hello <span><?php echo $name ?></span> this is the opportunity section</h1>
+
 </body>
 </html>

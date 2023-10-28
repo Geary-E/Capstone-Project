@@ -1,11 +1,13 @@
 <?php
 //PHP coded by Jeremy Tollison
 
+//Start the session
+session_start();
+
 //Include config file for database connection and functions
 @include 'config.php';
 
-//Start the session
-session_start();
+
 
 //If the form is submitted
 if (isset($_POST['submit'])) {

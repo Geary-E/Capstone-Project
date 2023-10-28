@@ -44,7 +44,7 @@ if (isset($_POST['createStudy'])) {
 							} else {
 								$insert2 = "INSERT INTO study_form(study_name, study_desc, study_loc, study_time, study_type, study_tags, study_email) VALUES('$stu_name','$stu_desc','$stu_loc','$stu_time','$stu_type','$stu_tags','$stu_email')";
 								mysqli_query($conn, $insert2);
-								header('location:studies.php');
+								header('location:study.php');
 							}
 						}
 					}
@@ -173,7 +173,7 @@ if (isset($_POST['createStudy'])) {
 				<br><br>
 		
 				<input type="submit" name="createStudy" value="Create new study" class="form-btn">
-				<input type="button" onClick="window.location.href='studies.php';" name="cancel" value="cancel" class="cancel-link"></input><br>
+				<input type="button" onClick="window.location.href='study.php';" name="cancel" value="cancel" class="cancel-link"></input><br>
 				<br>
 			</form>
 			
