@@ -1,6 +1,6 @@
 # Capstone-Project Demo Instructions
 
-Hello, this is a software development project for the University of North Texas. This document will guide you setting-up, and running the website.
+Hello, this is a software development project for the University of North Texas. This document will guide you through setting-up, and running the website.
 
 ## Required Tools
 
