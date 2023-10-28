@@ -1,6 +1,6 @@
 <?php
 //PHP coded by Jeremy
-
+echo '<script src="functions.js"></script>';
 //*****************************************************
 //*Preliminary functions - Necessary for functionality*
 //*****************************************************
@@ -64,8 +64,6 @@ function meta()
     ';
 }
 
-//Module-Specific - Used in dashboard module
-
 /**
  * Displays the header
  * @return void
@@ -74,16 +72,18 @@ function pageHeader()
 {
     echo '
     <div class="page-header" id="header">
-        <div class="page-logo">
-            <h2>Logo</h2>
-        </div>
-        <div class="buttons">
-            <a href="dashboard.php">
-                <button class="btn1">Dashboard</button>
-            </a>
-            <a href="logout.php">
-                <button class="btn2">Logout</button>
-            </a>
+        <div class="header-content">
+            <div class="page-logo">
+                <h2>Logo</h2>
+            </div>
+            <div class="buttons">
+                <a href="dashboard.php">
+                    <button class="btn1">Dashboard</button>
+                </a>
+                <a href="logout.php">
+                    <button class="btn2">Logout</button>
+                </a>
+            </div>
         </div>
     </div>
     ';
@@ -91,70 +91,261 @@ function pageHeader()
 
 /**
  * Displays the navbar
+ * @param $name
+ * @param $pageName
  * @return void
  */
-function pageNavbar($name)
+function pageNavbar($name, $pageName)
 {
-    echo '
-    <div class="navbar">
-    <a href="#" onclick="showSearch()">Search Surveys</a>
-    <a href="#" onclick="showManage()">Manage Surveys</a>
-    </div>
+    if($pageName=='Surveys')
+    {
+        echo '
+        <div class="navbar-content-container">
+            <div class="navbar">
+                <a href="#" onclick="surveySearch()">Search ' . $pageName . '</a>
+                <a href="#" onclick="surveyCreate()">Create ' . $pageName . '</a>
+                <a href="#" onclick="surveyModify()">Modify ' . $pageName . '</a>
+                <a href="#" onclick="surveyDelete()">Delete ' . $pageName . '</a>
+            </div>
 
-    <!-- Content -->
-    <div class="navbar-content">
+            <div class="page-content">';
+
+
+                surveySearch($name);
+                surveyCreate($name);
+                surveyModify($name);
+                surveyDelete($name);
+
+                echo '
+            </div>
+        </div>
+        ';
+    }
+    elseif($pageName=='Opportunities')
+    {
+        echo '
+        <div class="navbar-content-container">
+            <div class="navbar">
+                <a href="#" onclick="opportunitySearch()">Search ' . $pageName . '</a>
+                <a href="#" onclick="opportunityCreate()">Create ' . $pageName . '</a>
+                <a href="#" onclick="opportunityModify()">Modify ' . $pageName . '</a>
+                <a href="#" onclick="opportunityDelete()">Delete ' . $pageName . '</a>
+            </div>
+
+            <div class="page-content">';
+
+
+                opportunitySearch($name);
+                opportunityCreate($name);
+                opportunityModify($name);
+                opportunityDelete($name);
+
+                echo '
+            </div>
+        </div>
+        ';
+    }
+    elseif($pageName== 'Support Groups')
+    {
+        echo '
+        <div class="navbar-content-container">
+            <div class="navbar">
+                <a href="#" onclick="supportGroupSearch()">Search ' . $pageName . '</a>
+                <a href="#" onclick="supportGroupCreate()">Create ' . $pageName . '</a>
+                <a href="#" onclick="supportGroupModify()">Modify ' . $pageName . '</a>
+                <a href="#" onclick="supportGroupDelete()">Delete ' . $pageName . '</a>
+            </div>
+
+            <div class="page-content">';
+
+
+                supportGroupSearch($name);
+                supportGroupCreate($name);
+                supportGroupModify($name);
+                supportGroupDelete($name);
+
+                echo '
+            </div>
+        </div>
+        ';
+    }
+}
+
+//***************************
+//*Module-Specific Functions*
+//***************************
+
+
+
+/**
+ * Summary of surveySearch
+ * @param mixed $name
+ * @return void
+ */
+function surveySearch($name)
+{
+    
+    echo '
     <div class="search-surveys">
-
-        ';
-    displaySearch($name);
-    echo '
-    </div>
-    <div class="manage-surveys">
-
-        ';
-    displayManage($name);
-    echo '
-    </div>
+    <h1>Hello <span>' . $name . '</span> this is the search survey section</h1>
     </div>
     ';
 }
 
 /**
- * Displays the search  content
- * @param $name 
+ * Summary of surveyCreate
+ * @param mixed $name
  * @return void
  */
-function displaySearch($name)
+function surveyCreate($name)
 {
-    echo '<h1>Hello <span>' . $name . '</span> this is the search survey section</h1>';
-    // Generate additional HTML content for the Search Surveys page here
+    echo '
+    <div class="create-surveys">
+    <h1>Hello <span>' . $name . '</span> this is the create survey section</h1>
+    </div>
+    ';
 }
 
 /**
- * Displays the manage content
- * @param $name 
+ * Summary of surveyModify
+ * @param mixed $name
  * @return void
  */
-function displayManage($name)
+function surveyModify($name)
 {
-    echo '<h1>Hello <span>' . $name . '</span> this is the manage survey section</h1>';
-    // Generate additional HTML content for the Manage Surveys page here
+    echo '
+    <div class="modify-surveys">
+    <h1>Hello <span>' . $name . '</span> this is the modify survey section</h1>
+    </div>
+    ';
 }
 
-// JavaScript functions
+/**
+ * Summary of surveyDelete
+ * @param mixed $name
+ * @return void
+ */
+function surveyDelete($name)
+{
+    echo '
+    <div class="delete-surveys">
+    <h1>Hello <span>' . $name . '</span> this is the delete survey section</h1>
+    </div>
+    ';
+}
 
-echo '
-<script>
-    function showSearch()
-    {
-        document.querySelector(\'.search-surveys\').style.display = \'block\';
-        document.querySelector(\'.manage-surveys\').style.display = \'none\';
-    }
+/**
+ * Summary of opportunitySearch
+ * @param mixed $name
+ * @return void
+ */
+function opportunitySearch($name)
+{
+    
+    echo '
+    <div class="search-opportunities">
+    <h1>Hello <span>' . $name . '</span> this is the search opportunity section</h1>
+    </div>
+    ';
+}
 
-    function showManage()
-    {
-        document.querySelector(\'.search-surveys\').style.display = \'none\';
-        document.querySelector(\'.manage-surveys\').style.display = \'block\';
-    }
-</script>
-';
+/**
+ * Summary of opportunityCreate
+ * @param mixed $name
+ * @return void
+ */
+function opportunityCreate($name)
+{
+    echo '
+    <div class="create-opportunities">
+    <h1>Hello <span>' . $name . '</span> this is the create opportunity section</h1>
+    </div>
+    ';
+}
+
+/**
+ * Summary of opportunityModify
+ * @param mixed $name
+ * @return void
+ */
+function opportunityModify($name)
+{
+    echo '
+    <div class="modify-opportunities">
+    <h1>Hello <span>' . $name . '</span> this is the modify opportunity section</h1>
+    </div>
+    ';
+}
+
+/**
+ * Summary of opportunityDelete
+ * @param mixed $name
+ * @return void
+ */
+function opportunityDelete($name)
+{
+    echo '
+    <div class="delete-opportunities">
+    <h1>Hello <span>' . $name . '</span> this is the delete opportunity section</h1>
+    </div>
+    ';
+}
+
+/**
+ * Summary of supportGroupSearch
+ * @param mixed $name
+ * @return void
+ */
+function supportGroupSearch($name)
+{
+    
+    echo '
+    <div class="search-supportGroups">
+    <h1>Hello <span>' . $name . '</span> this is the search support group section</h1>
+    </div>
+    ';
+}
+
+/**
+ * Summary of supportGroupCreate
+ * @param mixed $name
+ * @return void
+ */
+function supportGroupCreate($name)
+{
+    echo '
+    <div class="create-supportGroups">
+    <h1>Hello <span>' . $name . '</span> this is the create support group section</h1>
+    </div>
+    ';
+}
+
+/**
+ * Summary of supportGroupModify
+ * @param mixed $name
+ * @return void
+ */
+function supportGroupModify($name)
+{
+    echo '
+    <div class="modify-supportGroups">
+    <h1>Hello <span>' . $name . '</span> this is the modify support group section</h1>
+    </div>
+    ';
+}
+
+/**
+ * Summary of supportGroupDelete
+ * @param mixed $name
+ * @return void
+ */
+function supportGroupDelete($name)
+{
+    echo '
+    <div class="delete-supportGroups">
+    <h1>Hello <span>' . $name . '</span> this is the delete support group section</h1>
+    </div>
+    ';
+}
+
+?>

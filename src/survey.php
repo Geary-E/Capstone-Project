@@ -25,10 +25,9 @@ $name=nameType();
 
 <body>
     <?php
+        $pageName = 'Surveys';
         pageHeader(); //Displays the header
-        pageNavbar($name); //Displays the navbar
+        pageNavbar($name, $pageName); //Displays the navbar
     ?>
-
-
 </body>
 </html>

@@ -19,14 +19,16 @@ $name=nameType();
     <?php //Prints meta data
     meta(); ?>
 
-    <link rel="stylesheet" href="style3.css">
+
     <link rel="stylesheet" href="generalStyle.css">
     <title>supportGroup</title>
 </head>
 
 <body>
-    <?php pageHeader(); //Displays the header
+    <?php
+    $pageName = 'Support Groups';
+        pageHeader(); //Displays the header
+        pageNavbar($name, $pageName); //Displays the navbar
     ?>
-    <h1>Hello <span><?php echo $name ?></span> this is the support group section</h1>
 </body>
 </html>

@@ -71,13 +71,22 @@ body {
 /*Beginning of styling for navbar*/
 /*********************************/
 
+/*Style for the entire navbar and container*/
+.navbar-content-container {
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: flex-start;
+}
+
 /* Basic styles for the navbar */
-.navbar { 
-    width: 200px;
+.navbar {
     background-color: var(--green);
     color: white;
     padding: 20px;
-    position: relative;
+    flex: 20;
+    height: 100vh;
+    text-align: center;
 }
 
 /*Navbar anchor tag (hyperlink) styling*/
@@ -90,8 +99,11 @@ body {
 }
 
 /* Styles for the content sections */
-.navbar-content {
-    padding: 20px;
+.page-content {
+    flex: 80;
+    padding: 30px;
+    background-color: white;
+    height: 100vh; 
 }
 
 /* Styling of h1 */
@@ -102,14 +114,59 @@ h1 {
     color: #00853E;
 }
 
-/*
+/*End of styling for navbar*/
+
+
+
+/****************************************************/
+/*Beginning of styling for module-specific functions*/
+/****************************************************/
+
+
 .search-surveys {
-
+    display: block;
 } 
-*/
 
-.manage-surveys { 
+.modify-surveys { 
     display: none; /* Hidden by default */
 }
 
-/*End of styling for navbar*/
+.create-surveys {
+    display: none; /* Hidden by default */
+}
+
+.delete-surveys {
+    display: none; /* Hidden by default */
+}
+
+.search-opportunities {
+    display: block;
+} 
+
+.modify-opportunities  { 
+    display: none; /* Hidden by default */
+}
+
+.create-opportunities  {
+    display: none; /* Hidden by default */
+}
+
+.delete-opportunities  {
+    display: none; /* Hidden by default */
+}
+
+.search-supportGroups {
+    display: block;
+} 
+
+.modify-supportGroups { 
+    display: none; /* Hidden by default */
+}
+
+.create-supportGroups {
+    display: none; /* Hidden by default */
+}
+
+.delete-supportGroups {
+    display: none; /* Hidden by default */
+}
