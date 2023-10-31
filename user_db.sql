@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 24, 2023 at 08:57 AM
+-- Generation Time: Oct 31, 2023 at 06:12 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.0.25
 
@@ -127,7 +127,8 @@ CREATE TABLE `survey` (
 --
 
 INSERT INTO `survey` (`surveyID`, `ownerID`, `name`, `description`) VALUES
-(1, 5, 'test', 'testing');
+(1, 5, 'test', 'testing'),
+(2, 2, 'secondtest', 'secondsurveytest');
 
 -- --------------------------------------------------------
 
@@ -140,6 +141,16 @@ CREATE TABLE `surveyquestion` (
   `surveyID` int(255) NOT NULL,
   `question` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `surveyquestion`
+--
+
+INSERT INTO `surveyquestion` (`questionID`, `surveyID`, `question`) VALUES
+(1, 1, 'whats your name'),
+(2, 1, 'whats your age'),
+(3, 2, 'what is the date'),
+(4, 2, 'what state do you live in?');
 
 -- --------------------------------------------------------
 
@@ -244,10 +255,10 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`userID`, `firstname`, `lastname`, `email`, `password`, `user_type`, `accessibility`, `notifications`, `tags`) VALUES
-(1, '', '', '', 'd41d8cd98f00b204e9800998ecf8427e', '', 0, 0, 0),
 (2, 'flumped', '', 'jrtollison@yahoo.com', 'bd5135bbbeabfc06d5ed458d76509793', 'researcher', 0, 0, 0),
 (4, 'sarah', 'o', 'saraho@google.com', '827ccb0eea8a706c4c34a16891f84e7b', 'person', 0, 0, 0),
-(5, 'test1', 'test2', 'admin@1', '21232f297a57a5a743894a0e4a801fc3', 'researcher', 0, 0, 0);
+(5, 'adminFirstName', 'adminLastName', 'admin@1', '21232f297a57a5a743894a0e4a801fc3', 'researcher', 0, 0, 0),
+(8, 'userFirstName', 'userLastName', 'user@1', 'ee11cbb19052e40b07aac0ca060c23ee', 'person', 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -488,13 +499,13 @@ ALTER TABLE `supportgrouppost`
 -- AUTO_INCREMENT for table `survey`
 --
 ALTER TABLE `survey`
-  MODIFY `surveyID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `surveyID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `surveyquestion`
 --
 ALTER TABLE `surveyquestion`
-  MODIFY `questionID` int(255) NOT NULL AUTO_INCREMENT;
+  MODIFY `questionID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `surveyresponse`
@@ -512,7 +523,7 @@ ALTER TABLE `tag`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `userID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Constraints for dumped tables

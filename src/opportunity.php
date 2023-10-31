@@ -28,7 +28,7 @@ $name=nameType();
 <?php
     $pageName = 'Opportunities';
         pageHeader(); //Displays the header
-        pageNavbar($name, $pageName); //Displays the navbar
+        pageNavbar($conn, $name, $pageName); //Displays the navbar
     ?>
 
 </body>
