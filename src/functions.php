@@ -169,6 +169,29 @@ function pageNavbar($name, $pageName)
         </div>
         ';
     }
+    elseif($pageName== 'Studies')
+    {
+        echo '
+        <div class="navbar-content-container">
+            <div class="navbar">
+                <a href="#" onclick="studySearch()">Search ' . $pageName . '</a>
+                <a href="#" onclick="studyCreate()">Create ' . $pageName . '</a>
+                <a href="#" onclick="studyModify()">Modify ' . $pageName . '</a>
+                <a href="#" onclick="studyDelete()">Delete ' . $pageName . '</a>
+            </div>
+
+            <div class="page-content">';
+
+                studySearch($name);
+                studyCreate($name);
+                studyModify($name);
+                studyDelete($name);
+
+                echo '
+            </div>
+        </div>
+        ';
+    }
 }
 
 //***************************
@@ -292,6 +315,63 @@ function opportunityDelete($name)
 }
 
 /**
+ * Summary of studySearch
+ * @param mixed $name
+ * @return void
+ */
+function studySearch($name)
+{
+    
+    echo '
+    <div class="search-studies">
+    <h1>Hello <span>' . $name . '</span> this is the search study section</h1>
+    </div>
+    ';
+}
+
+/**
+ * Summary of studyCreate
+ * @param mixed $name
+ * @return void
+ */
+function studyCreate($name)
+{
+    echo '
+    <div class="create-studies">
+    <h1>Hello <span>' . $name . '</span> this is the create study section</h1>
+    </div>
+    ';
+}
+
+/**
+ * Summary of studyModify
+ * @param mixed $name
+ * @return void
+ */
+function studyModify($name)
+{
+    echo '
+    <div class="modify-studies">
+    <h1>Hello <span>' . $name . '</span> this is the modify study section</h1>
+    </div>
+    ';
+}
+
+/**
+ * Summary of studyDelete
+ * @param mixed $name
+ * @return void
+ */
+function studyDelete($name)
+{
+    echo '
+    <div class="delete-studies">
+    <h1>Hello <span>' . $name . '</span> this is the delete study section</h1>
+    </div>
+    ';
+}
+
+/**
  * Summary of supportGroupSearch
  * @param mixed $name
  * @return void
@@ -347,5 +427,4 @@ function supportGroupDelete($name)
     </div>
     ';
 }
-
 ?>

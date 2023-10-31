@@ -170,3 +170,19 @@ h1 {
 .delete-supportGroups {
     display: none; /* Hidden by default */
 }
+
+.search-studies {
+    display: block;
+} 
+
+.modify-studies { 
+    display: none; /* Hidden by default */
+}
+
+.create-studies {
+    display: none; /* Hidden by default */
+}
+
+.delete-studies {
+    display: none; /* Hidden by default */
+}
