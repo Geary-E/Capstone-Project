@@ -60,6 +60,7 @@ $name=nameType();
          		
 				<!--Temporary code to test/show all the data from the study_form database
 				<?php
+                        $pageName = 'Studies';
 					echo "<table class='table'>
 					<tr>
 					<th>Study Name</th>

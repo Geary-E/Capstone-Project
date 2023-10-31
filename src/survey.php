@@ -10,6 +10,7 @@ session_start();
 //Used to set name variable based on user_type stored in $_SESSION
 $name=nameType();
 
+
 ?>
 
 <!DOCTYPE html> <!--HTML coded by Geary -->

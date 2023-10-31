@@ -82,3 +82,31 @@ function supportGroupDelete() {
     document.querySelector('.modify-supportGroups').style.display = 'none';
     document.querySelector('.delete-supportGroups').style.display = 'block';
 }
+
+function studySearch() {
+    document.querySelector('.search-studies').style.display = 'block';
+    document.querySelector('.create-studies').style.display = 'none';
+    document.querySelector('.modify-studies').style.display = 'none';
+    document.querySelector('.delete-studies').style.display = 'none';
+}
+
+function studyCreate() {
+    document.querySelector('.search-studies').style.display = 'none';
+    document.querySelector('.create-studies').style.display = 'block';
+    document.querySelector('.modify-studies').style.display = 'none';
+    document.querySelector('.delete-studies').style.display = 'none';
+}
+
+function studyModify() {
+    document.querySelector('.search-studies').style.display = 'none';
+    document.querySelector('.create-studies').style.display = 'none';
+    document.querySelector('.modify-studies').style.display = 'block';
+    document.querySelector('.delete-studies').style.display = 'none';
+}
+
+function studyDelete() {
+    document.querySelector('.search-studies').style.display = 'none';
+    document.querySelector('.create-studies').style.display = 'none';
+    document.querySelector('.modify-studies').style.display = 'none';
+    document.querySelector('.delete-studies').style.display = 'block';
+}
