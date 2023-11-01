@@ -217,10 +217,16 @@ function surveySearch($name, $conn)
     <div class="search-surveys-box">
         <h1>Hello <span>' . $name . '</span> this is the search survey section</h1>
         <form action="" method="post"> <!-- Buttons for the search -->
-            <input type="text" name="searchName" placeholder="Survey name">
-            <input type="text" name="searchTag" placeholder="Tag name">
+            <div class="search-boxes"><!-- Search boxes section -->
+            <p style="display: block;">Search By:</p> <br><br>
+            <!-- Added labels to the search boxes -->
+            <div class="survey-search-name-box"><label for="search">Name:</label><input type="text" name="searchName" placeholder="Survey name"></div>
+            <div class="survey-search-tag-box"><label for="tag"> Tags:</label><input type="text" name="searchTag" placeholder="Tag name"></div>
             <button name="submit" value="submit" type="submit">Search</button>
+            </div>
+
         </form>
+
         <div class="survey-list">';
 
         $select = "SELECT * FROM survey";
@@ -231,8 +237,10 @@ function surveySearch($name, $conn)
         }
         else if (mysqli_num_rows($result) > 0) { //if there are surveys 
             while ( $row = mysqli_fetch_assoc($result) ) {
-                echo $row['name'] . '<br> ' . $row['description'] . '<br><br>';    
-
+                /* Added styling to the queried search results */
+                echo '<div class="survey-item"> ';
+                echo '<b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'];
+                echo '</div><br>';    /* <br> */
             }
         }
 
@@ -240,7 +248,7 @@ function surveySearch($name, $conn)
         </div> <!-- survey-list end -->
         <div class="search-survey-list" style="display: none;">';
     if (isset($_POST['submit'])) {
-        echo '<script>hideAll();</script>';
+        echo '<script>hideAll();</script>'; 
 
         //Access searchName and searchTag variables
         $searchName = $_POST['searchName'];
@@ -254,8 +262,10 @@ function surveySearch($name, $conn)
         }
         else if (mysqli_num_rows($result) > 0) {  //if there are surveys 
             while ( $row = mysqli_fetch_assoc($result) ) {
-                echo $row['name'] . '<br> ' . $row['description'] . '<br><br>';
-                   
+                /* Added styling to the queried search results */
+                echo '<div class="survey-item"> ';
+                echo '<b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'];
+                echo '</div><br>';       
             }
         }
         unset($_POST['submit']);

@@ -132,5 +132,7 @@ function studyDelete() {
 // Used to hide specific modules when necessary
 function hideAll() {
     document.querySelector('.survey-list').style.display = 'none';
-    document.querySelector('.search-survey-list').style.display = 'block';
+    /* Changed the display of the search-survey-list in this function */
+    document.querySelector('.search-survey-list').style.display = 'flex';
+    document.querySelector('.survey-item').style.width = '50%';
 }

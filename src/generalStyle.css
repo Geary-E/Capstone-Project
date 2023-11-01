@@ -133,19 +133,63 @@ h1 {
 /* survey section start */
 /************************/
 /*searchSurveys styling start*/
-.search-surveys { /*Styling for all content in the searchSurvey module*/
+.search-surveys-box { /*Styling for all content in the searchSurvey module*/
     display: block; /* Inital page display*/
+    margin: auto;
 } 
 
-.search-surveys-box {/*Styling for search bars*/
-    display: block; /* Inital page display*/
-}
-.survey-list {
-    display: block; /* Inital page display*/
+/* Search boxes within the content styling */
+.search-boxes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.search-survey-list {
+.survey-search-name-box, .survey-search-tag-box {
+    padding: 10px;
+}
+
+/* Styling of the individual search boxes */
+.survey-search-name-box input, .survey-search-tag-box input {
+    border: solid 1px black;
+    font-size: 15px;
+    border-radius: 20%;
+    padding: 10px;
+}
+
+/* Styling of the survey list class */
+.survey-list {
+    display: flex;
+    padding: 20px;  /* test */
+    justify-content: center;
+    align-items: center;
+    flex-flow: column wrap;
+    /*display: block;*/ /* Inital page display*/
     text-align: center;
+}
+
+/* Styling of the search-survey-list class within the search surveys */
+.search-survey-list {
+    display: flex;
+    padding: 20px;
+    justify-content: center;
+    flex-flow: column wrap; 
+    align-items: center;
+    text-align: center;
+}
+
+/* styling of the individual queried searched survey results */
+.survey-item {
+    width: 50%;
+    padding: 15px;
+    border: solid 1px black;
+    cursor: pointer;
+}
+
+/* styling of the individual queried searched results when hovered over */
+.survey-item:hover {
+    background-color: var(--green);
+    color: white;
 }
 /*searchSurveys styling end*/
 
@@ -281,3 +325,5 @@ h1 {
 /*********************/
 /* Study section end */
 /*********************/
+
+
