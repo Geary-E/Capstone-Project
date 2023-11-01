@@ -172,7 +172,7 @@ function pageNavbar($conn, $name, $pageName)
         </div>
         ';
     } //Navbar for Support Groups end
-    elseif($pageName== 'Studies') //Navbar for Support Groups start
+    elseif($pageName== 'Studies') //Navbar for Studies start
     {
         echo '
         <div class="navbar-content-container">
@@ -195,7 +195,7 @@ function pageNavbar($conn, $name, $pageName)
         </div>
         ';
     }
-} //Navbar for Support Groups end
+} //Navbar for Studies end
 
 
 
@@ -213,7 +213,6 @@ function pageNavbar($conn, $name, $pageName)
  */
 function surveySearch($name, $conn)
 {
-
     echo '
     <div class="search-surveys-box">
         <h1>Hello <span>' . $name . '</span> this is the search survey section</h1>
@@ -223,6 +222,7 @@ function surveySearch($name, $conn)
             <button name="submit" value="submit" type="submit">Search</button>
         </form>
         <div class="survey-list">';
+
         $select = "SELECT * FROM survey";
         $result = mysqli_query($conn, $select);
 
@@ -231,13 +231,14 @@ function surveySearch($name, $conn)
         }
         else if (mysqli_num_rows($result) > 0) { //if there are surveys 
             while ( $row = mysqli_fetch_assoc($result) ) {
-                echo $row['name'] . ' ' . $row['description'] . '<br>' . 'bacon';    
+                echo $row['name'] . '<br> ' . $row['description'] . '<br><br>';    
 
             }
         }
 
     echo'
-        </div>';
+        </div> <!-- survey-list end -->
+        <div class="search-survey-list" style="display: none;">';
     if (isset($_POST['submit'])) {
         echo '<script>hideAll();</script>';
 
@@ -245,7 +246,7 @@ function surveySearch($name, $conn)
         $searchName = $_POST['searchName'];
         $searchTag = $_POST['searchTag'];
 
-        $select = "SELECT * FROM survey WHERE name LIKE '%$searchName%'";
+        $select = "SELECT * FROM survey WHERE name LIKE '%$searchName%'"; 
         $result = mysqli_query($conn, $select);
 
         if (mysqli_num_rows($result) == 0) { //if result == 0
@@ -253,12 +254,15 @@ function surveySearch($name, $conn)
         }
         else if (mysqli_num_rows($result) > 0) {  //if there are surveys 
             while ( $row = mysqli_fetch_assoc($result) ) {
-                echo $row['name'] . ' ' . $row['description'] . '<br>';    
+                echo $row['name'] . '<br> ' . $row['description'] . '<br><br>';
+                   
             }
         }
+        unset($_POST['submit']);
     }
     echo'
-    </div>
+        </div> <!-- search-surveys-list end -->
+    </div> <!-- search-surveys-box end -->
     ';
 }
 
