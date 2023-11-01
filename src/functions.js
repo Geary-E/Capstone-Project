@@ -1,6 +1,8 @@
 // Displays the surveySearch div, and hides the others
 function surveySearch() {
     document.querySelector('.search-surveys').style.display = 'block';
+    document.querySelector('.survey-list').style.display = 'block';
+    document.querySelector('.search-survey-list').style.display = 'none';
     document.querySelector('.create-surveys').style.display = 'none';
     document.querySelector('.modify-surveys').style.display = 'none';
     document.querySelector('.delete-surveys').style.display = 'none';
@@ -130,4 +132,5 @@ function studyDelete() {
 // Used to hide specific modules when necessary
 function hideAll() {
     document.querySelector('.survey-list').style.display = 'none';
+    document.querySelector('.search-survey-list').style.display = 'block';
 }
