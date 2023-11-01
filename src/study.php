@@ -1,32 +1,16 @@
-<?php
-//PHP coded by Jeremy Tollison
-
-//Include config file for database connection and functions
-@include 'config.php';
-
-//Start the session
-session_start();
-
-//Used to set name variable based on user_type stored in $_SESSION
-$name=nameType();
-?>
-
-<!DOCTYPE html> <!--HTML coded by Geary & Connor -->
-<html lang="en">
+<!--
+<!DOCTYPE html>--> <!--HTML coded by Geary & Connor -->
+<!--<html lang="en">
 
 <head>
-        
-    <?php //Prints meta data
-    meta(); ?>
+
     <link rel="stylesheet" href="style4.css">
     <link rel="stylesheet" href="generalStyle.css">
     <title>Study</title>
 </head>
 
-<body>
-<?php pageHeader(); //Displays the header
-    ?>
-
+<body> -->
+<!--
  <div class="container">
 
         <div class="content">
@@ -50,17 +34,16 @@ $name=nameType();
                     <div class="tag-bar"><span><label for="tag"> Tags:</label><input type="text" id="tag" name="tags"></span></div>
                 </div><br>
 
-                <a class="study1" href="#study1"> Study </a><br> <!-- originally divs -->
-                <a class="study2" href="#study2"> Study </a><br>
+                <a class="study1" href="#study1"> Study </a><br> --> <!-- originally divs -->
+            <!--    <a class="study2" href="#study2"> Study </a><br>
                 <a class="study3" href="#study3"> Study </a> <br>
                 <a class="study4" href="#study4"> Study </a> <br>
                 <a class="study5" href="#study5"> Study </a><br>
                 <button class="load-more"> Load More </button><br>
-
+-->
          		
 				<!--Temporary code to test/show all the data from the study_form database
-				<?php
-                        $pageName = 'Studies';
+                    /*    $pageName = 'Studies';
 					echo "<table class='table'>
 					<tr>
 					<th>Study Name</th>
@@ -78,11 +61,44 @@ $name=nameType();
 				<br>
 				-->
 
-            </div>
+           <!-- </div>
 
 			
          </div>
-    </div>
-</body>
+    </div> -->
+    <?php
+//PHP coded by Jeremy Tollison
 
+//Include config file for database connection and functions
+@include 'config.php';
+
+//Start the session
+session_start();
+
+//Used to set name variable based on user_type stored in $_SESSION
+$name=nameType();
+
+
+?>
+
+<!DOCTYPE html> <!--HTML coded by Geary -->
+<html lang="en">
+
+<head>
+
+    <?php meta(); ?> <!--Prints meta data-->
+
+    <link rel="stylesheet" href="generalStyle.css">
+    <title>Studies</title>
+</head>
+
+<body>
+    <?php
+        $pageName = 'Studies';
+        pageHeader(); //Displays the header
+        pageNavbar($conn, $name, $pageName); //Displays the navbar
+    ?>
+</body>
 </html>
+
+

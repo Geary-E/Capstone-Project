@@ -224,10 +224,24 @@ h1 {
 /* opportunity section start */
 /*****************************/
 /*searchOpportunities styling start*/
-.search-opportunities {
+/* Implemented opportunity search boxes styling */
+.search-opportunities-box {
     display: block; /* Inital page display*/
+    margin: auto;
     text-align: center;
 } 
+
+.opportunity-search-name-box, .opportunity-search-tag-box {
+    padding: 10px;
+}
+
+.opportunity-search-name-box input, .opportunity-search-tag-box input {
+    border: solid 1px black;
+    font-size: 15px;
+    border-radius: 20%;
+    padding: 10px;
+}
+
 /*searchOpportunities styling end*/
 
 /*modifyOpportunities styling start*/
@@ -260,10 +274,23 @@ h1 {
 /* supportGroup section start */
 /******************************/
 /*searchSupportGroups styling start*/
-.search-supportGroups {
+.search-supportGroups-box {
     display: block; /* Inital page display*/
     text-align: center;
+    margin: auto;
 } 
+
+.support-search-name-box, .support-search-tag-box {
+    padding: 10px;
+}
+
+.support-search-name-box input, .support-search-tag-box input {
+    border: solid 1px black;
+    font-size: 15px;
+    border-radius: 20%;
+    padding: 10px;
+}
+
 /*searchSupportGroups styling end*/
 
 /*modifySupportGroups styling start*/
@@ -296,10 +323,24 @@ h1 {
 /* Study section start */
 /***********************/
 /*searchStudies styling start*/
-.search-studies {
+.search-studies-box {
     display: block; /* Inital page display*/
     text-align: center;
+    margin: auto;
 } 
+
+.study-search-name-box, .study-search-tag-box {
+    padding: 10px;
+}
+
+.study-search-name-box input, .study-search-tag-box input {
+    border: solid 1px black;
+    font-size: 15px;
+    border-radius: 20%;
+    padding: 10px;
+}
+
+
 /*searchStudies styling end*/
 
 /*modifyStudies styling start*/

@@ -328,8 +328,20 @@ function opportunitySearch($name)
 {
     
     echo '
-    <div class="search-opportunities">
+    <div class="search-opportunities-box">
     <h1>Hello <span>' . $name . '</span> this is the search opportunity section</h1>
+    
+    <!-- Implemented search boxes -->
+    <form action="" method="post"> <!-- Buttons for the search -->
+    <div class="search-boxes"><!-- Search boxes section -->
+    <p style="display: block;">Search By:</p> <br><br>
+    <!-- Added labels to the search boxes -->
+    <div class="opportunity-search-name-box"><label for="search">Name:</label><input type="text" name="searchName" placeholder="Study name"></div>
+    <div class="opportunity-search-tag-box"><label for="tag"> Tags:</label><input type="text" name="searchTag" placeholder="Tag name"></div>
+    <button name="submit" value="submit" type="submit">Search</button>
+    </div>
+
+</form>
     </div>
     ';
 }
@@ -385,8 +397,20 @@ function studySearch($name)
 {
     
     echo '
-    <div class="search-studies">
+    <div class="search-studies-box">
     <h1>Hello <span>' . $name . '</span> this is the search study section</h1>
+
+    <!-- Implemented search boxes -->
+    <form action="" method="post"> <!-- Buttons for the search -->
+    <div class="search-boxes"><!-- Search boxes section -->
+    <p style="display: block;">Search By:</p> <br><br>
+    <!-- Added labels to the search boxes -->
+    <div class="study-search-name-box"><label for="search">Name:</label><input type="text" name="searchName" placeholder="Study name"></div>
+    <div class="study-search-tag-box"><label for="tag"> Tags:</label><input type="text" name="searchTag" placeholder="Tag name"></div>
+    <button name="submit" value="submit" type="submit">Search</button>
+    </div>
+
+</form>
     </div>
     ';
 }
@@ -442,8 +466,20 @@ function supportGroupSearch($name)
 {
     
     echo '
-    <div class="search-supportGroups">
+    <div class="search-supportGroups-box">
     <h1>Hello <span>' . $name . '</span> this is the search support group section</h1>
+   
+    <!-- Implemented search boxes -->
+    <form action="" method="post"> <!-- Buttons for the search -->
+    <div class="search-boxes"><!-- Search boxes section -->
+    <p style="display: block;">Search By:</p> <br><br>
+    <!-- Added labels to the search boxes -->
+    <div class="support-search-name-box"><label for="search">Name:</label><input type="text" name="searchName" placeholder="Study name"></div>
+    <div class="support-search-tag-box"><label for="tag"> Tags:</label><input type="text" name="searchTag" placeholder="Tag name"></div>
+    <button name="submit" value="submit" type="submit">Search</button>
+    </div>
+
+</form>
     </div>
     ';
 }
