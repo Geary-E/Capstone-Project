@@ -14,5 +14,5 @@ session_unset();
 session_destroy();
 
 // Redirect the user to the login page
-header('location:login.php');
+header('location:index.php');
 ?>

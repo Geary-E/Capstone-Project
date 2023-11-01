@@ -7,8 +7,6 @@ session_start();
 //Include config file for database connection and functions
 @include 'config.php';
 
-
-
 //If the form is submitted
 if (isset($_POST['submit'])) {
 
@@ -20,10 +18,13 @@ if (isset($_POST['submit'])) {
         //Saves the row where user info is stored
         $row = mysqli_fetch_array($result);
 
+        //Set the userID as a session variable
+        $_SESSION['userID'] = $row['userID']; 
+
         //If the user_type is researcher 
         if ($row['user_type'] == 'researcher') {
 
-            //Set the researcher_name to firstname 
+            //Set the researcher_name session variable to firstname 
            $_SESSION['researcher_name'] = $row['firstname'];
 
            //Send to dashboard.php
@@ -32,13 +33,13 @@ if (isset($_POST['submit'])) {
         //If the user_type is person 
         } elseif ($row['user_type'] == 'person') {
 
-           //Set the person_name to firstname
+           //Set the person_name session variable to firstname
            $_SESSION['person_name'] = $row['firstname'];
 
            //Send to dashboard.php
             header('location:dashboard.php');
         }
-    
+
     //If user does not exist
     } else {
         $error[] = 'Incorrect email or password';
@@ -93,7 +94,7 @@ if (isset($_POST['submit'])) {
                     </div>   
                 <div class="button-list">
                     <button class="btn1" name="submit"> Log In </button>
-                    <a href="login.php">
+                    <a href="index.php">
                     <button class="btn2"> Cancel </button>
                     </a>
                 </div>

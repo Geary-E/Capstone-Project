@@ -1,6 +1,6 @@
 <?php
 //PHP coded by Jeremy
-echo '<script src="functions.js"></script>';
+
 //*****************************************************
 //*Preliminary functions - Necessary for functionality*
 //*****************************************************
@@ -23,7 +23,6 @@ function nameType()
     }
     return $name;
 }
-
 /**
  * Uses the input to return a result through $conn
  * 
@@ -91,41 +90,45 @@ function pageHeader()
 
 /**
  * Displays the navbar
+ * @param $conn
  * @param $name
  * @param $pageName
  * @return void
  */
-function pageNavbar($name, $pageName)
+function pageNavbar($conn, $name, $pageName)
 {
-    if($pageName=='Surveys')
+    if($pageName=='Surveys') //Navbar for surveys start
     {
         echo '
         <div class="navbar-content-container">
-            <div class="navbar">
+            <div class="navbar"> <!-- Links for each module -->
                 <a href="#" onclick="surveySearch()">Search ' . $pageName . '</a>
                 <a href="#" onclick="surveyCreate()">Create ' . $pageName . '</a>
                 <a href="#" onclick="surveyModify()">Modify ' . $pageName . '</a>
                 <a href="#" onclick="surveyDelete()">Delete ' . $pageName . '</a>
             </div>
 
-            <div class="page-content">';
+            <div class="page-content">  <!-- Container for all the content -->
 
-
-                surveySearch($name);
-                surveyCreate($name);
-                surveyModify($name);
-                surveyDelete($name);
+                <div class="search-surveys">'; //Container for searchSurvey module
+                    surveySearch($name, $conn);  //Displays the surveySearch content
+                    echo '
+                        </div>
+                    ';
+                surveyCreate($name); //Displays the surveyCreate content
+                surveyModify($name); //Displays the surveyModify content
+                surveyDelete($name); //Displays the surveyDelete content
 
                 echo '
             </div>
         </div>
         ';
-    }
-    elseif($pageName=='Opportunities')
+    } //Navbar for surveys end
+    elseif($pageName=='Opportunities') //Navbar for Opportunities start
     {
         echo '
         <div class="navbar-content-container">
-            <div class="navbar">
+            <div class="navbar"> <!-- Links for each module -->
                 <a href="#" onclick="opportunitySearch()">Search ' . $pageName . '</a>
                 <a href="#" onclick="opportunityCreate()">Create ' . $pageName . '</a>
                 <a href="#" onclick="opportunityModify()">Modify ' . $pageName . '</a>
@@ -135,21 +138,21 @@ function pageNavbar($name, $pageName)
             <div class="page-content">';
 
 
-                opportunitySearch($name);
-                opportunityCreate($name);
-                opportunityModify($name);
-                opportunityDelete($name);
+                opportunitySearch($name); //Displays the opportunitySearch content
+                opportunityCreate($name); //Displays the opportunityCreate content
+                opportunityModify($name); //Displays the opportunityModify content
+                opportunityDelete($name); //Displays the opportunityDelete content
 
                 echo '
             </div>
         </div>
         ';
-    }
-    elseif($pageName== 'Support Groups')
+    } //Navbar for Opportunities end
+    elseif($pageName== 'Support Groups') //Navbar for Support Groups start
     {
         echo '
         <div class="navbar-content-container">
-            <div class="navbar">
+            <div class="navbar"> <!-- Links for each module -->
                 <a href="#" onclick="supportGroupSearch()">Search ' . $pageName . '</a>
                 <a href="#" onclick="supportGroupCreate()">Create ' . $pageName . '</a>
                 <a href="#" onclick="supportGroupModify()">Modify ' . $pageName . '</a>
@@ -159,21 +162,21 @@ function pageNavbar($name, $pageName)
             <div class="page-content">';
 
 
-                supportGroupSearch($name);
-                supportGroupCreate($name);
-                supportGroupModify($name);
-                supportGroupDelete($name);
+                supportGroupSearch($name); //Displays the supportGroupSearch content 
+                supportGroupCreate($name); //Displays the supportGroupCreate content
+                supportGroupModify($name); //Displays the supportGroupModify content
+                supportGroupDelete($name); //Displays the supportGroupDelete content
 
                 echo '
             </div>
         </div>
         ';
-    }
-    elseif($pageName== 'Studies')
+    } //Navbar for Support Groups end
+    elseif($pageName== 'Studies') //Navbar for Support Groups start
     {
         echo '
         <div class="navbar-content-container">
-            <div class="navbar">
+            <div class="navbar"> <!-- Links for each module -->
                 <a href="#" onclick="studySearch()">Search ' . $pageName . '</a>
                 <a href="#" onclick="studyCreate()">Create ' . $pageName . '</a>
                 <a href="#" onclick="studyModify()">Modify ' . $pageName . '</a>
@@ -182,35 +185,79 @@ function pageNavbar($name, $pageName)
 
             <div class="page-content">';
 
-                studySearch($name);
-                studyCreate($name);
-                studyModify($name);
-                studyDelete($name);
+                studySearch($name); //Displays the studySearch content
+                studyCreate($name); //Displays the studyCreate content
+                studyModify($name); //Displays the studyModify content
+                studyDelete($name); //Displays the studyDelete content
 
                 echo '
             </div>
         </div>
         ';
     }
-}
+} //Navbar for Support Groups end
+
+
+
+
 
 //***************************
 //*Module-Specific Functions*
 //***************************
 
-
-
 /**
  * Summary of surveySearch
  * @param mixed $name
+ * @param mixed $conn
  * @return void
  */
-function surveySearch($name)
+function surveySearch($name, $conn)
 {
-    
+
     echo '
-    <div class="search-surveys">
-    <h1>Hello <span>' . $name . '</span> this is the search survey section</h1>
+    <div class="search-surveys-box">
+        <h1>Hello <span>' . $name . '</span> this is the search survey section</h1>
+        <form action="" method="post"> <!-- Buttons for the search -->
+            <input type="text" name="searchName" placeholder="Survey name">
+            <input type="text" name="searchTag" placeholder="Tag name">
+            <button name="submit" value="submit" type="submit">Search</button>
+        </form>
+        <div class="survey-list">';
+        $select = "SELECT * FROM survey";
+        $result = mysqli_query($conn, $select);
+
+        if (mysqli_num_rows($result) == 0) { //if result == 0
+            $error[] = 'No surveys were found';
+        }
+        else if (mysqli_num_rows($result) > 0) { //if there are surveys 
+            while ( $row = mysqli_fetch_assoc($result) ) {
+                echo $row['name'] . ' ' . $row['description'] . '<br>' . 'bacon';    
+
+            }
+        }
+
+    echo'
+        </div>';
+    if (isset($_POST['submit'])) {
+        echo '<script>hideAll();</script>';
+
+        //Access searchName and searchTag variables
+        $searchName = $_POST['searchName'];
+        $searchTag = $_POST['searchTag'];
+
+        $select = "SELECT * FROM survey WHERE name LIKE '%$searchName%'";
+        $result = mysqli_query($conn, $select);
+
+        if (mysqli_num_rows($result) == 0) { //if result == 0
+            $error[] = 'No surveys were found';
+        }
+        else if (mysqli_num_rows($result) > 0) {  //if there are surveys 
+            while ( $row = mysqli_fetch_assoc($result) ) {
+                echo $row['name'] . ' ' . $row['description'] . '<br>';    
+            }
+        }
+    }
+    echo'
     </div>
     ';
 }
@@ -222,6 +269,7 @@ function surveySearch($name)
  */
 function surveyCreate($name)
 {
+    
     echo '
     <div class="create-surveys">
     <h1>Hello <span>' . $name . '</span> this is the create survey section</h1>
@@ -427,4 +475,6 @@ function supportGroupDelete($name)
     </div>
     ';
 }
+
+echo '<script src="functions.js"></script>';
 ?>

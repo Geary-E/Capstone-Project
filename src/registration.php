@@ -7,10 +7,19 @@
 //If the form is submitted
 if (isset($_POST['submit'])) {
 
-    $result = validate($conn);
+    //Declares variables from the user table via $conn
+    $first_name = mysqli_real_escape_string($conn, $_POST['firstname']);
+    $last_name = mysqli_real_escape_string($conn, $_POST['lastname']);
+    $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $pass = md5($_POST['password']);
+    $confirmpass = md5($_POST['confirmpassword']);
+    $user_type = $_POST['user_type'];
+
+    $select = " SELECT * FROM user WHERE email = '$email' && password = '$pass' ";
+    $result = mysqli_query($conn, $select);
 
     //If the user exists stop
-    if (mysqli_num_rows($result) > 0) {
+    if (mysqli_num_rows($result) > 0) { // if result is greater than 0
         $error[] = 'This user already exists';
     }
 
@@ -24,13 +33,12 @@ if (isset($_POST['submit'])) {
 
         //If the passwords match
         else {
-
             //Creates insert to add data into user table via conn
-            $insert = "INSERT INTO user(firstname, lastname, email,password,user_type) VALUES('$first_name', '$last_name','$email','$pass','$user_type')";
+            $insert = "INSERT INTO user(firstname, lastname, email, password, user_type) VALUES('$first_name', '$last_name','$email','$pass','$user_type')";
             mysqli_query($conn, $insert);
 
-            //Send to login.php
-            header('location:login.php');
+            //Send to index.php (login page)
+            header('location:index.php');
         }
     }
 };
@@ -96,7 +104,7 @@ if (isset($_POST['submit'])) {
             <input type="submit" name="submit" value="Click here to register" class="form-btn">
             <br>
 
-            <p>Already have an account? <a href="login.php">Click here to login</a></p>
+            <p>Already have an account? <a href="index.php">Click here to login</a></p>
         </form>
 
     </div>
