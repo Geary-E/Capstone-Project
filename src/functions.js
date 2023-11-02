@@ -1,4 +1,3 @@
-// Displays the surveySearch div, and hides the others
 function surveySearch() {
     document.querySelector('.search-surveys').style.display = 'block';
     document.querySelector('.survey-list').style.display = 'flex';

@@ -292,8 +292,29 @@ function surveyCreate($name)
     echo '
     <div class="create-surveys">
     <h1>Hello <span>' . $name . '</span> this is the create survey section</h1>
+    
+    
+        <form action="" method="post"> <!-- Buttons for the search -->
+            <div class="search-boxes"><!-- Search boxes section -->
+                <p style="display: block;">Enter info:</p> <br><br>
+                <!-- Added labels to the search boxes -->
+                <div class="survey-search-name-box"><label for="search">Name:</label><input type="text" name="surveyName" placeholder="Survey name"></div>
+                
+                <div class="survey-search-tag-box"><label for="tag"> Description:</label><input type="text" name="surveyDescription" placeholder="Description"></div>
+
+                <button name="submit" value="submit" type="submit">Search</button>
+            </div>
+        </form>
     </div>
     ';
+    unset($_POST['submit']);
+    /*
+    -form for survey name
+
+    -form for survey description
+
+    -submit button
+    */
 }
 
 /**
