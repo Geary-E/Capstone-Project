@@ -269,7 +269,10 @@ h1 {
 /***************************/
 
 
-
+.account-page-box {
+    display: none;
+    text-align: center;
+}
 /******************************/
 /* supportGroup section start */
 /******************************/

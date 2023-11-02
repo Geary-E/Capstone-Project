@@ -26,7 +26,9 @@ $name=nameType();
 
 <body>
     <?php pageHeader(); //Displays the header
+    $pageName = 'Account Page';
+    pageNavbar($conn, $name, $pageName); 
+    accountPageDisplay($name);
     ?>
-    <h1>Hello <span><?php echo $name ?></span> welcome to the account page</h1><br>
 </body>
 </html>

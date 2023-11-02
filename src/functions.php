@@ -199,6 +199,21 @@ function pageNavbar($conn, $name, $pageName)
             </div>
         </div>
         ';
+    } 
+    else if($pageName = 'Account Page') {
+        echo '
+        <div class="navbar-content-container">
+            <div class="navbar"> <!-- Links for each module -->
+                <a href="#" onclick="studySearch()">FAQ ' . '</a>
+                <a href="#" onclick="studyCreate()">Compenstation ' . '</a>
+                <a href="#" onclick="studyModify()">Privacy' .'</a>
+            </div> 
+            <div class="page-content">';
+                accountPageDisplay($name);
+            echo '
+            </div>
+            </div>';
+
     }
 } //Navbar for Studies end
 
@@ -216,6 +231,13 @@ function pageNavbar($conn, $name, $pageName)
  * @param mixed $conn
  * @return void
  */
+
+ function accountPageDisplay($name) {
+    echo '
+        <div class="account-page-box">
+        <h1>Hello <span>' . $name . '</span> Welcome to the Account Page.</h1>
+        </div>';
+ }
 function surveySearch($name, $conn)
 {
     echo '
