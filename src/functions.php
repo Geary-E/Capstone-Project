@@ -416,7 +416,7 @@ function studySearch($name,$conn)
     </div>
 	</form>
 	
-    <div class="study-list">';
+    <div class="survey-list">';
 
         $select = "SELECT * FROM study";
         $result = mysqli_query($conn, $select);
@@ -435,7 +435,7 @@ function studySearch($name,$conn)
 
     echo'
         </div> <!-- study-list end -->
-        <div class="search-study-list" style="display: none;">';
+        <div class="search-survey-list" style="display: none;">';
     if (isset($_POST['submit'])) {
         echo '<script>hideAll();</script>'; 
 
