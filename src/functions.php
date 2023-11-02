@@ -183,10 +183,15 @@ function pageNavbar($conn, $name, $pageName)
                 <a href="#" onclick="studyDelete()">Delete ' . $pageName . '</a>
             </div>
 
-            <div class="page-content">';
+            <div class="page-content">
+				<div class="search-studies">'; //Container for searchStudy module
+                studySearch($name, $conn);  //Displays the studySearch content
+                echo '
+                    </div>';
 
-                studySearch($name); //Displays the studySearch content
-                studyCreate($name); //Displays the studyCreate content
+                studyCreate($name, $conn);  //Displays the studyCreate content
+
+					
                 studyModify($name); //Displays the studyModify content
                 studyDelete($name); //Displays the studyDelete content
 
@@ -393,7 +398,7 @@ function opportunityDelete($name)
  * @param mixed $name
  * @return void
  */
-function studySearch($name)
+function studySearch($name,$conn)
 {
     
     echo '
@@ -409,9 +414,54 @@ function studySearch($name)
     <div class="study-search-tag-box"><label for="tag"> Tags:</label><input type="text" name="searchTag" placeholder="Tag name"></div>
     <button name="submit" value="submit" type="submit">Search</button>
     </div>
+	</form>
+	
+    <div class="study-list">';
 
-</form>
-    </div>
+        $select = "SELECT * FROM study";
+        $result = mysqli_query($conn, $select);
+
+        if (mysqli_num_rows($result) == 0) { //if result == 0
+            $error[] = 'No studies were found';
+        }
+        else if (mysqli_num_rows($result) > 0) { //if there are studies 
+            while ( $row = mysqli_fetch_assoc($result) ) {
+                /* Added styling to the queried search results */
+                echo '<div class="survey-item"> ';
+                echo '<b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'] . '<br><b>Date:</b> ' . $row['date'] . '<br><b>Location:</b> ' . $row['location'] . '<br><b>Compensation:</b> ' . $row['compensation'];
+                echo '</div><br>';    /* <br> */
+            }
+        }
+
+    echo'
+        </div> <!-- study-list end -->
+        <div class="search-study-list" style="display: none;">';
+    if (isset($_POST['submit'])) {
+        echo '<script>hideAll();</script>'; 
+
+        //Access searchName and searchTag variables
+        $searchName = $_POST['searchName'];
+        $searchTag = $_POST['searchTag'];
+
+        $select = "SELECT * FROM study WHERE name LIKE '%$searchName%'"; 
+        $result = mysqli_query($conn, $select);
+
+        if (mysqli_num_rows($result) == 0) { //if result == 0
+            $error[] = 'No studies were found';
+        }
+        else if (mysqli_num_rows($result) > 0) {  //if there are studies 
+            while ( $row = mysqli_fetch_assoc($result) ) {
+                /* Added styling to the queried search results */
+                echo '<div class="survey-item"> ';
+                echo '<b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'] . '<br><b>Date:</b> ' . $row['date'] . '<br><b>Location:</b> ' . $row['location'] . '<br><b>Compensation:</b> ' . $row['compensation'];
+                echo '</div><br>';       
+            }
+        }
+        unset($_POST['submit']);
+    }
+    echo'
+        </div> <!-- search-studys-list end -->
+    </div> <!-- search-studys-box end -->
     ';
 }
 
@@ -420,13 +470,70 @@ function studySearch($name)
  * @param mixed $name
  * @return void
  */
-function studyCreate($name)
+function studyCreate($name,$conn)
 {
-    echo '
-    <div class="create-studies">
+    echo '<div class="create-studies">
     <h1>Hello <span>' . $name . '</span> this is the create study section</h1>
-    </div>
-    ';
+    <form action="" method="post">';
+		if (isset($error)) {
+			foreach ($error as $error) {
+				echo '<span class="error-msg">' . $error . '</span>';
+			};
+		};
+		
+	echo'
+		<label for="studyname"><b>Study Name:</b></label><br>
+		<input type="text" name="study_name" required placeholder="Enter the study name">
+		<br><br>
+	
+		<label for="studydescription"><b>Study Description:</b></label><br>
+		<input type="text" name="study_desc" required placeholder="Enter the study description">
+		<br><br>
+		
+		<label for="studylocation"><b>Study location:</b></label><br>
+		<input type="text" name="study_loc" required placeholder="Enter the study location">
+		<br><br>
+		
+		<label for="studytime"><b>Study date(YYYY-MM-DD hh:mm):</b></label><br>
+		<input type="text" name="study_time" required placeholder="Enter the study time">
+		<br><br>
+		
+		<label for="studycompensation"><b>Study Compensation (in US dollors):</b></label><br>
+		<input type="text" name="study_com" required placeholder="Enter the study compensation">
+		<br><br>
+		
+		<label for="studytags"><b>Study tag(s):</b></label><br>
+		<input type="text" name="study_tags" value="tag1" required placeholder="Enter the study tag(s)">
+		<br><br>
+	
+		<input type="submit" name="createStudy" value="Create new study" class="form-btn">
+		<input type="button" onClick="" name="cancel" value="cancel" class="cancel-link"></input><br>
+		<br>
+	</form></div>';
+	
+	//Assigns input from input fields to varibles
+	if (isset($_POST['createStudy'])) {
+		$user_id = $_SESSION['userID'];
+		$stu_name = mysqli_real_escape_string($conn, $_POST['study_name']);
+		$stu_desc = mysqli_real_escape_string($conn, $_POST['study_desc']);
+		$stu_loc = mysqli_real_escape_string($conn, $_POST['study_loc']);
+		$stu_time = mysqli_real_escape_string($conn, $_POST['study_time']);
+		$stu_com = mysqli_real_escape_string($conn, $_POST['study_com']);
+		$stu_tags = mysqli_real_escape_string($conn, $_POST['study_tags']);
+    
+		//$insert2 = "INSERT INTO study(,,study_name, study_desc, study_loc, study_time, study_com, study_tags) VALUES('','','$stu_name','$stu_desc','$stu_loc','$stu_time','$stu_com','$stu_tags')";
+		
+		//Creates new row into the study table
+		$insert2 = "INSERT INTO `study`(`ownerID`, `name`, `description`, `location`, `date`, `compensation`) VALUES ('$user_id','$stu_name','$stu_desc','$stu_loc','$stu_time','$stu_com')";
+		mysqli_query($conn, $insert2);
+		
+		//Gets the newly created row's id
+		$result = mysqli_insert_id($conn);
+		
+		//Creates new row into the user_study table
+		$insert3 = "INSERT INTO `user_study`(`userID`, `studyID`) VALUES ('$user_id','$result')";
+		mysqli_query($conn, $insert3);				
+	}
 }
 
 /**
