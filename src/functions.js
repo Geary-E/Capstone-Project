@@ -101,6 +101,9 @@ function supportGroupDelete() {
 // Displays the studySearch div, and hides the others
 function studySearch() {
     document.querySelector('.search-studies').style.display = 'block';
+	document.querySelector('.study-list').style.display = 'flex';
+    document.querySelector('.study-item').style.width = '50%';
+    document.querySelector('.search-study-list').style.display = 'none';
     document.querySelector('.create-studies').style.display = 'none';
     document.querySelector('.modify-studies').style.display = 'none';
     document.querySelector('.delete-studies').style.display = 'none';
