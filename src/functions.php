@@ -341,7 +341,7 @@ function opportunitySearch($name)
     <div class="search-boxes"><!-- Search boxes section -->
     <p style="display: block;">Search By:</p> <br><br>
     <!-- Added labels to the search boxes -->
-    <div class="opportunity-search-name-box"><label for="search">Name:</label><input type="text" name="searchName" placeholder="Study name"></div>
+    <div class="opportunity-search-name-box"><label for="search">Name:</label><input type="text" name="searchName" placeholder="Opportunity name"></div>
     <div class="opportunity-search-tag-box"><label for="tag"> Tags:</label><input type="text" name="searchTag" placeholder="Tag name"></div>
     <button name="submit" value="submit" type="submit">Search</button>
     </div>
@@ -581,7 +581,7 @@ function supportGroupSearch($name)
     <div class="search-boxes"><!-- Search boxes section -->
     <p style="display: block;">Search By:</p> <br><br>
     <!-- Added labels to the search boxes -->
-    <div class="support-search-name-box"><label for="search">Name:</label><input type="text" name="searchName" placeholder="Study name"></div>
+    <div class="support-search-name-box"><label for="search">Name:</label><input type="text" name="searchName" placeholder="Support Group name"></div>
     <div class="support-search-tag-box"><label for="tag"> Tags:</label><input type="text" name="searchTag" placeholder="Tag name"></div>
     <button name="submit" value="submit" type="submit">Search</button>
     </div>
