@@ -1,0 +1,339 @@
+/* Coded by Jeremy */
+
+/*************/
+/*************/
+/**Variables**/
+/*************/
+/*************/
+
+:root {
+    --green: #00853E; /*primary styling color*/
+}
+
+body {
+    margin: 0; /*Sets boundaries properly*/
+}
+
+
+
+
+/*****************************/
+/*Start of styling for header*/
+/*****************************/
+.page-header { /*Styling by Geary start*/
+    background-color: var(--green);
+    height: 80px;
+    padding: 30px;
+    overflow: hidden;
+    position: relative;
+}
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+ .page-logo {                
+    color: white;
+}
+
+/* page-header: buttons */
+.page-header .buttons {  
+    float: right;   /* puts the dashboard button to the right */
+}
+
+/* Styling for Dashboard button */
+.btn1 {     
+    margin-right: 25px;
+}
+
+/* Styling for Logout button */
+.btn2 {     
+    margin-left: 25px;
+}
+
+/* Styling for both Dashboard and Logout button */
+ .btn1, .btn2 {     
+    text-align: center;
+    padding: 20px;
+    width: 150px;
+    color: white;
+    background-color: var(--green);
+    border: 5px solid white;
+    border-radius: 25%;
+    font-size: 20px;
+}
+
+/* Styling for both Dashboard and Logout buttons when hovering*/
+.btn1:hover, .btn2:hover {
+    background-color: white;
+    color: var(--green);
+} /*Styling by Geary end*/
+/***************************/
+/*End of styling for header*/
+/***************************/
+
+
+
+/*****************************/
+/*Start of styling for navbar*/
+/*****************************/
+/*Style for the entire navbar and container*/
+.navbar-content-container {
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+/* Basic styles for the navbar */
+.navbar {
+    background-color: var(--green);
+    color: white;
+    padding: 20px;
+    flex: 20;
+    height: 100vh;
+    text-align: center;
+}
+
+/*Navbar anchor tag (hyperlink) styling*/
+.navbar a { 
+    display: block;
+    color: white;
+    text-decoration: none;
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+/* Styles for the content sections */
+.page-content {
+    flex: 80;
+    padding: 30px;
+    background-color: white;
+    height: 100vh; 
+}
+
+/* Styling of h1 */
+h1 {
+    font-size: 20px;
+    padding: 10px;
+    text-align: center;
+    color: var(--green);
+}
+/***************************/
+/*End of styling for navbar*/
+/***************************/
+
+/**************************************************/
+/**************************************************/
+/**Start of styling for module-specific functions**/
+/**************************************************/
+/**************************************************/
+
+/************************/
+/* survey section start */
+/************************/
+/*searchSurveys styling start*/
+.search-surveys-box { /*Styling for all content in the searchSurvey module*/
+    display: block; /* Inital page display*/
+    margin: auto;
+} 
+
+/* Search boxes within the content styling */
+.search-boxes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.survey-search-name-box, .survey-search-tag-box {
+    padding: 10px;
+}
+
+/* Styling of the individual search boxes */
+.survey-search-name-box input, .survey-search-tag-box input {
+    border: solid 1px black;
+    font-size: 15px;
+    border-radius: 20%;
+    padding: 10px;
+}
+
+/* Styling of the survey list class */
+.survey-list {
+    display: flex;
+    padding: 20px;  /* test */
+    justify-content: center;
+    align-items: center;
+    flex-flow: column wrap;
+    /*display: block;*/ /* Inital page display*/
+    text-align: center;
+}
+
+/* Styling of the search-survey-list class within the search surveys */
+.search-survey-list {
+    display: flex;
+    padding: 20px;
+    justify-content: center;
+    flex-flow: column wrap; 
+    align-items: center;
+    text-align: center;
+}
+
+/* styling of the individual queried searched survey results */
+.survey-item {
+    width: 50%;
+    padding: 15px;
+    border: solid 1px black;
+    cursor: pointer;
+}
+
+/* styling of the individual queried searched results when hovered over */
+.survey-item:hover {
+    background-color: var(--green);
+    color: white;
+}
+/*searchSurveys styling end*/
+
+/*modifySurveys styling start*/
+.modify-surveys { 
+    display: none; /* Hidden by default */
+    text-align: center;
+}
+/*modifySurveys styling end*/
+
+/*createSurveys styling start*/
+.create-surveys {
+    display: none; /* Hidden by default */
+    text-align: center;
+
+}
+/*createSurveys styling end*/
+
+/*deleteSurveys styling start*/
+.delete-surveys {
+    display: none; /* Hidden by default */
+    text-align: center;
+}
+/* deleteSurveys styling end */
+/**********************/
+/* Survey section end */
+/**********************/
+
+
+
+/*****************************/
+/* opportunity section start */
+/*****************************/
+/*searchOpportunities styling start*/
+.search-opportunities {
+    display: block; /* Inital page display*/
+    text-align: center;
+} 
+/*searchOpportunities styling end*/
+
+/*modifyOpportunities styling start*/
+.modify-opportunities  { 
+    display: none; /* Hidden by default */
+    text-align: center;
+}
+/*modifyOpportunities styling end*/
+
+/*createOpportunities styling start*/
+.create-opportunities  {
+    display: none; /* Hidden by default */
+    text-align: center;
+}
+/*createOpportunities styling end*/
+
+/*deleteOpportunities styling start*/
+.delete-opportunities  {
+    display: none; /* Hidden by default */
+    text-align: center;
+}
+/* deleteOpportunities styling end */
+/***************************/
+/* Opportunity section end */
+/***************************/
+
+
+
+/******************************/
+/* supportGroup section start */
+/******************************/
+/*searchSupportGroups styling start*/
+.search-supportGroups {
+    display: block; /* Inital page display*/
+    text-align: center;
+} 
+/*searchSupportGroups styling end*/
+
+/*modifySupportGroups styling start*/
+.modify-supportGroups { 
+    display: none; /* Hidden by default */
+    text-align: center;
+}
+/*modifySupportGroups styling end*/
+
+/*createSupportGroups styling start*/
+.create-supportGroups {
+    display: none; /* Hidden by default */
+    text-align: center;
+}
+/*createSupportGroups styling end*/
+
+/*deleteSupportGroups styling start*/
+.delete-supportGroups {
+    display: none; /* Hidden by default */
+    text-align: center;
+}
+/* deleteSupportGroups styling end */
+/****************************/
+/* supportGroup section end */
+/****************************/
+
+
+
+/***********************/
+/* Study section start */
+/***********************/
+/*searchStudies styling start*/
+.search-studies {
+    display: block; /* Inital page display*/
+    text-align: center;
+} 
+/*searchStudies styling end*/
+
+/*modifyStudies styling start*/
+.modify-studies { 
+    display: none; /* Hidden by default */
+    text-align: center;
+}
+/*modifyStudies styling end*/
+
+/*createStudies styling start*/
+.create-studies {
+    display: none; /* Hidden by default */
+    text-align: center;
+}
+/*createStudies styling end*/
+
+/*deleteStudies styling start*/
+.delete-studies {
+    display: none; /* Hidden by default */
+    text-align: center;
+}
+/*deleteStudies styling end*/
+/*********************/
+/* Study section end */
+/*********************/
+
+/* Adjust the font size for the resize buttons */
+.resize-button {
+    font-size: 16px; /* Adjust the initial font size as needed */
+}
+
+/* Add any other necessary styling for the buttons */
+.resize-button:hover {
+    background-color: gray; /* Adjust the hover background color as needed */
+    color: white;
+}
+

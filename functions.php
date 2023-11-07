@@ -545,3 +545,9 @@ function supportGroupDelete($name)
 
 echo '<script src="functions.js"></script>';
 ?>
+
+<div class="text-size-controls">
+    <button class="resize-button" onclick="increaseTextSize()">Increase Text Size</button>
+    <button class="resize-button" onclick="decreaseTextSize()">Decrease Text Size</button>
+</div>
+<script src="functions.js"></script>
