@@ -27,6 +27,13 @@ if (isset($_POST['submit'])) {
             //Set the researcher_name session variable to firstname 
            $_SESSION['researcher_name'] = $row['firstname'];
 
+           /* Created session variales for the retrieval of information on account page */
+           $_SESSION['firstName'] = $row['firstname'];
+           $_SESSION['lastName'] = $row['lastname'];
+           $_SESSION['email'] = $row['email']; 
+           $_SESSION['user_type'] = $row['user_type'];
+           /* Ending of creation of session variables for account page */
+
            //Send to dashboard.php
             header('location:dashboard.php');
 
@@ -35,6 +42,13 @@ if (isset($_POST['submit'])) {
 
            //Set the person_name session variable to firstname
            $_SESSION['person_name'] = $row['firstname'];
+
+            /* Created session variales for the retrieval of information on account page */
+           $_SESSION['firstName'] = $row['firstname'];
+           $_SESSION['lastName'] = $row['lastname'];
+           $_SESSION['email'] = $row['email'];  
+           $_SESSION['user_type'] = $row['user_type'];
+          /* Ending of creation of session variables for account page */
 
            //Send to dashboard.php
             header('location:dashboard.php');

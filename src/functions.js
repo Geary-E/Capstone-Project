@@ -139,3 +139,4 @@ function hideAll() {
     document.querySelector('.search-survey-list').style.display = 'flex';
     document.querySelector('.survey-item').style.width = '50%';
 }
+

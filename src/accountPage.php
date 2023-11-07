@@ -9,6 +9,10 @@ session_start();
 
 //Used to set name variable based on user_type stored in $_SESSION
 $name=nameType();
+//$first_name = firstNameType();
+//$last_name = lastNameType();
+//$email=emailType();
+//$user_type=userType();
 ?>
 
 <!DOCTYPE html> <!--HTML coded by Geary -->
@@ -28,7 +32,7 @@ $name=nameType();
     <?php pageHeader(); //Displays the header
     $pageName = 'Account Page';
     pageNavbar($conn, $name, $pageName); 
-    accountPageDisplay($name);
+   /* accountPageDisplay($name, $email, $user_type);*/
     ?>
 </body>
 </html>

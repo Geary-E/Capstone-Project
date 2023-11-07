@@ -10,6 +10,7 @@
  * 
  * @return $name
  */
+
 function nameType()
 {
     //If researcher_name is set make it name
@@ -23,6 +24,38 @@ function nameType()
     }
     return $name;
 }
+
+/* Functions implemented for use of retrieval of information on the accounts page */
+function emailType() 
+{
+    if(isset($_SESSION['email'])) {
+        $email = $_SESSION['email'];
+        }
+        return $email;
+} 
+
+function userType() {
+    if(isset($_SESSION['user_type'])) {
+        $user_type = $_SESSION['user_type'];
+    }
+    return $user_type;
+}
+
+function firstNameType() {
+    if(isset($_SESSION['firstName'])) {
+        $firstname = $_SESSION['firstName'];
+    }
+    return $firstname;
+}
+
+function lastNameType() {
+    if(isset($_SESSION['lastName'])) {
+        $lastname = $_SESSION['lastName'];
+    }
+    return $lastname;
+}
+/* End of retrieval functions for account page */
+
 /**
  * Uses the input to return a result through $conn
  * 
@@ -205,11 +238,14 @@ function pageNavbar($conn, $name, $pageName)
         <div class="navbar-content-container">
             <div class="navbar"> <!-- Links for each module -->
                 <a href="#" onclick="studySearch()">FAQ ' . '</a>
-                <a href="#" onclick="studyCreate()">Compenstation ' . '</a>
+                <a href="#" onclick="studyCreate()">Compensation ' . '</a>
                 <a href="#" onclick="studyModify()">Privacy' .'</a>
             </div> 
             <div class="page-content">';
-                accountPageDisplay($name);
+                $last_name = lastNameType();
+                $email = emailType();
+                $user_type = userType();
+                accountPageDisplay($email, $user_type, $name, $last_name);
             echo '
             </div>
             </div>';
@@ -232,10 +268,32 @@ function pageNavbar($conn, $name, $pageName)
  * @return void
  */
 
- function accountPageDisplay($name) {
+ function accountPageDisplay($email, $user_type, $first_name, $last_name) {
     echo '
         <div class="account-page-box">
-        <h1>Hello <span>' . $name . '</span> Welcome to the Account Page.</h1>
+        <h1>Welcome to the Account Page.</h1>
+        
+        <!--Profile Information for account page -->
+
+        <div class="profile-header">
+            <img class="profile-pic" src="../profile_pic.png" alt="Profile pic"><br>
+            </div><br>
+            <div class="header-links">
+            <a href="#"> Upload </a>
+            <a href="#"> Edit </a>
+            </div>
+        <div class="profile-information">
+        <label for="myInput">First Name: </label><input type="text" id="myInput" value="'. $first_name .'" readonly><br>
+        <label for="myInput1">Last Name: </label><input type="text" id="myInput1" value="'. $last_name .'" readonly><br>
+         <label for="myInput2">Email:</label><input type="text" id="myInput2" value="'. $email .'" readonly><br>
+        <label for="myInput3">User-Type:</label><input type="text" id="myInput3" value="'. $user_type .'" readonly><br>
+            <div class="button-list">
+                <button class="save-btn"> Save </button>
+                <button class="cancel-btn"> Cancel </button>
+            </div>
+            </div>
+
+            <!-- Profile Information on account page ends -->
         </div>';
  }
 function surveySearch($name, $conn)
