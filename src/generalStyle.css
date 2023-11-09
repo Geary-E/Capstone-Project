@@ -301,6 +301,14 @@ h1 {
     color: var(--green);
 }
 
+#img-form {
+    display: none;
+}
+
+.header-links label {
+    cursor: pointer;
+}
+
 .profile-pic {
     width: 12em;
     border: solid 1px black;
@@ -325,11 +333,13 @@ h1 {
 }
 
 .save-btn {
+    display: none;  /* Test */
     margin: 5px;
     padding: 10px;
 }
 
 .cancel-btn {
+    display: none; /* Test */
     margin: 5px;
     padding: 10px;
 }

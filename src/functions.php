@@ -54,6 +54,15 @@ function lastNameType() {
     }
     return $lastname;
 }
+
+function chooseFile() {
+    echo '
+    <form class="upload-form" action="upload.php"  method="POST" enctype="multipart/form-data">
+           <input class="img-form" style="display:none;" type="file" name="file">
+            <button class="submit-form" style="display:none;" type="submit" name="submit"> UPLOAD </button>
+</form>
+    ';
+}
 /* End of retrieval functions for account page */
 
 /**
@@ -276,10 +285,13 @@ function pageNavbar($conn, $name, $pageName)
         <!--Profile Information for account page -->
 
         <div class="profile-header">
-            <img class="profile-pic" src="../profile_pic.png" alt="Profile pic"><br>
+            <img class="profile-pic" src="./images/profile_pic.png" alt="Profile pic"><br>
             </div><br>
             <div class="header-links">
-            <a href="#"> Upload </a>
+           <form class="upload-form" action="upload.php"  method="POST" enctype="multipart/form-data">
+            <label for="img-form">Upload</label><input id="img-form" type="file" name="file"/>
+             <button class="submit-form" type="submit" name="submit"> UPLOAD </button>
+            </form>
             <a href="#"> Edit </a>
             </div>
         <div class="profile-information">
