@@ -157,6 +157,7 @@ h1 {
     padding: 10px;
 }
 
+
 /* Styling of the survey list class */
 .survey-list {
     display: flex;
@@ -269,7 +270,83 @@ h1 {
 /* Opportunity section end */
 /***************************/
 
+/***************************/
+/* Styling on account page */
+.account-page-box {
+    padding: 25px;
+    margin: auto;
+    display: block;
+}
 
+.account-page-box h1 {
+    /*display: none;*/
+    text-align: center;  
+}
+
+/* Styling for profile information on account page start */
+.profile-header {
+    display: flex;
+    justify-content: center;
+}
+
+.header-links  {
+    margin: auto;
+    text-align: center;
+    display: block;
+    font-size: 12px;
+    color: var(--green);
+}
+
+.header-links a {
+    margin: 10px;
+    text-decoration: none;
+    color: var(--green);
+}
+
+#img-form {
+    display: none;
+}
+
+.header-links label {
+    cursor: pointer;
+}
+
+.profile-pic {
+    width: 12em;
+    border: solid 1px black;
+    border-radius: 75%;
+}
+
+.profile-information {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+   /* background-color: black; */
+}
+
+.profile-information input {
+    width: 100%;
+    padding: 10px;
+}
+
+ .button-list {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.save-btn {
+    display: none;  /* Test */
+    margin: 5px;
+    padding: 10px;
+}
+
+.cancel-btn {
+    display: none; /* Test */
+    margin: 5px;
+    padding: 10px;
+}
+/* Ending for styling on account profile page: More will be added soon */
+/**********************************************************************/
 
 /***************************/
 /* Styling on account page */
@@ -373,6 +450,7 @@ h1 {
     border-radius: 20%;
     padding: 10px;
 }
+
 /*searchSupportGroups styling end*/
 
 /*modifySupportGroups styling start*/
@@ -448,3 +526,5 @@ h1 {
 /*********************/
 /* Study section end */
 /*********************/
+
+

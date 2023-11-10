@@ -61,7 +61,6 @@ function lastNameType() {
     return $lastname;
 }
 
-
 function chooseFile() {
     echo '
     <form class="upload-form" action="upload.php"  method="POST" enctype="multipart/form-data">
@@ -250,9 +249,7 @@ function pageNavbar($conn, $pageName, $name, $userID)
                 echo '
                     </div>';
 
-                studyCreate($name, $conn);  //Displays the studyCreate content
-
-					
+                studyCreate($name, $conn);  //Displays the studyCreate conten
                 studyModify($name); //Displays the studyModify content
                 studyDelete($name); //Displays the studyDelete content
 
@@ -335,6 +332,38 @@ function pageNavbar($conn, $pageName, $name, $userID)
  * @param mixed $conn
  * @return void
  */
+
+ function accountPageDisplay($email, $user_type, $first_name, $last_name) {
+    echo '
+        <div class="account-page-box">
+        <h1>Welcome to the Account Page.</h1>
+        
+        <!--Profile Information for account page -->
+
+        <div class="profile-header">
+            <img class="profile-pic" src="./images/profile_pic.png" alt="Profile pic"><br>
+            </div><br>
+            <div class="header-links">
+           <form class="upload-form" action="upload.php"  method="POST" enctype="multipart/form-data">
+            <label for="img-form">Upload</label><input id="img-form" type="file" name="file"/>
+             <button class="submit-form" type="submit" name="submit"> UPLOAD </button>
+            </form>
+            <a href="#"> Edit </a>
+            </div>
+        <div class="profile-information">
+        <label for="myInput">First Name: </label><input type="text" id="myInput" value="'. $first_name .'" readonly><br>
+        <label for="myInput1">Last Name: </label><input type="text" id="myInput1" value="'. $last_name .'" readonly><br>
+         <label for="myInput2">Email:</label><input type="text" id="myInput2" value="'. $email .'" readonly><br>
+        <label for="myInput3">User-Type:</label><input type="text" id="myInput3" value="'. $user_type .'" readonly><br>
+            <div class="button-list">
+                <button class="save-btn"> Save </button>
+                <button class="cancel-btn"> Cancel </button>
+            </div>
+            </div>
+
+            <!-- Profile Information on account page ends -->
+        </div>';
+ }
 function surveySearch($name, $conn)
 {
     if (isset($error)) {
@@ -351,7 +380,9 @@ function surveySearch($name, $conn)
             <!-- Added labels to the search boxes -->
             <div class="survey-search-name-box"><label for="search">Name:</label><input type="text" name="searchName" placeholder="Survey name"></div>
             <div class="survey-search-tag-box"><label for="tag"> Tags:</label><input type="text" name="searchTag" placeholder="Tag name"></div>
+
             <button name="surveySearch" value="submit" type="submit">Search</button>
+
             </div>
 
         </form>
@@ -376,8 +407,10 @@ function surveySearch($name, $conn)
     echo'
         </div> <!-- survey-list end -->
         <div class="search-survey-list" style="display: none;">';
+
     if (isset($_POST['surveySearch'])) {
         echo '<script>hideAll();</script>';
+
 
         //Access searchName and searchTag variables
         $searchName = mysqli_real_escape_string($conn, $_POST['searchName']);
