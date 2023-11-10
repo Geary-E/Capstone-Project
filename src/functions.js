@@ -5,15 +5,14 @@ function surveySearch() {
     document.querySelector('.search-survey-list').style.display = 'none';
     document.querySelector('.create-surveys').style.display = 'none';
     document.querySelector('.modify-surveys').style.display = 'none';
-    document.querySelector('.delete-surveys').style.display = 'none';
 }
 
 // Displays the surveyCreate div, and hides the others
 function surveyCreate() {
-    document.querySelector('.search-surveys').style.display = 'none';
+    //document.querySelector('.search-surveys').style.display = 'none';
     document.querySelector('.create-surveys').style.display = 'block';
     document.querySelector('.modify-surveys').style.display = 'none';
-    document.querySelector('.delete-surveys').style.display = 'none';
+    //document.querySelector('.delete-surveys').style.display = 'none';
 }
 
 // Displays the surveyModify div, and hides the others
@@ -21,7 +20,7 @@ function surveyModify() {
     document.querySelector('.search-surveys').style.display = 'none';
     document.querySelector('.create-surveys').style.display = 'none';
     document.querySelector('.modify-surveys').style.display = 'block';
-    document.querySelector('.delete-surveys').style.display = 'none';
+
 }
 
 // Displays the surveyDelete div, and hides the others
@@ -29,7 +28,6 @@ function surveyDelete() {
     document.querySelector('.search-surveys').style.display = 'none';
     document.querySelector('.create-surveys').style.display = 'none';
     document.querySelector('.modify-surveys').style.display = 'none';
-    document.querySelector('.delete-surveys').style.display = 'block';
 }
 
 // Displays the opportunitySearch div, and hides the others
@@ -100,6 +98,9 @@ function supportGroupDelete() {
 // Displays the studySearch div, and hides the others
 function studySearch() {
     document.querySelector('.search-studies').style.display = 'block';
+	document.querySelector('.study-list').style.display = 'flex';
+    document.querySelector('.study-item').style.width = '50%';
+    document.querySelector('.search-study-list').style.display = 'none';
     document.querySelector('.create-studies').style.display = 'none';
     document.querySelector('.modify-studies').style.display = 'none';
     document.querySelector('.delete-studies').style.display = 'none';
@@ -132,5 +133,8 @@ function studyDelete() {
 // Used to hide specific modules when necessary
 function hideAll() {
     document.querySelector('.survey-list').style.display = 'none';
-    document.querySelector('.search-survey-list').style.display = 'block';
+    /* Changed the display of the search-survey-list in this function */
+    document.querySelector('.search-survey-list').style.display = 'flex';
+    document.querySelector('.survey-item').style.width = '50%';
 }
+

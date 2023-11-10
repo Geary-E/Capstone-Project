@@ -105,9 +105,8 @@ if (isset($_POST['submit'])) {
             <br>
 
             <p>Already have an account? <a href="index.php">Click here to login</a></p>
+            
         </form>
-
     </div>
 </body>
-
 </html>
