@@ -9,6 +9,7 @@ session_start();
 
 //Used to set name variable based on user_type stored in $_SESSION
 $name=nameType();
+$userID=userID();
 ?>
 
 <!DOCTYPE html> <!--HTML coded by Geary -->
@@ -28,7 +29,7 @@ $name=nameType();
     <?php
     $pageName = 'Support Groups';
         pageHeader(); //Displays the header
-        pageNavbar($conn, $name, $pageName); //Displays the navbar
+        pageNavbar($conn, $pageName, $name, $userID); //Displays the navbar
     ?>
 </body>
 </html>
