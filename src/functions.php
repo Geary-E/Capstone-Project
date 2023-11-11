@@ -61,6 +61,7 @@ function lastNameType() {
     return $lastname;
 }
 
+
 function chooseFile() {
     echo '
     <form class="upload-form" action="upload.php"  method="POST" enctype="multipart/form-data">
@@ -185,6 +186,25 @@ function pageNavbar($conn, $pageName, $name, $userID)
         </div>';
 
     }//Navbar for surveysModify end
+    elseif($pageName=='SurveysEdit') //Navbar for surveysModify start
+    {
+        $pageNameDisplay='Surveys';
+        echo '
+        <div class="navbar-content-container">
+            <div class="navbar"> <!-- Links for each module -->
+            <a href="survey.php">Search ' . $pageNameDisplay . '</a>
+            <a href="surveyModify.php">Modify ' . $pageNameDisplay . '</a>
+            </div>
+
+            <div class="page-content">  <!-- Container for all the content -->';
+
+                surveyEdit($name, $userID, $conn); //Displays the surveyEdit content
+
+                echo '
+            </div>
+        </div>';
+
+    }//Navbar for surveysModify end
     elseif($pageName=='Opportunities') //Navbar for Opportunities start
     {
         echo '
@@ -249,7 +269,9 @@ function pageNavbar($conn, $pageName, $name, $userID)
                 echo '
                     </div>';
 
-                studyCreate($name, $conn);  //Displays the studyCreate conten
+                studyCreate($name, $conn);  //Displays the studyCreate content
+
+					
                 studyModify($name); //Displays the studyModify content
                 studyDelete($name); //Displays the studyDelete content
 
@@ -257,7 +279,7 @@ function pageNavbar($conn, $pageName, $name, $userID)
             </div>
         </div>
         ';
-    } 
+    } //Navbar for Studies end
     else if($pageName = 'Account Page') {
         echo '
         <div class="navbar-content-container">
@@ -275,8 +297,8 @@ function pageNavbar($conn, $pageName, $name, $userID)
             </div>
             </div>';
 
-    }
-} //Navbar for Studies end
+    }//Navbar for Account Page end
+} //Navbar end
 
 
 
@@ -294,7 +316,7 @@ function pageNavbar($conn, $pageName, $name, $userID)
   * @param mixed $last_name
   * @return void
   */
- function accountPageDisplay($email, $user_type, $first_name, $last_name) {
+ function accountPageDisplay($email, $user_type, $first_name, $last_name) { //Created by Geary
     echo '
         <div class="account-page-box">
         <h1>Welcome to the Account Page.</h1>
@@ -332,38 +354,6 @@ function pageNavbar($conn, $pageName, $name, $userID)
  * @param mixed $conn
  * @return void
  */
-
- function accountPageDisplay($email, $user_type, $first_name, $last_name) {
-    echo '
-        <div class="account-page-box">
-        <h1>Welcome to the Account Page.</h1>
-        
-        <!--Profile Information for account page -->
-
-        <div class="profile-header">
-            <img class="profile-pic" src="./images/profile_pic.png" alt="Profile pic"><br>
-            </div><br>
-            <div class="header-links">
-           <form class="upload-form" action="upload.php"  method="POST" enctype="multipart/form-data">
-            <label for="img-form">Upload</label><input id="img-form" type="file" name="file"/>
-             <button class="submit-form" type="submit" name="submit"> UPLOAD </button>
-            </form>
-            <a href="#"> Edit </a>
-            </div>
-        <div class="profile-information">
-        <label for="myInput">First Name: </label><input type="text" id="myInput" value="'. $first_name .'" readonly><br>
-        <label for="myInput1">Last Name: </label><input type="text" id="myInput1" value="'. $last_name .'" readonly><br>
-         <label for="myInput2">Email:</label><input type="text" id="myInput2" value="'. $email .'" readonly><br>
-        <label for="myInput3">User-Type:</label><input type="text" id="myInput3" value="'. $user_type .'" readonly><br>
-            <div class="button-list">
-                <button class="save-btn"> Save </button>
-                <button class="cancel-btn"> Cancel </button>
-            </div>
-            </div>
-
-            <!-- Profile Information on account page ends -->
-        </div>';
- }
 function surveySearch($name, $conn)
 {
     if (isset($error)) {
@@ -380,9 +370,7 @@ function surveySearch($name, $conn)
             <!-- Added labels to the search boxes -->
             <div class="survey-search-name-box"><label for="search">Name:</label><input type="text" name="searchName" placeholder="Survey name"></div>
             <div class="survey-search-tag-box"><label for="tag"> Tags:</label><input type="text" name="searchTag" placeholder="Tag name"></div>
-
             <button name="surveySearch" value="submit" type="submit">Search</button>
-
             </div>
 
         </form>
@@ -407,10 +395,8 @@ function surveySearch($name, $conn)
     echo'
         </div> <!-- survey-list end -->
         <div class="search-survey-list" style="display: none;">';
-
     if (isset($_POST['surveySearch'])) {
         echo '<script>hideAll();</script>';
-
 
         //Access searchName and searchTag variables
         $searchName = mysqli_real_escape_string($conn, $_POST['searchName']);
@@ -466,8 +452,8 @@ function surveyCreate($name, $userID, $conn)
 		<br><br>
 	
 		<input type="submit" name="createSurvey" value="Create new survey" class="form-btn">
-		<input type="button" onClick="" name="cancel" value="cancel" class="cancel-link"></input><br>
-		<br>
+		<input type="button" onClick="window.location.href=\'surveyModify.php\'" name="cancel" value="cancel" class="cancel-link"></input>
+        <br><br>
 	</form>
     </div> <!-- create-surveys end -->';
 
@@ -503,7 +489,8 @@ function surveyModify($name, $userID, $conn)
     <div class="created-surveys-list">';
     $select = "SELECT * FROM survey WHERE `ownerID` = '$userID';";
     $result = mysqli_query($conn, $select);
-
+  
+    unset($_SESSION['editSurveyID']);
     if (mysqli_num_rows($result) == 0) { // If no surveys were found
         echo '<h1>No surveys were found</h1>';
     } else if (mysqli_num_rows($result) > 0) { // If there are surveys
@@ -513,11 +500,15 @@ function surveyModify($name, $userID, $conn)
             <div class="survey-item">
                 <b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'] . '
             </div> <!-- survey-item end -->
-            <br>
-            <form method="post" action="">
-                <input type="hidden" name="survey_id" value="' . $row['surveyID'] . '">
-                <button name="editSurvey" value="submit" type="submit">Edit</button>
-            </form>
+            <br>';
+
+            echo '
+            <form method="post" action="surveyEdit.php">
+                <input type="hidden" name="editSurveyID" value="' . $row['surveyID'] . '">
+                <button type="submit" name="editSurvey" class="edit-button">Edit</button>
+            </form>';
+
+            echo'
             <form method="post" action="" onsubmit="return confirm(\'Are you sure you want to delete this survey?\');">
                   <input type="hidden" name="survey_id" value="' . $row['surveyID'] . '">
                   <button name="deleteSurvey" value="submit" type="submit">Delete</button>
@@ -530,30 +521,7 @@ function surveyModify($name, $userID, $conn)
 
     <h1>These are the surveys you have completed:</h1>
         <div class="created-surveys-list">';
-    $select = "SELECT * FROM user_survey WHERE `userID` = '$userID';";
-    $result = mysqli_query($conn, $select);
 
-    if (mysqli_num_rows($result) == 0) { // If no surveys were found
-        echo '<h1>No surveys were found</h1>';
-    } else if (mysqli_num_rows($result) > 0) { // If there are surveys
-        while ($row = mysqli_fetch_assoc($result)) {
-            // Added styling to the queried search results 
-            echo '
-            <div class="survey-item">
-                <b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'] . '
-            </div> <!-- survey-item end -->
-            <br>
-            <form method="post" action="">
-                <input type="hidden" name="survey_id" value="' . $row['surveyID'] . '">
-                <button name="editSurvey" value="submit" type="submit">Edit</button>
-            </form>
-            <form method="post" action="" onsubmit="return confirm(\'Are you sure you want to delete this survey?\');">
-                  <input type="hidden" name="survey_id" value="' . $row['surveyID'] . '">
-                  <button name="deleteSurvey" value="submit" type="submit">Delete</button>
-            </form>
-            <br>';
-        }
-    }
     echo '
     </div> <!-- created-surveys-list end -->
     </div> <!-- modify-surveys end -->
@@ -569,14 +537,72 @@ function surveyModify($name, $userID, $conn)
             echo "Error: " . mysqli_error($conn);
         }
     }
-
-    if (isset($_POST['editSurvey'])) {
-        $surveyID = mysqli_real_escape_string($conn, $_POST['survey_id']);
-    }
 }
 
+function surveyEdit($name, $userID, $conn)
+{ 
+    $surveyName = ''; // Initialize variable with default value
+    $surveyDescription = ''; // Initialize variable with default value
+    $edittedSurveyID = ''; // Initialize variable with default value
+    if (isset($_POST['editSurveyID'])) {
+        // Access the surveyID
+        $edittedSurveyID = $_POST['editSurveyID'];
 
+        // Fetch survey data from the database using the $edittedSurveyID
+        $selectSurveyData = "SELECT `name`, `description` FROM `survey` WHERE `surveyID` ='$edittedSurveyID';";
+        $resultSurveyData = mysqli_query($conn, $selectSurveyData);
 
+        if ($resultSurveyData && mysqli_num_rows($resultSurveyData) > 0) {
+            $row = mysqli_fetch_assoc($resultSurveyData);
+            $surveyName = $row['name'];
+            $surveyDescription = $row['description'];
+        }
+    }
+    
+    echo '
+    <div class="edit-surveys">
+    <h1>Hello <span>' . $name. ' '.$edittedSurveyID.'</span> this is the edit survey section</h1>';
+
+/*
+What was done:
+-Store the data for the name and description from the survey table via the $surveyID in the variables $surveyName $surveyDescription
+-Two forms, one for each part of the survey table: ( `name`, `description`)
+-Use the $surveyName data as a placeholder for the name form, and the $surveyDescription data as a placeholder for the description form
+-Submit form that posts updateSurvey
+-Verify that when submitted the data in the forms will update the survey table row name and description column where the $surveyID is equal
+*/
+    echo '
+    <form action="" method="post">
+    <input type="hidden" name="editSurveyID" value="' . $edittedSurveyID . '">
+    <label for="surveyName">Survey Name:</label>
+    <input type="text" name="surveyName" value="' . $surveyName . '" class="form-input" required>
+    <br>
+    <label for="surveyDescription">Survey Description:</label>
+    <textarea name="surveyDescription" class="form-textarea" required>' . $surveyDescription . '</textarea>
+    <br>
+    <input type="submit" name="updateSurvey" value="Submit" class="form-btn"> 
+    <input type="button" onClick="window.location.href=\'surveyModify.php\'" name="cancel" value="Cancel" class="cancel-link">
+    <br>
+</form>
+    </div> <!-- edit-surveys end -->
+    ';
+
+    if (isset($_POST['updateSurvey'])) {
+        // Handle the edit logic here
+        $surveyName = mysqli_real_escape_string($conn, $_POST['surveyName']);
+        $surveyDescription = mysqli_real_escape_string($conn, $_POST['surveyDescription']);
+        echo $edittedSurveyID;
+        $editQuery = "UPDATE `survey` SET `name` = '$surveyName', `description` = '$surveyDescription' WHERE `survey`.`surveyID` = '$edittedSurveyID';";
+        
+        if (mysqli_query($conn, $editQuery)) {
+            echo "update successful ";
+            //header('location: surveyModify.php');
+            //exit(); // Important to prevent further execution after the redirect
+        } else {
+            echo "Error: " . mysqli_error($conn);
+        }
+    }
+}
 
 /**
  * Summary of opportunitySearch

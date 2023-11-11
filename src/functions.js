@@ -9,10 +9,14 @@ function surveySearch() {
 
 // Displays the surveyCreate div, and hides the others
 function surveyCreate() {
-    //document.querySelector('.search-surveys').style.display = 'none';
     document.querySelector('.create-surveys').style.display = 'block';
     document.querySelector('.modify-surveys').style.display = 'none';
-    //document.querySelector('.delete-surveys').style.display = 'none';
+}
+
+// Displays the surveyEdit div, and hides the others
+function surveyEditer() {
+    document.querySelector('.create-surveys').style.display = 'none';
+    document.querySelector('.modify-surveys').style.display = 'none';
 }
 
 // Displays the surveyModify div, and hides the others
@@ -20,6 +24,7 @@ function surveyModify() {
     document.querySelector('.search-surveys').style.display = 'none';
     document.querySelector('.create-surveys').style.display = 'none';
     document.querySelector('.modify-surveys').style.display = 'block';
+    document.querySelector('.edit-surveys').style.display = 'none';
 
 }
 
