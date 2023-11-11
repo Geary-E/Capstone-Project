@@ -17,20 +17,17 @@ $userID=userID();
 
 <head>
 
-    <?php //Prints meta data
-    meta(); ?>
+    <?php meta(); ?> <!--Prints meta data-->
 
-    <link rel="stylesheet" href="style3.css">
     <link rel="stylesheet" href="generalStyle.css">
-    <title>opportunity</title>
+    <title>SurveysModify</title>
 </head>
 
 <body>
-<?php
-    $pageName = 'Opportunities';
+    <?php
+        $pageName = 'SurveysModify';
         pageHeader(); //Displays the header
         pageNavbar($conn, $pageName, $name, $userID); //Displays the navbar
     ?>
-
 </body>
 </html>

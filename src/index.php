@@ -19,12 +19,12 @@ if (isset($_POST['submit'])) {
         $row = mysqli_fetch_array($result);
 
         //Set the userID as a session variable
-        $_SESSION['userID'] = $row['userID']; 
+        $_SESSION['userID'] = $row['userID'];
 
-        //If the user_type is researcher 
+        //If the user_type is researcher
         if ($row['user_type'] == 'researcher') {
 
-            //Set the researcher_name session variable to firstname 
+            //Set the researcher_name session variable to firstname
            $_SESSION['researcher_name'] = $row['firstname'];
 
            /* Created session variales for the retrieval of information on account page */
@@ -37,7 +37,7 @@ if (isset($_POST['submit'])) {
            //Send to dashboard.php
             header('location:dashboard.php');
 
-        //If the user_type is person 
+        //If the user_type is person
         } elseif ($row['user_type'] == 'person') {
 
            //Set the person_name session variable to firstname
