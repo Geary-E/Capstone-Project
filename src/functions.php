@@ -348,6 +348,7 @@ function pageNavbar($conn, $pageName, $name, $userID)
         </div>';
  }
 
+
  /**
  * Summary of surveySearch
  * @param mixed $name
