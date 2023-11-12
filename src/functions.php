@@ -16,7 +16,6 @@ function userID() {
  * 
  * @return $name
  */
-
 function nameType()
 {
     //If researcher_name is set make it name
@@ -284,15 +283,19 @@ function pageNavbar($conn, $pageName, $name, $userID)
         echo '
         <div class="navbar-content-container">
             <div class="navbar"> <!-- Links for each module -->
-                <a href="#" onclick="studySearch()">FAQ ' . '</a>
-                <a href="#" onclick="studyCreate()">Compensation ' . '</a>
-                <a href="#" onclick="studyModify()">Privacy' .'</a>
+                <a href="#" onclick="generalAccountDisplay()">General ' . '</a> <!-- General page -->
+                <a href="#/faq" onclick="faq()">FAQ ' . '</a>    <!-- FAQ Page -->
+                <a href="#/compensation" onclick="accountCompensation()">Compensation ' . '</a>  <!-- Compensation page -->
             </div> 
             <div class="page-content">';
                 $last_name = lastNameType();
                 $email = emailType();
                 $user_type = userType();
+                echo '<div class="account-page-display">';
                 accountPageDisplay($email, $user_type, $name, $last_name);
+                echo '</div>'; 
+                accountPageFaq();   /* the FAQ page */
+                accountPageComp($name);   /* the compensation page */
             echo '
             </div>
             </div>';
@@ -316,9 +319,11 @@ function pageNavbar($conn, $pageName, $name, $userID)
   * @param mixed $last_name
   * @return void
   */
- function accountPageDisplay($email, $user_type, $first_name, $last_name) { //Created by Geary
+/* Display for the account page */
+  function accountPageDisplay($email, $user_type, $first_name, $last_name) { //Created by Geary
     echo '
-        <div class="account-page-box">
+        <div class="account-page-box">';
+        echo '
         <h1>Welcome to the Account Page.</h1>
         
         <!--Profile Information for account page -->
@@ -329,7 +334,7 @@ function pageNavbar($conn, $pageName, $name, $userID)
         <div class="header-links">
        <form class="upload-form" action="upload.php"  method="POST" enctype="multipart/form-data">
         <label for="img-form">Upload</label><input id="img-form" type="file" name="file"/>
-         <button class="submit-form" type="submit" name="submit"> UPLOAD </button>
+         <!--<button class="submit-form" type="submit" name="submit"> UPLOAD </button> -->
         </form>
             <a href="#"> Edit </a>
             </div>
@@ -347,7 +352,58 @@ function pageNavbar($conn, $pageName, $name, $userID)
             <!-- Profile Information on account page ends -->
         </div>';
  }
+ /* Account page display end */
 
+/* Display for the FAQ link on the account page */
+ function accountPageFaq() {
+    echo '
+    <div class="faq-section">
+
+        <h1 style="font-size: 25px;"> Frequently Asked Questions (FAQ): </h1>
+
+        <div class="faq-list">
+        <div class="faq-item">
+        <p><b>Q:</b> Question 1? </p>
+        <p><b>A:</b> Answer 1. </p>
+        </div><br>
+
+        <div class="faq-item">
+        <p><b>Q:</b> Question 2?  </p>
+        <p><b>A:</b> Answer 2. </p>
+        </div><br>
+
+        <div class="faq-item">
+        <p><b>Q:</b> Question 3?  </p>
+        <p><b>A:</b> Answer 3. </p>
+        </div><br>
+
+        <div class="faq-item">
+        <p><b>Q:</b> Question 4?  </p>
+        <p><b>A:</b> Answer 4. </p>
+        </div><br>
+
+        </div>
+        </div>
+    ';
+ }
+ /* FAQ link display end */
+
+/* Display for the compensation link on the account page */
+ function accountPageComp($name) {
+    echo '
+    <div class="compensation-section">
+        <h1 style="font-size: 25px;"> User Compensation: </h1>
+
+        <div class="compensation-listing">
+            <div class="compensation-item">
+            <h1 class="compensation-header" style="font-size: 35px;">'.$name.' has made: </br>
+            $0.00 </h1>
+            </div>
+        </div>
+
+    </div>';
+ }
+/* Compensation link display end */
 
  /**
  * Summary of surveySearch
