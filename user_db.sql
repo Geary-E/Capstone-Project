@@ -634,7 +634,7 @@ ALTER TABLE `user_opportunity`
 -- Constraints for table `user_study`
 --
 ALTER TABLE `user_study`
-  ADD CONSTRAINT `user_study_ibfk_1` FOREIGN KEY (`studyID`) REFERENCES `study` (`studyID`),
+  ADD CONSTRAINT `user_study_ibfk_1` FOREIGN KEY (`studyID`) REFERENCES `study` (`studyID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `user_study_ibfk_2` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`);
 
 --
