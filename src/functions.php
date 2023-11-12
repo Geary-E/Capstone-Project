@@ -892,13 +892,87 @@ function studyModify($name)
  * @param mixed $name
  * @return void
  */
-function studyDelete($name)
+function studyDelete($name,$conn)
 {
+    //coded and edited by carlos diaz
     echo '
     <div class="delete-studies">
     <h1>Hello <span>' . $name . '</span> this is the delete study section</h1>
+
+    <!-- Implemented search boxes -->
+    <form action="" method="post"> <!-- Buttons for the search -->
+    <div class="search-boxes"><!-- Search boxes section -->
+    <p style="display: block;">Search By:</p> <br><br>
+    <!-- Added labels to the search boxes -->
+    <div class="study-search-name-box"><label for="search">Name:</label><input type="text" name="searchName" placeholder="Study name"></div>
+    <div class="study-search-tag-box"><label for="tag"> Tags:</label><input type="text" name="searchTag" placeholder="Tag name"></div>
+    <button name="submit" value="submit" type="submit">Search</button>
     </div>
+	</form>
+
+	<div class="survey-list">';
+
+        $select = "SELECT * FROM study";
+        $result = mysqli_query($conn, $select);
+
+        if (mysqli_num_rows($result) == 0) { //if result == 0
+            $error[] = 'No studies were found';
+        }
+        else if (mysqli_num_rows($result) > 0) { //if there are studies 
+            while ( $row = mysqli_fetch_assoc($result) ) {
+                /* Added styling to the queried search results */
+                echo '<div class="survey-item"> ';
+                echo '<b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'] . '<br><b>Date:</b> ' . $row['date'] . '<br><b>Location:</b> ' . $row['location'] . '<br><b>Compensation:</b> ' . $row['compensation']. '<br><a href="study.php?studyID='.$row['studyID'].'"> Delete</a>';
+                echo '</div><br>';    /* <br> */
+            }
+        }
+        if(isset($_GET['studyID'])){
+            $id = $_GET['studyID'];
+            $sql = "DELETE study, user_study 
+            FROM study INNER JOIN user_study
+            ON study.studyID = user_study.studyID
+            WHERE study.studyID = '$id' ";
+            $result2=mysqli_query($conn, $sql);
+
+        }
+
+    echo'
+        </div> <!-- study-list end -->
+        <div class="search-survey-list" style="display: none;">';
+    if (isset($_POST['submit'])) {
+        echo '<script>hideAll();</script>'; 
+
+        //Access searchName and searchTag variables
+        $searchName = $_POST['searchName'];
+        $searchTag = $_POST['searchTag'];
+
+        $select = "SELECT * FROM study WHERE name LIKE '%$searchName%'"; 
+        $result = mysqli_query($conn, $select);
+
+        if (mysqli_num_rows($result) == 0) { //if result == 0
+            $error[] = 'No studies were found';
+        }
+        else if (mysqli_num_rows($result) > 0) {  //if there are studies 
+            while ( $row = mysqli_fetch_assoc($result) ) {
+                /* Added styling to the queried search results */
+                echo '<div class="survey-item"> ';
+                echo '<b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'] . '<br><b>Date:</b> ' . $row['date'] . '<br><b>Location:</b> ' . $row['location'] . '<br><b>Compensation:</b> ' . $row['compensation']. '<br><a href="study.php?studyID='.$row['studyID'].'"> Delete</a>';
+        
+                echo '</div><br>';
+            }
+        }
+        unset($_POST['submit']);
+    }
+
+    	//Assigns input from input fields to varibles
+
+            
+        
+    echo'
+        </div> <!-- search-studys-list end -->
+    </div> <!-- search-studys-box end -->
     ';
+
 }
 
 /**
