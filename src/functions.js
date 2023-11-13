@@ -9,10 +9,14 @@ function surveySearch() {
 
 // Displays the surveyCreate div, and hides the others
 function surveyCreate() {
-    //document.querySelector('.search-surveys').style.display = 'none';
     document.querySelector('.create-surveys').style.display = 'block';
     document.querySelector('.modify-surveys').style.display = 'none';
-    //document.querySelector('.delete-surveys').style.display = 'none';
+}
+
+// Displays the surveyEdit div, and hides the others
+function surveyEditer() {
+    document.querySelector('.create-surveys').style.display = 'none';
+    document.querySelector('.modify-surveys').style.display = 'none';
 }
 
 // Displays the surveyModify div, and hides the others
@@ -20,6 +24,7 @@ function surveyModify() {
     document.querySelector('.search-surveys').style.display = 'none';
     document.querySelector('.create-surveys').style.display = 'none';
     document.querySelector('.modify-surveys').style.display = 'block';
+    document.querySelector('.edit-surveys').style.display = 'none';
 
 }
 
@@ -137,4 +142,29 @@ function hideAll() {
     document.querySelector('.search-survey-list').style.display = 'flex';
     document.querySelector('.survey-item').style.width = '50%';
 }
+
+// Used to display the FAQ section when clicked on in the Account Page 
+function faq() {
+    document.querySelector('.faq-section').style.display = 'block';
+    document.querySelector('.compensation-section').style.display = 'none';
+    document.querySelector('.account-page-box').style.display = 'none';
+    document.querySelector('.faq-list').style.display = 'flex';
+
+}
+
+// Used to display the Compensation section when clicked on in the Account Page 
+function accountCompensation() {
+    document.querySelector('.compensation-listing').style.display = 'flex';
+    document.querySelector('.compensation-section').style.display = 'block';
+    document.querySelector('.account-page-box').style.display = 'none';
+    document.querySelector('.faq-section').style.display = 'none';
+}
+
+
+// Used to display the General section on the account page 
+function generalAccountDisplay() {
+    document.querySelector('.account-page-box').style.display = 'block';
+    document.querySelector('.compensation-section').style.display = 'none';
+    document.querySelector('.faq-section').style.display = 'none';
+} 
 
