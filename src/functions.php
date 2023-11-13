@@ -152,7 +152,7 @@ function pageNavbar($conn, $pageName, $name, $userID)
         <div class="navbar-content-container">
             <div class="navbar"> <!-- Links for each module -->
                 <a href="survey.php">Search ' . $pageName . '</a>
-                <a href="surveyModify.php">Modify ' . $pageName . '</a>
+                <a href="surveyModify.php">Manage ' . $pageName . '</a>
             </div>
 
             <div class="page-content">  <!-- Container for all the content -->
@@ -172,7 +172,7 @@ function pageNavbar($conn, $pageName, $name, $userID)
         <div class="navbar-content-container">
             <div class="navbar"> <!-- Links for each module -->
             <a href="survey.php">Search ' . $pageNameDisplay . '</a>
-            <a href="surveyModify.php">Modify ' . $pageNameDisplay . '</a>
+            <a href="surveyModify.php">Manage ' . $pageNameDisplay . '</a>
             </div>
 
             <div class="page-content">  <!-- Container for all the content -->';
@@ -192,7 +192,7 @@ function pageNavbar($conn, $pageName, $name, $userID)
         <div class="navbar-content-container">
             <div class="navbar"> <!-- Links for each module -->
             <a href="survey.php">Search ' . $pageNameDisplay . '</a>
-            <a href="surveyModify.php">Modify ' . $pageNameDisplay . '</a>
+            <a href="surveyModify.php">Manage ' . $pageNameDisplay . '</a>
             </div>
 
             <div class="page-content">  <!-- Container for all the content -->';
@@ -560,11 +560,12 @@ function surveyModify($name, $userID, $conn)
 {
     echo '
     <div class="modify-surveys">
-    <h1>Hello <span>' . $name . '</span> this is the modify survey section</h1>
+    <h1>Hello <span>' . $name . '</span> this is the manage survey section</h1>
 
-    <h1><a href="#" onclick="surveyCreate()">Click here to create a new survey</a></h1>
+    <!--<h1><a href="#" onclick="surveyCreate()">Click here to create a new survey</a></h1> -->
 
-    <h1>These are the surveys you have created:</h1>
+    <!--<h1>These are the surveys you have created:</h1> -->
+    <h1> Created Surveys: </h1>
     <div class="created-surveys-list">';
     $select = "SELECT * FROM survey WHERE `ownerID` = '$userID';";
     $result = mysqli_query($conn, $select);
@@ -577,28 +578,34 @@ function surveyModify($name, $userID, $conn)
             /* Added styling to the queried search results */
             echo '
             <div class="survey-item">
-                <b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'] . '
-            </div> <!-- survey-item end -->
-            <br>';
-
-            echo '
-            <form method="post" action="surveyEdit.php">
-                <input type="hidden" name="editSurveyID" value="' . $row['surveyID'] . '">
-                <button type="submit" name="editSurvey" class="edit-button">Edit</button>
-            </form>';
-
-            echo'
-            <form method="post" action="" onsubmit="return confirm(\'Are you sure you want to delete this survey?\');">
-                  <input type="hidden" name="survey_id" value="' . $row['surveyID'] . '">
-                  <button name="deleteSurvey" value="submit" type="submit">Delete</button>
-            </form>
-            <br>';
+               <p> <b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'] . '</p>
+               <div class="edit-delete-buttons">  <!-- Testing -->
+               <form method="post" class="edit-method" action="surveyEdit.php">
+                   <input type="hidden" name="editSurveyID" value="' . $row['surveyID'] . '">
+                   <button type="submit" name="editSurvey">Edit</button>
+               </form>';
+   
+               echo'
+               <form method="post" action="" class="delete-method" onsubmit="return confirm(\'Are you sure you want to delete this survey?\');">
+                     <input type="hidden" name="survey_id" value="' . $row['surveyID'] . '">
+                     <button name="deleteSurvey" value="submit" type="submit">Delete</button>
+               </form>
+               </div>  <!-- Testing -->
+            </div><br> <!-- survey-item end -->';
         }
     }
     echo '
-    </div> <!-- created-surveys-list end -->
 
-    <h1>These are the surveys you have completed:</h1>
+    <!-- Create survey button -->
+            <button onclick="surveyCreate()" class="create-btn"> <b>Create New Survey</b>  </button>
+    <!-- Create survey button end -->
+    
+    </div>
+    
+    <!-- created-surveys-list end -->
+
+
+    <h1>Completed Surveys:</h1>
         <div class="created-surveys-list">';
 
     echo '
@@ -654,10 +661,14 @@ What was done:
     <form action="" method="post">
     <input type="hidden" name="editSurveyID" value="' . $edittedSurveyID . '">
     <label for="surveyName">Survey Name:</label>
+    <br>
     <input type="text" name="surveyName" value="' . $surveyName . '" class="form-input" required>
     <br>
+    <br>
     <label for="surveyDescription">Survey Description:</label>
+    <br>
     <textarea name="surveyDescription" class="form-textarea" required>' . $surveyDescription . '</textarea>
+    <br>
     <br>
     <input type="submit" name="updateSurvey" value="Submit" class="form-btn"> 
     <input type="button" onClick="window.location.href=\'surveyModify.php\'" name="cancel" value="Cancel" class="cancel-link">
