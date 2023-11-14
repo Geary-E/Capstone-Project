@@ -287,7 +287,9 @@ function pageNavbar($conn, $pageName, $name, $userID)
         </div>
         ';
     } //Navbar for Studies end
+
     elseif($pageName=='StudiesEdit') //Navbar for studiesEdit start
+
     {
         echo '
         <div class="navbar-content-container">
@@ -308,6 +310,7 @@ function pageNavbar($conn, $pageName, $name, $userID)
 
     } //Navbar for studiesEdit end
     else if($pageName = 'Account Page') { //Navbar for Account Page start
+
         echo '
         <div class="navbar-content-container">
             <div class="navbar"> <!-- Links for each module -->
@@ -432,7 +435,6 @@ function pageNavbar($conn, $pageName, $name, $userID)
     </div>';
  }
 /* Compensation link display end */
-
 
  /**
  * Summary of surveySearch
@@ -639,6 +641,7 @@ function surveyModify($name, $userID, $conn)
     echo '
 
     <!-- Create survey button -->
+
     <button onclick="surveyCreate()" class="create-btn"> <b>Create New Survey</b>  </button>
     </div> <!-- created-surveys-list end -->
     
@@ -707,6 +710,7 @@ function surveyEdit($name, $userID, $conn)
     //Two forms, one for each part of the survey table: ( `name`, `description`)
     echo '
     <form action="" method="post">
+
         <input type="hidden" name="editSurveyID" value="' . $edittedSurveyID . '">
 
         <!--$surveyName data as a placeholder for the name form-->
