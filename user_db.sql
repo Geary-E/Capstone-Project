@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 15, 2023 at 01:50 AM
+-- Generation Time: Nov 15, 2023 at 03:59 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.0.25
 
@@ -73,6 +73,13 @@ CREATE TABLE `study` (
   `date` datetime(6) NOT NULL,
   `compensation` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `study`
+--
+
+INSERT INTO `study` (`studyID`, `ownerID`, `name`, `description`, `location`, `date`, `compensation`) VALUES
+(1, 5, 'test study', 'test study description', 'denton, TX', '2023-11-23 20:40:09.000000', 1);
 
 -- --------------------------------------------------------
 
@@ -491,7 +498,7 @@ ALTER TABLE `opportunitycomment`
 -- AUTO_INCREMENT for table `study`
 --
 ALTER TABLE `study`
-  MODIFY `studyID` int(255) NOT NULL AUTO_INCREMENT;
+  MODIFY `studyID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `supportgroup`
