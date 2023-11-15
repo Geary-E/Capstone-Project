@@ -612,8 +612,6 @@ h1 {
     margin: 0 5px;
 }
 
-
-
 .created-supportGroups-list{
     display: flex;
     text-align: center;
@@ -652,9 +650,9 @@ h1 {
 
 }
 /*editSupportGroups styling end*/
-/**********************/
+/*****************************/
 /* Support group section end */
-/**********************/
+/*****************************/
 
 
 
@@ -662,16 +660,24 @@ h1 {
 /* Study section start */
 /***********************/
 /*searchStudies styling start*/
-.search-studies-box {
+.search-studies-box { /*Styling for all content in the searchStudy module*/
     display: block; /* Inital page display*/
-    text-align: center;
     margin: auto;
 } 
 
+/* Search boxes within the content styling */
+.search-boxes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Styling of the individual search buttons */
 .study-search-name-box, .study-search-tag-box {
     padding: 10px;
 }
 
+/* Styling of the individual search boxes */
 .study-search-name-box input, .study-search-tag-box input {
     border: solid 1px black;
     font-size: 15px;
@@ -679,29 +685,97 @@ h1 {
     padding: 10px;
 }
 
-
-/*searchStudies styling end*/
-
-/*modifyStudies styling start*/
-.modify-studies { 
-    display: none; /* Hidden by default */
+/* Styling of the study list class */
+.study-list {
+    display: flex;
+    padding: 20px;  /* test */
+    justify-content: center;
+    align-items: center;
+    flex-flow: column wrap;
+    /*display: block;*/ /* Inital page display*/
     text-align: center;
 }
-/*modifyStudies styling end*/
 
+/* Styling of the search-study-list class within the search studies */
+.search-study-list {
+    display: flex;
+    padding: 20px;
+    justify-content: center;
+    flex-flow: column wrap; 
+    align-items: center;
+    text-align: center;
+}
+
+/* styling of the individual queried searched study results */
+.study-item {
+    width: 50%;
+    padding: 15px;
+    border: solid 1px black;
+    cursor: pointer;
+}
+
+/* styling of the individual queried searched results when hovered over */
+.study-item:hover {
+    background-color: var(--green);
+    color: white;
+}
+/*searchStudies styling end*/
+/*modifyStudies styling start*/
+.modify-studies { 
+    display: block; /* Inital page display*/
+}
+
+.edit-delete-buttons {
+    display: flex;
+    justify-content: center;
+    padding: 0px;
+}
+
+.edit-method {
+    margin: 0 5px;
+}
+
+.delete-method {
+    margin: 0 5px;
+}
+
+.created-studies-list{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    flex-flow:column wrap;
+    align-items: center;
+    padding: 10px;
+}
+
+.create-btn {
+    width: 25%;
+    padding: 20px;
+    background-color: white;
+    color: black;
+    border: solid black 1px;
+    border-radius: 10%;
+}
+
+.create-btn:hover {
+    background-color: var(--green);
+    color: white;
+}
+/*modifyStudies styling end*/
 /*createStudies styling start*/
 .create-studies {
     display: none; /* Hidden by default */
     text-align: center;
+
 }
 /*createStudies styling end*/
-
-/*deleteStudies styling start*/
-.delete-studies {
-    display: none; /* Hidden by default */
+/*editStudies styling start*/
+.edit-studies {
+    display: block; /* Hidden by default */
     text-align: center;
+
 }
-/*deleteStudies styling end*/
+/*editStudies styling end*/
 /*********************/
 /* Study section end */
 /*********************/
