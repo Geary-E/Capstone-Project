@@ -161,14 +161,12 @@ function pageNavbar($conn, $pageName, $name, $userID)
             </div>
 
             <div class="page-content">  <!-- Container for all the content -->
-
                 <div class="search-surveys">'; //Container for searchSurvey module
                     surveySearch($name, $conn);  //Displays the surveySearch content
                     echo '
                 </div>
             </div>
-        </div>
-        ';
+        </div>';
     } //Navbar for surveys end
     elseif($pageName=='SurveysModify') //Navbar for surveysModify start
     {
@@ -179,16 +177,12 @@ function pageNavbar($conn, $pageName, $name, $userID)
             <a href="survey.php">Search ' . $pageNameDisplay . '</a>
             <a href="surveyModify.php">Manage ' . $pageNameDisplay . '</a>
             </div>
-
             <div class="page-content">  <!-- Container for all the content -->';
-
                 surveyModify($name, $userID, $conn); //Displays the surveyModify content
                 surveyCreate($name, $userID, $conn); //Displays the surveyCreate content
-
                 echo '
             </div>
         </div>';
-
     }//Navbar for surveysModify end
     elseif($pageName=='SurveysEdit') //Navbar for surveysEdit start
     {
@@ -201,62 +195,106 @@ function pageNavbar($conn, $pageName, $name, $userID)
             </div>
 
             <div class="page-content">  <!-- Container for all the content -->';
-
                 surveyEdit($name, $userID, $conn); //Displays the surveyEdit content
-
                 echo '
             </div>
         </div>';
-
     }//Navbar for surveysEdit end
-    elseif($pageName=='Opportunities') //Navbar for Opportunities start
+    elseif($pageName=='Opportunities') //Navbar opportunities start
     {
         echo '
         <div class="navbar-content-container">
             <div class="navbar"> <!-- Links for each module -->
-                <a href="#" onclick="opportunitySearch()">Search ' . $pageName . '</a>
-                <a href="#" onclick="opportunityCreate()">Create ' . $pageName . '</a>
-                <a href="#" onclick="opportunityModify()">Modify ' . $pageName . '</a>
-                <a href="#" onclick="opportunityDelete()">Delete ' . $pageName . '</a>
+                <a href="opportunity.php">Search ' . $pageName . '</a>
+                <a href="opportunityModify.php">Manage ' . $pageName . '</a>
             </div>
-
-            <div class="page-content">';
-
-                opportunitySearch($name); //Displays the opportunitySearch content
-                opportunityCreate($name); //Displays the opportunityCreate content
-                opportunityModify($name); //Displays the opportunityModify content
-                opportunityDelete($name); //Displays the opportunityDelete content
-
+            <div class="page-content">  <!-- Container for all the content -->
+                <div class="search-opportunities">'; //Container for searchOpportunity module
+                    opportunitySearch($name, $conn);  //Displays the opportunitySearch content
+                    echo '
+                </div>
+            </div>
+        </div>';
+    } //Navbar for opportunities end
+    elseif($pageName=='OpportunitiesModify') //Navbar for opportunitiesModify start
+    {
+        $pageNameDisplay='Opportunities';
+        echo '
+        <div class="navbar-content-container">
+            <div class="navbar"> <!-- Links for each module -->
+            <a href="opportunity.php">Search ' . $pageNameDisplay . '</a>
+            <a href="opportunityModify.php">Manage ' . $pageNameDisplay . '</a>
+            </div>
+            <div class="page-content">  <!-- Container for all the content -->';
+                opportunityModify($name, $userID, $conn); //Displays the opportunityModify content
+                opportunityCreate($name, $userID, $conn); //Displays the opportunityCreate content
                 echo '
             </div>
-        </div>
-        ';
-    } //Navbar for Opportunities end
-    elseif($pageName== 'Support Groups') //Navbar for Support Groups start
+        </div>';
+    }//Navbar for opportunitiesModify end
+    elseif($pageName=='OpportunitiesEdit') //Navbar for opportunitiesEdit start
+    {
+        $pageNameDisplay='Opportunities';
+        echo '
+        <div class="navbar-content-container">
+            <div class="navbar"> <!-- Links for each module -->
+            <a href="opportunity.php">Search ' . $pageNameDisplay . '</a>
+            <a href="opportunityModify.php">Manage ' . $pageNameDisplay . '</a>
+            </div>
+            <div class="page-content">  <!-- Container for all the content -->';
+                opportunityEdit($name, $userID, $conn); //Displays the opportunitityEdit content
+                echo '
+            </div>
+        </div>';
+    }//Navbar for opportunitiesEdit end
+    elseif($pageName=='Support Groups') //Navbar Support Groups start
     {
         echo '
         <div class="navbar-content-container">
             <div class="navbar"> <!-- Links for each module -->
-                <a href="#" onclick="supportGroupSearch()">Search ' . $pageName . '</a>
-                <a href="#" onclick="supportGroupCreate()">Create ' . $pageName . '</a>
-                <a href="#" onclick="supportGroupModify()">Modify ' . $pageName . '</a>
-                <a href="#" onclick="supportGroupDelete()">Delete ' . $pageName . '</a>
+                <a href="supportGroup.php">Search ' . $pageName . '</a>
+                <a href="supportGroupModify.php">Manage ' . $pageName . '</a>
             </div>
-
-            <div class="page-content">';
-
-
-                supportGroupSearch($name); //Displays the supportGroupSearch content 
-                supportGroupCreate($name); //Displays the supportGroupCreate content
-                supportGroupModify($name); //Displays the supportGroupModify content
-                supportGroupDelete($name); //Displays the supportGroupDelete content
-
-                echo '
+            <div class="page-content">  <!-- Container for all the content -->
+                <div class="search-supportGroups">'; //Container for searchOpportunity module
+                    supportGroupSearch($name, $conn);  //Displays the opportunitySearch content
+                    echo '
+                </div>
             </div>
-        </div>
-        ';
+        </div>';
     } //Navbar for Support Groups end
-    elseif($pageName== 'Studies') //Navbar for Studies start
+    elseif($pageName=='SupportGroupsModify') //Navbar for supportGroupModify start
+    {
+        $pageNameDisplay='Support Groups';
+        echo '
+        <div class="navbar-content-container">
+            <div class="navbar"> <!-- Links for each module -->
+            <a href="supportGroup.php">Search ' . $pageNameDisplay . '</a>
+            <a href="supportGroupModify.php">Manage ' . $pageNameDisplay . '</a>
+            </div>
+            <div class="page-content">  <!-- Container for all the content -->';
+                supportGroupModify($name, $userID, $conn); //Displays the supportGroupModify content
+                supportGroupCreate($name, $userID, $conn); //Displays the supportGroupCreate content
+                echo '
+            </div>
+        </div>';
+    }//Navbar for supportGroupsModify end
+    elseif($pageName=='SupportGroupsEdit') //Navbar for supportGroupEdit start
+    {
+        $pageNameDisplay='Support Groups';
+        echo '
+        <div class="navbar-content-container">
+            <div class="navbar"> <!-- Links for each module -->
+            <a href="supportGroup.php">Search ' . $pageNameDisplay . '</a>
+            <a href="supportGroupModify.php">Manage ' . $pageNameDisplay . '</a>
+            </div>
+            <div class="page-content">  <!-- Container for all the content -->';
+                supportGroupEdit($name, $userID, $conn); //Displays the supportGroupEdit content
+                echo '
+            </div>
+        </div>';
+    }//Navbar for supportGroupEdit end
+    elseif($pageName=='Studies') //Navbar for Studies start
     {
         echo '
         <div class="navbar-content-container">
@@ -459,7 +497,6 @@ function surveySearch($name, $conn)
             <div class="survey-search-tag-box"><label for="tag"> Tags:</label><input type="text" name="searchTag" placeholder="Tag name"></div>
             <button name="surveySearch" value="submit" type="submit">Search</button>
             </div> <!-- search-boxes end -->
-
         </form>
 
         <div class="survey-list">';
@@ -490,7 +527,7 @@ function surveySearch($name, $conn)
         </div> <!-- survey-list end -->
         <div class="search-survey-list" style="display: none;">';
 
-    //If createSurvey is posted
+    //If surveySearch is posted
     if (isset($_POST['surveySearch'])) {
         echo '<script>hideAll();</script>';
 
@@ -541,12 +578,12 @@ function surveyCreate($name, $userID, $conn)
     <h1>Hello <span>' . $name . '</span> this is the create survey section</h1>
 
     <form action="" method="post"> <!-- form for create survey info start-->
-		<label for="surveyname"><b>Survey Name:</b></label><br> <!-- surveyName button -->
+		<label for="surveyname"><b>Survey name:</b></label><br> <!-- surveyName button -->
 		<input type="text" id="survey_name" name="survey_name" required placeholder="Survey name">
 		<br><br>
 	
-		<label for="surveydescription"><b>Study Description:</b></label><br> <!-- surveyDescription button -->
-		<input type="text" id="survey_description" name="survey_description" required placeholder="Study description">
+		<label for="surveydescription"><b>Survey description:</b></label><br> <!-- surveyDescription button -->
+		<input type="text" id="survey_description" name="survey_description" required placeholder="Survey description">
 		<br><br>
 		
 		<label for="surveytags"><b>Survey tag(s):</b></label><br> <!-- surveyTags button -->
@@ -757,70 +794,638 @@ function surveyEdit($name, $userID, $conn)
 /**
  * Summary of opportunitySearch
  * @param mixed $name
+ * @param mixed $conn
  * @return void
  */
-function opportunitySearch($name)
+function opportunitySearch($name, $conn)
 {
-    
+    //Used to display errors
+    if (isset($error)) {
+        foreach ($error as $error) {
+            echo '<span class="error-msg">' . $error . '</span>';
+        };
+    };
     echo '
     <div class="search-opportunities-box">
-    <h1>Hello <span>' . $name . '</span> this is the search opportunity section</h1>
-    
-    <!-- Implemented search boxes -->
-    <form action="" method="post"> <!-- Buttons for the search -->
-    <div class="search-boxes"><!-- Search boxes section -->
-    <p style="display: block;">Search By:</p> <br><br>
-    <!-- Added labels to the search boxes -->
-    <div class="opportunity-search-name-box"><label for="search">Name:</label><input type="text" name="searchName" placeholder="Study name"></div>
-    <div class="opportunity-search-tag-box"><label for="tag"> Tags:</label><input type="text" name="searchTag" placeholder="Tag name"></div>
-    <button name="submit" value="submit" type="submit">Search</button>
-    </div>
+        <h1>Hello <span>' . $name . '</span> this is the search opportunity section</h1>
+        <form action="" method="post"> <!-- Buttons for the search -->
+            <div class="search-boxes">
+            <p style="display: block;">Search By:</p> <br><br>
+            <!-- Added labels to the search boxes -->
+            <div class="opportunity-search-name-box"><label for="search">Name:</label><input type="text" name="searchName" placeholder="Opportunity name"></div>
+            <div class="opportunity-search-tag-box"><label for="tag"> Tags:</label><input type="text" name="searchTag" placeholder="Tag name"></div>
+            <button name="opportunitySearch" value="submit" type="submit">Search</button>
+            </div> <!-- search-boxes end -->
+        </form>
 
-</form>
-    </div>
-    ';
+        <div class="opportunity-list">';
+
+        //Select from all opportunities
+        $select = "SELECT * FROM opportunity";
+        $result = mysqli_query($conn, $select);
+
+        //If there are no opportunities
+        if (mysqli_num_rows($result) == 0) {
+            $error[] = 'No opportunities were found';
+        }
+
+        //If there are opportunities
+        else if (mysqli_num_rows($result) > 0) {
+
+            //While row in table exists via result
+            while ( $row = mysqli_fetch_assoc($result) ) {
+
+                //Lists all opportunities
+                echo '<div class="opportunity-item"> ';
+                echo '<b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'];
+                echo '</div><br>';
+            } //While end
+        } //Else if end
+
+    echo'
+        </div> <!-- opportunity-list end -->
+        <div class="search-opportunity-list" style="display: none;">';
+
+    //If opportunitySearch is posted
+    if (isset($_POST['opportunitySearch'])) {
+        echo '<script>hideAll();</script>';
+
+        //Access searchName and searchTag variables from the posted data
+        $searchName = mysqli_real_escape_string($conn, $_POST['searchName']);
+        $searchTag = mysqli_real_escape_string($conn, $_POST['searchTag']);
+
+        //Select from opportunity table where name variable is similar
+        $select = "SELECT * FROM opportunity WHERE name LIKE '%$searchName%'";
+        $result = mysqli_query($conn, $select);
+
+        //If there are no opportunities
+        if (mysqli_num_rows($result) == 0) {
+            $error[] = 'No opportunities were found';
+        }
+
+        //If there are opportunities
+        else if (mysqli_num_rows($result) > 0) { 
+
+            //While row in table exists via result
+            while ( $row = mysqli_fetch_assoc($result) ) {
+                
+                //Lists opportunities where name and tag is included in the search fields
+                echo '<div class="opportunity-item"> ';
+                echo '<b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'];
+                echo '</div><br>';       
+            } //While end
+        } //Else if end
+        unset($_POST['opportunitySearch']);
+    } //If end
+    echo'
+        </div> <!-- search-opportunities-list end -->
+    </div> <!-- search-opportunities-box end -->';
 }
 
 /**
  * Summary of opportunityCreate
  * @param mixed $name
+ * @param mixed $userID
+ * @param mixed $conn
  * @return void
  */
-function opportunityCreate($name)
+function opportunityCreate($name, $userID, $conn)
 {
     echo '
     <div class="create-opportunities">
     <h1>Hello <span>' . $name . '</span> this is the create opportunity section</h1>
-    </div>
-    ';
+
+    <form action="" method="post"> <!-- form for create opportunity info start-->
+		<label for="opportunityname"><b>Opportunity name:</b></label><br> <!-- opportunityName button -->
+		<input type="text" id="opportunity_name" name="opportunity_name" required placeholder="Opportunity name">
+		<br><br>
+	
+		<label for="opportunitydescription"><b>Opportunity description:</b></label><br> <!-- opportunityDescription button -->
+		<input type="text" id="opportunity_description" name="opportunity_description" required placeholder="Opportunity description">
+		<br><br>
+		
+		<label for="opportunitytags"><b>Opportunity tag(s):</b></label><br> <!-- opportunityTags button -->
+		<input type="text" id="opportunity_tags" name="opportunity_tags" required placeholder="Opportunity tag(s)">
+		<br><br>
+	
+		<input type="submit" name="createOpportunity" value="Create new opportunity" class="form-btn"> <!-- createOpportunity button -->
+		<input type="button" onClick="window.location.href=\'opportunityModify.php\'" name="cancel" value="cancel" class="cancel-link"></input> <!-- cancel button links to opportunityModify.php-->
+        <br><br>
+	</form> <!-- form for create opportunity info end-->
+    </div> <!-- create-opportunities end -->';
+
+    //If createOpportunity is posted
+    if (isset($_POST['createOpportunity'])) {
+
+        //Create name and description variables from the posted data
+        $name = mysqli_real_escape_string($conn, $_POST['opportunity_name']);
+        $description = mysqli_real_escape_string($conn, $_POST['opportunity_description']);
+
+        //Insert into opportunity table with the created variables
+        $insert = "INSERT INTO `opportunity` (`opportunityID`, `ownerID`, `name`, `description`) VALUES (NULL, '$userID', '$name', '$description');";
+        
+        //If query was successful
+        if (mysqli_query($conn, $insert)) {
+            echo "Opportunity inserted successfully!";
+        }
+
+        //If query was not successful
+        else { 
+            echo "Error: " . mysqli_error($conn);
+        }
+        unset($_POST['createOpportunity']);
+    } //If end
 }
 
 /**
  * Summary of opportunityModify
  * @param mixed $name
+ * @param mixed $userID
+ * @param mixed $conn
  * @return void
  */
-function opportunityModify($name)
+function opportunityModify($name, $userID, $conn)
 {
     echo '
     <div class="modify-opportunities">
-    <h1>Hello <span>' . $name . '</span> this is the modify opportunity section</h1>
-    </div>
+    <h1>Hello <span>' . $name . '</span> this is the manage opportunity section</h1>
+
+    <h1> Created Opportunities: </h1>
+    <div class="created-opportunities-list">';
+
+    //Select from opportunity table where userID is equal
+    $select = "SELECT * FROM opportunity WHERE `ownerID` = '$userID';";
+    $result = mysqli_query($conn, $select);
+  
+    unset($_SESSION['editOpportunityID']);
+
+    //If no opportunities were found
+    if (mysqli_num_rows($result) == 0) {
+        echo '<h1>No opportunities were found</h1>';
+    }
+
+    //If there are opportunities
+    else if (mysqli_num_rows($result) > 0) {
+
+        //While row in table exists via result
+        while ($row = mysqli_fetch_assoc($result)) { 
+
+            //Lists opportunities where where userID is equal
+            echo '<div class="opportunity-item">
+               <p> <b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'] . '</p>
+               
+                <div class="edit-delete-buttons"> <!-- edit and delete buttons div start  -->
+            
+                <form method="post" class="edit-method" action="opportunityEdit.php">
+                   <input type="hidden" name="editOpportunityID" value="' . $row['opportunityID'] . '">
+                   <button type="submit" name="editOpportunity">Edit</button>
+                </form>';
+   
+                echo'
+                <!-- deleteOpportunity button -->
+                <form method="post" action="" class="delete-method" onsubmit="return confirm(\'Are you sure you want to delete this opportunity?\');">
+                    <input type="hidden" name="opportunity_id" value="' . $row['opportunityID'] . '">
+                    <button name="deleteOpportunity" value="submit" type="submit">Delete</button>
+                </form>
+                </div> <!-- edit and delete buttons div start  -->
+            </div><br> <!-- opportunity-item end -->';
+        } //While end
+    } //Else if end
+    echo '
+
+    <!-- Create opportunity button -->
+    <button onclick="opportunityCreate()" class="create-btn"> <b>Create New Opportunity</b>  </button>
+    </div> <!-- created-opportunities-list end -->
+    
+    <h1>Joined Opportunities:</h1>
+        <div class="created-opportunities-list">';
+
+    echo '
+    </div> <!-- created-opportunities-list end -->
+    </div> <!-- modify-opportunities end -->
     ';
+
+    //If deleteOpportunity is posted
+    if (isset($_POST['deleteOpportunity'])) {
+
+        //Creates opportunityID variable from the posted data
+        $opportunityID = mysqli_real_escape_string($conn, $_POST['opportunity_id']);
+
+        //Delete from opportunity table where opportunityID is equal
+        $deleteQuery = "DELETE FROM opportunity WHERE opportunityID = '$opportunityID';";
+       
+        //If query was successful
+        if (mysqli_query($conn, $deleteQuery)) { 
+            echo "Opportunity deleted successfully!";
+        }
+
+        //If query was not successful
+        else {
+            echo "Error: " . mysqli_error($conn);
+        }
+    } //If end
+}
+
+function opportunityEdit($name, $userID, $conn)
+{ 
+    //Initialize variables with default values
+    $opportunityName = '';
+    $opportunityDescription = '';
+    $edittedOpportunityID = '';
+
+    //Checks if opportunityID to edit is posted
+    if (isset($_POST['editOpportunityID'])) {
+
+        //Access access and store the opportunityID in a variable
+        $edittedOpportunityID = $_POST['editOpportunityID'];
+
+        //Store the data for the name and description from the opportunity table via the $opportunityID
+        $selectOpportunityData = "SELECT `name`, `description` FROM `opportunity` WHERE `opportunityID` ='$edittedOpportunityID';";
+        $resultOpportunityData = mysqli_query($conn, $selectOpportunityData);
+
+        //If there is a result
+        if ($resultOpportunityData && mysqli_num_rows($resultOpportunityData) > 0) {
+
+            //Make row variable to save name and description
+            $row = mysqli_fetch_assoc($resultOpportunityData);
+
+            //Info in the row to variables
+            $opportunityName = $row['name'];
+            $opportunityDescription = $row['description'];
+        } //Inner if end
+    } //Outter if end
+    
+    echo '
+    <div class="edit-opportunities">
+    <h1>Hello <span>' . $name. '</span> this is the edit opportunity section</h1>';
+
+    //Two forms, one for each part of the opportunity table: ( `name`, `description`)
+    echo '
+    <form action="" method="post">
+        <input type="hidden" name="editOpportunityID" value="' . $edittedOpportunityID . '">
+
+        <!--$opportunityName data as a placeholder for the name form-->
+        <label for="opportunityName">Opportunity Name:</label>
+        <br>
+        <input type="text" name="opportunityName" value="' . $opportunityName . '" class="form-input" required>
+        <br><br>
+
+        <!--$opportunityDescription data as a placeholder for the description form-->
+        <label for="opportunityDescription">Opportunity Description:</label>
+        <br>
+        <textarea name="opportunityDescription" class="form-textarea" required>' . $opportunityDescription . '</textarea>
+        <br><br>
+
+        <!--Submit form that posts updateOpportunity-->
+        <input type="submit" name="updateOpportunity" value="Submit" class="form-btn">
+
+        <!--Cancel button links to opportunityModify.php-->
+        <input type="button" onClick="window.location.href=\'opportunityModify.php\'" name="cancel" value="Cancel" class="cancel-link">
+        <br>
+    </form>
+    </div> <!-- edit-opportunities end -->';
+
+    //If updateOpportunity is posted
+    if (isset($_POST['updateOpportunity'])) {
+
+        //Create name and description variables from the posted data
+        $opportunityName = mysqli_real_escape_string($conn, $_POST['opportunityName']);
+        $opportunityDescription = mysqli_real_escape_string($conn, $_POST['opportunityDescription']);
+
+        //Update the opportunity table row name and description column where the $opportunityID is equal
+        $editQuery = "UPDATE `opportunity` SET `name` = '$opportunityName', `description` = '$opportunityDescription' WHERE `opportunity`.`opportunityID` = '$edittedOpportunityID';";
+        
+        //If query was successful
+        if (mysqli_query($conn, $editQuery)) {
+            echo "update successful ";
+            //header('location: opportunityModify.php');
+            //exit(); // Important to prevent further execution after the redirect
+        }
+
+        //If query was not successful
+        else {
+            echo "Error: " . mysqli_error($conn);
+        }
+    } //Outter if end
+}
+
+
+/**
+ * Summary of supportGroupSearch
+ * @param mixed $name
+ * @param mixed $conn
+ * @return void
+ */
+function supportGroupSearch($name, $conn)
+{
+    //Used to display errors
+    if (isset($error)) {
+        foreach ($error as $error) {
+            echo '<span class="error-msg">' . $error . '</span>';
+        };
+    };
+    echo '
+    <div class="search-supportGroups-box">
+        <h1>Hello <span>' . $name . '</span> this is the search support group section</h1>
+        <form action="" method="post"> <!-- Buttons for the search -->
+            <div class="search-boxes">
+            <p style="display: block;">Search By:</p> <br><br>
+            <!-- Added labels to the search boxes -->
+            <div class="supportGroup-search-name-box"><label for="search">Name:</label><input type="text" name="searchName" placeholder="Support group name"></div>
+            <div class="supportGroup-search-tag-box"><label for="tag"> Tags:</label><input type="text" name="searchTag" placeholder="Tag name"></div>
+            <button name="supportGroupSearch" value="submit" type="submit">Search</button>
+            </div> <!-- search-boxes end -->
+        </form>
+
+        <div class="supportGroup-list">';
+
+        //Select from all support groups
+        $select = "SELECT * FROM supportgroup";
+        $result = mysqli_query($conn, $select);
+
+        //If there are no support groups
+        if (mysqli_num_rows($result) == 0) {
+            $error[] = 'No support groups were found';
+        }
+
+        //If there are support groups
+        else if (mysqli_num_rows($result) > 0) {
+
+            //While row in table exists via result
+            while ( $row = mysqli_fetch_assoc($result) ) {
+
+                //Lists all support groups
+                echo '<div class="supportGroup-item"> ';
+                echo '<b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'];
+                echo '</div><br>';
+            } //While end
+        } //Else if end
+
+    echo'
+        </div> <!-- supportGroup-list end -->
+        <div class="search-supportGroup-list" style="display: none;">';
+
+    //If supportGroupSearch is posted
+    if (isset($_POST['supportGroupSearch'])) {
+        echo '<script>hideAll();</script>';
+
+        //Access searchName and searchTag variables from the posted data
+        $searchName = mysqli_real_escape_string($conn, $_POST['searchName']);
+        $searchTag = mysqli_real_escape_string($conn, $_POST['searchTag']);
+
+        //Select from supportgroup table where name variable is similar
+        $select = "SELECT * FROM supportgroup WHERE name LIKE '%$searchName%'";
+        $result = mysqli_query($conn, $select);
+
+        //If there are no support groups
+        if (mysqli_num_rows($result) == 0) {
+            $error[] = 'No support groups were found';
+        }
+
+        //If there are support groups
+        else if (mysqli_num_rows($result) > 0) { 
+
+            //While row in table exists via result
+            while ( $row = mysqli_fetch_assoc($result) ) {
+                
+                //Lists support groups where name and tag is included in the search fields
+                echo '<div class="supportGroup-item"> ';
+                echo '<b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'];
+                echo '</div><br>';       
+            } //While end
+        } //Else if end
+        unset($_POST['supportGroupSearch']);
+    } //If end
+    echo'
+        </div> <!-- search-supportGroups-list end -->
+    </div> <!-- search-supportGroups-box end -->';
 }
 
 /**
- * Summary of opportunityDelete
+ * Summary of supportGroupCreate
  * @param mixed $name
+ * @param mixed $userID
+ * @param mixed $conn
  * @return void
  */
-function opportunityDelete($name)
+function supportGroupCreate($name, $userID, $conn)
 {
     echo '
-    <div class="delete-opportunities">
-    <h1>Hello <span>' . $name . '</span> this is the delete opportunity section</h1>
-    </div>
+    <div class="create-supportGroups">
+    <h1>Hello <span>' . $name . '</span> this is the create support group section</h1>
+
+    <form action="" method="post"> <!-- form for create supportGroup info start-->
+		<label for="supportGroupname"><b>Support group name:</b></label><br> <!-- supportGroupName button -->
+		<input type="text" id="supportGroup_name" name="supportGroup_name" required placeholder="Support group name">
+		<br><br>
+	
+		<label for="supportGroupdescription"><b>Support Group description:</b></label><br> <!-- supportGroupDescription button -->
+		<input type="text" id="supportGroup_description" name="supportGroup_description" required placeholder="Support group description">
+		<br><br>
+		
+		<label for="supportGrouptags"><b>Support group tag(s):</b></label><br> <!-- supportGroupTags button -->
+		<input type="text" id="supportGroup_tags" name="supportGroup_tags" required placeholder="Support group tag(s)">
+		<br><br>
+	
+		<input type="submit" name="createSupportGroup" value="Create new support group" class="form-btn"> <!-- createSupportGroup button -->
+		<input type="button" onClick="window.location.href=\'supportGroupModify.php\'" name="cancel" value="cancel" class="cancel-link"></input> <!-- cancel button links to supportGroupModify.php-->
+        <br><br>
+	</form> <!-- form for create supportGroup info end-->
+    </div> <!-- create-supportGroups end -->';
+
+    //If createSupportGroup is posted
+    if (isset($_POST['createSupportGroup'])) {
+
+        //Create name and description variables from the posted data
+        $name = mysqli_real_escape_string($conn, $_POST['supportGroup_name']);
+        $description = mysqli_real_escape_string($conn, $_POST['supportGroup_description']);
+
+        //Insert into supportgroup table with the created variables
+        $insert = "INSERT INTO `supportgroup` (`supportGroupID`, `ownerID`, `name`, `description`) VALUES (NULL, '$userID', '$name', '$description');";
+        
+        //If query was successful
+        if (mysqli_query($conn, $insert)) {
+            echo "Support Group inserted successfully!";
+        }
+
+        //If query was not successful
+        else { 
+            echo "Error: " . mysqli_error($conn);
+        }
+        unset($_POST['createSupportGroup']);
+    } //If end
+}
+
+/**
+ * Summary of supportGroupModify
+ * @param mixed $name
+ * @param mixed $userID
+ * @param mixed $conn
+ * @return void
+ */
+function supportGroupModify($name, $userID, $conn)
+{
+    echo '
+    <div class="modify-supportGroups">
+    <h1>Hello <span>' . $name . '</span> this is the manage support group section</h1>
+
+    <h1> Created Support groups: </h1>
+    <div class="created-supportGroups-list">';
+
+    //Select from supportgroup table where userID is equal
+    $select = "SELECT * FROM supportgroup WHERE `ownerID` = '$userID';";
+    $result = mysqli_query($conn, $select);
+  
+    unset($_SESSION['editSupportGroupID']);
+
+    //If no support groups were found
+    if (mysqli_num_rows($result) == 0) {
+        echo '<h1>No support groups were found</h1>';
+    }
+
+    //If there are support groups
+    else if (mysqli_num_rows($result) > 0) {
+
+        //While row in table exists via result
+        while ($row = mysqli_fetch_assoc($result)) { 
+
+            //Lists support groups where where userID is equal
+            echo '<div class="supportGroup-item">
+               <p> <b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'] . '</p>
+               
+                <div class="edit-delete-buttons"> <!-- edit and delete buttons div start  -->
+            
+                <form method="post" class="edit-method" action="supportGroupEdit.php">
+                   <input type="hidden" name="editSupportGroupID" value="' . $row['supportGroupID'] . '">
+                   <button type="submit" name="editSupportGroup">Edit</button>
+                </form>';
+   
+                echo'
+                <!-- deleteSupportGroup button -->
+                <form method="post" action="" class="delete-method" onsubmit="return confirm(\'Are you sure you want to delete this support group?\');">
+                    <input type="hidden" name="supportGroup_id" value="' . $row['supportGroupID'] . '">
+                    <button name="deleteSupportGroup" value="submit" type="submit">Delete</button>
+                </form>
+                </div> <!-- edit and delete buttons div start  -->
+            </div><br> <!-- supportGroup-item end -->';
+        } //While end
+    } //Else if end
+    echo '
+
+    <!-- Create supportGroup button -->
+    <button onclick="supportGroupCreate()" class="create-btn"> <b>Create New Support Group</b>  </button>
+    </div> <!-- created-supportGroups-list end -->
+    
+    <h1>Joined Support Groups:</h1>
+        <div class="created-supportGroups-list">';
+
+    echo '
+    </div> <!-- created-supportGroups-list end -->
+    </div> <!-- modify-supportGroups end -->
     ';
+
+    //If deleteSupportGroup is posted
+    if (isset($_POST['deleteSupportGroup'])) {
+
+        //Creates supportGroupID variable from the posted data
+        $supportGroupID = mysqli_real_escape_string($conn, $_POST['supportGroup_id']);
+
+        //Delete from supportgroup table where supportGroupID is equal
+        $deleteQuery = "DELETE FROM supportgroup WHERE supportGroupID = '$supportGroupID';";
+       
+        //If query was successful
+        if (mysqli_query($conn, $deleteQuery)) { 
+            echo "Support group deleted successfully!";
+        }
+
+        //If query was not successful
+        else {
+            echo "Error: " . mysqli_error($conn);
+        }
+    } //If end
+}
+
+function supportGroupEdit($name, $userID, $conn)
+{ 
+    //Initialize variables with default values
+    $supportGroupName = '';
+    $supportGroupDescription = '';
+    $edittedSupportGroupID = '';
+
+    //Checks if supportGroupID to edit is posted
+    if (isset($_POST['editSupportGroupID'])) {
+
+        //Access access and store the supportGroupID in a variable
+        $edittedSupportGroupID = $_POST['editSupportGroupID'];
+
+        //Store the data for the name and description from the supportgroup table via the $supportGroupID
+        $selectSupportGroupData = "SELECT `name`, `description` FROM `supportgroup` WHERE `supportGroupID` ='$edittedSupportGroupID';";
+        $resultSupportGroupData = mysqli_query($conn, $selectSupportGroupData);
+
+        //If there is a result
+        if ($resultSupportGroupData && mysqli_num_rows($resultSupportGroupData) > 0) {
+
+            //Make row variable to save name and description
+            $row = mysqli_fetch_assoc($resultSupportGroupData);
+
+            //Info in the row to variables
+            $supportGroupName = $row['name'];
+            $supportGroupDescription = $row['description'];
+        } //Inner if end
+    } //Outter if end
+    
+    echo '
+    <div class="edit-supportGroups">
+    <h1>Hello <span>' . $name. '</span> this is the edit support group section</h1>';
+
+    //Two forms, one for each part of the supportgroup table: ( `name`, `description`)
+    echo '
+    <form action="" method="post">
+        <input type="hidden" name="editSupportGroupID" value="' . $edittedSupportGroupID . '">
+
+        <!--$supportGroupName data as a placeholder for the name form-->
+        <label for="supportGroupName">Support Group Name:</label>
+        <br>
+        <input type="text" name="supportGroupName" value="' . $supportGroupName . '" class="form-input" required>
+        <br><br>
+
+        <!--$supportGroupDescription data as a placeholder for the description form-->
+        <label for="supportGroupDescription">SupportGroup Description:</label>
+        <br>
+        <textarea name="supportGroupDescription" class="form-textarea" required>' . $supportGroupDescription . '</textarea>
+        <br><br>
+
+        <!--Submit form that posts updateSupportGroup-->
+        <input type="submit" name="updateSupportGroup" value="Submit" class="form-btn">
+
+        <!--Cancel button links to supportGroupModify.php-->
+        <input type="button" onClick="window.location.href=\'supportGroupModify.php\'" name="cancel" value="Cancel" class="cancel-link">
+        <br>
+    </form>
+    </div> <!-- edit-supportGroups end -->';
+
+    //If updateSupportGroup is posted
+    if (isset($_POST['updateSupportGroup'])) {
+
+        //Create name and description variables from the posted data
+        $supportGroupName = mysqli_real_escape_string($conn, $_POST['supportGroupName']);
+        $supportGroupDescription = mysqli_real_escape_string($conn, $_POST['supportGroupDescription']);
+
+        //Update the supportgroup table row name and description column where the $supportGroupID is equal
+        $editQuery = "UPDATE `supportgroup` SET `name` = '$supportGroupName', `description` = '$supportGroupDescription' WHERE `supportgroup`.`supportGroupID` = '$edittedSupportGroupID';";
+        
+        //If query was successful
+        if (mysqli_query($conn, $editQuery)) {
+            echo "update successful ";
+            //header('location: supportGroupModify.php');
+            //exit(); // Important to prevent further execution after the redirect
+        }
+
+        //If query was not successful
+        else {
+            echo "Error: " . mysqli_error($conn);
+        }
+    } //Outter if end
 }
 
 /**
@@ -1113,75 +1718,6 @@ function studyDelete($name, $userID, $conn)
         }
     }
     
-}
-
-/**
- * Summary of supportGroupSearch
- * @param mixed $name
- * @return void
- */
-function supportGroupSearch($name)
-{
-    
-    echo '
-    <div class="search-supportGroups-box">
-    <h1>Hello <span>' . $name . '</span> this is the search support group section</h1>
-   
-    <!-- Implemented search boxes -->
-    <form action="" method="post"> <!-- Buttons for the search -->
-    <div class="search-boxes"><!-- Search boxes section -->
-    <p style="display: block;">Search By:</p> <br><br>
-    <!-- Added labels to the search boxes -->
-    <div class="support-search-name-box"><label for="search">Name:</label><input type="text" name="searchName" placeholder="Study name"></div>
-    <div class="support-search-tag-box"><label for="tag"> Tags:</label><input type="text" name="searchTag" placeholder="Tag name"></div>
-    <button name="submit" value="submit" type="submit">Search</button>
-    </div>
-
-</form>
-    </div>
-    ';
-}
-
-/**
- * Summary of supportGroupCreate
- * @param mixed $name
- * @return void
- */
-function supportGroupCreate($name)
-{
-    echo '
-    <div class="create-supportGroups">
-    <h1>Hello <span>' . $name . '</span> this is the create support group section</h1>
-    </div>
-    ';
-}
-
-/**
- * Summary of supportGroupModify
- * @param mixed $name
- * @return void
- */
-function supportGroupModify($name)
-{
-    echo '
-    <div class="modify-supportGroups">
-    <h1>Hello <span>' . $name . '</span> this is the modify support group section</h1>
-    </div>
-    ';
-}
-
-/**
- * Summary of supportGroupDelete
- * @param mixed $name
- * @return void
- */
-function supportGroupDelete($name)
-{
-    echo '
-    <div class="delete-supportGroups">
-    <h1>Hello <span>' . $name . '</span> this is the delete support group section</h1>
-    </div>
-    ';
 }
 
 echo '<script src="functions.js"></script>';

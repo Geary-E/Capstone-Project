@@ -1,3 +1,5 @@
+// Displays the surveySearch div, and hides the others
+
 function surveySearch() {
     document.querySelector('.search-surveys').style.display = 'block';
     document.querySelector('.survey-list').style.display = 'flex';
@@ -13,19 +15,12 @@ function surveyCreate() {
     document.querySelector('.modify-surveys').style.display = 'none';
 }
 
-// Displays the surveyEdit div, and hides the others
-function surveyEditer() {
-    document.querySelector('.create-surveys').style.display = 'none';
-    document.querySelector('.modify-surveys').style.display = 'none';
-}
-
 // Displays the surveyModify div, and hides the others
 function surveyModify() {
     document.querySelector('.search-surveys').style.display = 'none';
     document.querySelector('.create-surveys').style.display = 'none';
     document.querySelector('.modify-surveys').style.display = 'block';
     document.querySelector('.edit-surveys').style.display = 'none';
-
 }
 
 // Displays the surveyDelete div, and hides the others
@@ -38,17 +33,17 @@ function surveyDelete() {
 // Displays the opportunitySearch div, and hides the others
 function opportunitySearch() {
     document.querySelector('.search-opportunities').style.display = 'block';
+    document.querySelector('.opportunity-list').style.display = 'flex';
+    document.querySelector('.opportunity-item').style.width = '50%';
+    document.querySelector('.search-opportunity-list').style.display = 'none';
     document.querySelector('.create-opportunities').style.display = 'none';
     document.querySelector('.modify-opportunities').style.display = 'none';
-    document.querySelector('.delete-opportunities').style.display = 'none';
 }
 
 // Displays the opportunityCreate div, and hides the others
 function opportunityCreate() {
-    document.querySelector('.search-opportunities').style.display = 'none';
     document.querySelector('.create-opportunities').style.display = 'block';
     document.querySelector('.modify-opportunities').style.display = 'none';
-    document.querySelector('.delete-opportunities').style.display = 'none';
 }
 
 // Displays the opportunityModify div, and hides the others
@@ -56,7 +51,7 @@ function opportunityModify() {
     document.querySelector('.search-opportunities').style.display = 'none';
     document.querySelector('.create-opportunities').style.display = 'none';
     document.querySelector('.modify-opportunities').style.display = 'block';
-    document.querySelector('.delete-opportunities').style.display = 'none';
+    document.querySelector('.edit-opportunities').style.display = 'none';
 }
 
 // Displays the opportunityDelete div, and hides the others
@@ -64,23 +59,22 @@ function opportunityDelete() {
     document.querySelector('.search-opportunities').style.display = 'none';
     document.querySelector('.create-opportunities').style.display = 'none';
     document.querySelector('.modify-opportunities').style.display = 'none';
-    document.querySelector('.delete-opportunities').style.display = 'block';
 }
 
 // Displays the supportGroupSearch div, and hides the others
 function supportGroupSearch() {
     document.querySelector('.search-supportGroups').style.display = 'block';
+    document.querySelector('.supportGroup-list').style.display = 'flex';
+    document.querySelector('.supportGroup-item').style.width = '50%';
+    document.querySelector('.search-supportGroup-list').style.display = 'none';
     document.querySelector('.create-supportGroups').style.display = 'none';
     document.querySelector('.modify-supportGroups').style.display = 'none';
-    document.querySelector('.delete-supportGroups').style.display = 'none';
 }
 
 // Displays the supportGroupCreate div, and hides the others
 function supportGroupCreate() {
-    document.querySelector('.search-supportGroups').style.display = 'none';
     document.querySelector('.create-supportGroups').style.display = 'block';
     document.querySelector('.modify-supportGroups').style.display = 'none';
-    document.querySelector('.delete-supportGroups').style.display = 'none';
 }
 
 // Displays the supportGroupModify div, and hides the others
@@ -88,16 +82,14 @@ function supportGroupModify() {
     document.querySelector('.search-supportGroups').style.display = 'none';
     document.querySelector('.create-supportGroups').style.display = 'none';
     document.querySelector('.modify-supportGroups').style.display = 'block';
-    document.querySelector('.delete-supportGroups').style.display = 'none';
+    document.querySelector('.edit-supportGroups').style.display = 'none';
 }
 
 // Displays the supportGroupDelete div, and hides the others
 function supportGroupDelete() {
-
     document.querySelector('.search-supportGroups').style.display = 'none';
     document.querySelector('.create-supportGroups').style.display = 'none';
     document.querySelector('.modify-supportGroups').style.display = 'none';
-    document.querySelector('.delete-supportGroups').style.display = 'block';
 }
 
 // Displays the studySearch div, and hides the others
@@ -138,8 +130,15 @@ function studyDelete() {
 // Used to hide specific modules when necessary
 function hideAll() {
     document.querySelector('.survey-list').style.display = 'none';
-    /* Changed the display of the search-survey-list in this function */
     document.querySelector('.search-survey-list').style.display = 'flex';
     document.querySelector('.survey-item').style.width = '50%';
+
+    document.querySelector('.opportunity-list').style.display = 'none'
+    document.querySelector('.search-opportunity-list').style.display = 'flex';
+    document.querySelector('.opportunity-item').style.width = '50%';
+
+    document.querySelector('.supportGroup-list').style.display = 'none'
+    document.querySelector('.search-supportGroup-list').style.display = 'flex';
+    document.querySelector('.supportGroup-item').style.width = '50%';
 }
 
