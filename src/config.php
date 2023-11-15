@@ -7,4 +7,5 @@
 //Includes the functions
 @include 'functions.php';
 
+
 ?>
