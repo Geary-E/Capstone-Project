@@ -294,59 +294,55 @@ function pageNavbar($conn, $pageName, $name, $userID)
             </div>
         </div>';
     }//Navbar for supportGroupEdit end
-    elseif($pageName=='Studies') //Navbar for Studies start
+    elseif($pageName=='Studies') //Navbar for studies start
     {
         echo '
         <div class="navbar-content-container">
             <div class="navbar"> <!-- Links for each module -->
-                <a href="#" onclick="studySearch()">Search ' . $pageName . '</a>
-                <a href="#" onclick="studyCreate()">Create ' . $pageName . '</a>
-                <a href="#" onclick="studyModify()">Modify ' . $pageName . '</a>
+                <a href="study.php">Search ' . $pageName . '</a>
+                <a href="studyModify.php">Manage ' . $pageName . '</a>
             </div>
 
-            <div class="page-content">
-				<div class="search-studies">'; //Container for searchStudy module
-                studySearch($name, $conn);  //Displays the studySearch content
-                echo '
-                    </div>';
-                studyCreate($name, $conn);  //Displays the studyCreate content
-				echo '
-
-				<div class="modify-studies">';
-                studyModify($name,$userID,$conn); //Displays the studyModify content
-				echo '
-					</div>
-				<div class="delete-studies">';
-				
-				studyDelete($name,$userID,$conn);
-                echo '
-				</div>
+            <div class="page-content">  <!-- Container for all the content -->
+                <div class="search-studies">'; //Container for searchStudy module
+                    studySearch($name, $conn);  //Displays the studySearch content
+                    echo '
+                </div>
             </div>
-        </div>
-        ';
-    } //Navbar for Studies end
-
+        </div>';
+    } //Navbar for studies end
+    elseif($pageName=='StudiesModify') //Navbar for studiesModify start
+    {
+        $pageNameDisplay='Studies';
+        echo '
+        <div class="navbar-content-container">
+            <div class="navbar"> <!-- Links for each module -->
+            <a href="study.php">Search ' . $pageNameDisplay . '</a>
+            <a href="studyModify.php">Manage ' . $pageNameDisplay . '</a>
+            </div>
+            <div class="page-content">  <!-- Container for all the content -->';
+                studyModify($name, $userID, $conn); //Displays the studyModify content
+                studyCreate($name, $userID, $conn); //Displays the studyCreate content
+                echo '
+            </div>
+        </div>';
+    }//Navbar for studiesModify end
     elseif($pageName=='StudiesEdit') //Navbar for studiesEdit start
-
     {
+        $pageNameDisplay='Studies';
         echo '
         <div class="navbar-content-container">
             <div class="navbar"> <!-- Links for each module -->
-                <a href="#" onclick="studySearch()">Search ' . $pageName . '</a>
-                <a href="#" onclick="studyCreate()">Create ' . $pageName . '</a>
-                <a href="#" onclick="studyModify()">Modify ' . $pageName . '</a>
+            <a href="study.php">Search ' . $pageNameDisplay . '</a>
+            <a href="studyModify.php">Manage ' . $pageNameDisplay . '</a>
             </div>
 
-            <div class="page-content">';
-				
-				studyDelete($name,$userID,$conn);
+            <div class="page-content">  <!-- Container for all the content -->';
+                studyEdit($name, $userID, $conn); //Displays the studyEdit content
                 echo '
-
             </div>
-        </div>
-        ';
-
-    } //Navbar for studiesEdit end
+        </div>';
+    }//Navbar for studiesEdit end
     else if($pageName = 'Account Page') { //Navbar for Account Page start
 
         echo '
@@ -1437,291 +1433,361 @@ function supportGroupEdit($name, $userID, $conn)
  * @param mixed $name
  * @return void
  */
-function studySearch($name,$conn)
+function studySearch($name, $conn)
 {
+    //Used to display errors
+    if (isset($error)) {
+        foreach ($error as $error) {
+            echo '<span class="error-msg">' . $error . '</span>';
+        };
+    };
     echo '
     <div class="search-studies-box">
-    <h1>Hello <span>' . $name . '</span> this is the search study section</h1>
+        <h1>Hello <span>' . $name . '</span> this is the search study section</h1>
+        <form action="" method="post"> <!-- Buttons for the search -->
+            <div class="search-boxes">
+            <p style="display: block;">Search By:</p> <br><br>
+            <!-- Added labels to the search boxes -->
+            <div class="study-search-name-box"><label for="search">Name:</label><input type="text" name="searchName" placeholder="Study name"></div>
+            <div class="study-search-tag-box"><label for="tag"> Tags:</label><input type="text" name="searchTag" placeholder="Tag name"></div>
+            <button name="studySearch" value="submit" type="submit">Search</button>
+            </div> <!-- search-boxes end -->
+        </form>
 
-    <!-- Implemented search boxes -->
-    <form action="" method="post"> <!-- Buttons for the search -->
-    <div class="search-boxes"><!-- Search boxes section -->
-    <p style="display: block;">Search By:</p> <br><br>
-    <!-- Added labels to the search boxes -->
-    <div class="study-search-name-box"><label for="search">Name:</label><input type="text" name="searchName" placeholder="Study name"></div>
-    <div class="study-search-tag-box"><label for="tag"> Tags:</label><input type="text" name="searchTag" placeholder="Tag name"></div>
-    <button name="submit" value="submit" type="submit">Search</button>
-    </div>
-	</form>
-	
-    <div class="survey-list">';
+        <div class="study-list">';
 
+        //Select from all studies
         $select = "SELECT * FROM study";
         $result = mysqli_query($conn, $select);
 
-        if (mysqli_num_rows($result) == 0) { //if result == 0
+        //If there are no studies
+        if (mysqli_num_rows($result) == 0) {
             $error[] = 'No studies were found';
         }
-        else if (mysqli_num_rows($result) > 0) { //if there are studies 
+
+        //If there are studies
+        else if (mysqli_num_rows($result) > 0) {
+
+            //While row in table exists via result
             while ( $row = mysqli_fetch_assoc($result) ) {
-                /* Added styling to the queried search results */
-                echo '<div class="survey-item"> ';
-                echo '<b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'] . '<br><b>Date:</b> ' . $row['date'] . '<br><b>Location:</b> ' . $row['location'] . '<br><b>Compensation:</b> ' . $row['compensation'];
-                echo '</div><br>';    /* <br> */
-            }
-        }
+
+                //Lists all studies
+                echo '<div class="study-item"> ';
+                echo '<b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'] . '<br><b>Location:</b> ' . $row['location'] . '<br><b>Date:</b> ' . $row['date'] . '<br><b>Compensation:</b> ' . $row['compensation'];
+                echo '</div><br>';
+            } //While end
+        } //Else if end
 
     echo'
         </div> <!-- study-list end -->
-        <div class="search-survey-list" style="display: none;">';
-    if (isset($_POST['submit'])) {
-        echo '<script>hideAll();</script>'; 
+        <div class="search-study-list" style="display: none;">';
 
-        //Access searchName and searchTag variables
-        $searchName = $_POST['searchName'];
-        $searchTag = $_POST['searchTag'];
+    //If studySearch is posted
+    if (isset($_POST['studySearch'])) {
+        echo '<script>hideAll();</script>';
 
-        $select = "SELECT * FROM study WHERE name LIKE '%$searchName%'"; 
+        //Access searchName and searchTag variables from the posted data
+        $searchName = mysqli_real_escape_string($conn, $_POST['searchName']);
+        $searchTag = mysqli_real_escape_string($conn, $_POST['searchTag']);
+
+        //Select from study table where name variable is similar
+        $select = "SELECT * FROM study WHERE name LIKE '%$searchName%'";
         $result = mysqli_query($conn, $select);
 
-        if (mysqli_num_rows($result) == 0) { //if result == 0
+        //If there are no studies
+        if (mysqli_num_rows($result) == 0) {
             $error[] = 'No studies were found';
         }
-        else if (mysqli_num_rows($result) > 0) {  //if there are studies 
+
+        //If there are studies
+        else if (mysqli_num_rows($result) > 0) { 
+
+            //While row in table exists via result
             while ( $row = mysqli_fetch_assoc($result) ) {
-                /* Added styling to the queried search results */
-                echo '<div class="survey-item"> ';
-                echo '<b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'] . '<br><b>Date:</b> ' . $row['date'] . '<br><b>Location:</b> ' . $row['location'] . '<br><b>Compensation:</b> ' . $row['compensation'];
+                
+                //Lists studies where name and tag is included in the search fields
+                echo '<div class="study-item"> ';
+                echo '<b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'] . '<br><b>Location:</b> ' . $row['location'] . '<br><b>Date:</b> ' . $row['date'] . '<br><b>Compensation:</b> ' . $row['compensation'];
                 echo '</div><br>';       
-            }
-        }
-        unset($_POST['submit']);
-    }
+            } //While end
+        } //Else if end
+        unset($_POST['studySearch']);
+    } //If end
     echo'
-        </div> <!-- search-studys-list end -->
-    </div> <!-- search-studys-box end -->
-    ';
+        </div> <!-- search-studies-list end -->
+    </div> <!-- search-studies-box end -->';
 }
 
 /**
  * Summary of studyCreate
  * @param mixed $name
+ * @param mixed $userID
+ * @param mixed $conn
  * @return void
  */
-function studyCreate($name,$conn)
+function studyCreate($name, $userID, $conn)
 {
-    echo '<div class="create-studies">
+
+    echo '
+    <div class="create-studies">
     <h1>Hello <span>' . $name . '</span> this is the create study section</h1>
-    <form action="" method="post">';
-		if (isset($error)) {
-			foreach ($error as $error) {
-				echo '<span class="error-msg">' . $error . '</span>';
-			};
-		};
-		
-	echo'
-		<label for="studyname"><b>Study Name:</b></label><br>
-		<input type="text" name="study_name" required placeholder="Enter the study name">
+
+    <form action="" method="post"> <!-- form for create study info start-->
+		<label for="studyname"><b>Study name:</b></label><br> <!-- studyName button -->
+		<input type="text" id="study_name" name="study_name" required placeholder="Study name">
 		<br><br>
 	
-		<label for="studydescription"><b>Study Description:</b></label><br>
-		<input type="text" name="study_desc" required placeholder="Enter the study description">
+		<label for="studydescription"><b>Study description:</b></label><br> <!-- studyDescription button -->
+		<input type="text" id="study_description" name="study_description" required placeholder="Study description">
 		<br><br>
 		
-		<label for="studylocation"><b>Study location:</b></label><br>
-		<input type="text" name="study_loc" required placeholder="Enter the study location">
+		<label for="studylocation"><b>Study location:</b></label><br> <!-- studyLocation button -->
+		<input type="text" id="study_location" name="study_location" required placeholder="Study location">
 		<br><br>
 		
-		<label for="studytime"><b>Study date(YYYY-MM-DD hh:mm):</b></label><br>
-		<input type="text" name="study_time" required placeholder="Enter the study time">
+		<label for="studydate"><b>Study date:</b></label><br> <!-- studyDate button -->
+		<input type="text" id="study_date" name="study_date" required placeholder="Study date">
 		<br><br>
 		
-		<label for="studycompensation"><b>Study Compensation (in US dollors):</b></label><br>
-		<input type="text" name="study_com" required placeholder="Enter the study compensation">
+		<label for="studycompensation"><b>Study compensation:</b></label><br> <!-- studyCompensation button -->
+		<input type="text" id="study_compensation" name="study_compensation" required placeholder="Study compensation">
 		<br><br>
 		
-		<label for="studytags"><b>Study tag(s):</b></label><br>
-		<input type="text" name="study_tags" value="tag1" required placeholder="Enter the study tag(s)">
+		<label for="studytags"><b>Study tag(s):</b></label><br> <!-- studyTags button -->
+		<input type="text" id="study_tags" name="study_tags" required placeholder="Study tag(s)">
 		<br><br>
 	
-		<input type="submit" name="createStudy" value="Create new study" class="form-btn">
-		<input type="button" onClick="" name="cancel" value="cancel" class="cancel-link"></input><br>
-		<br>
-	</form></div>';
-	
-	//Assigns input from input fields to varibles
-	if (isset($_POST['createStudy'])) {
-		$user_id = $_SESSION['userID'];
-		$stu_name = mysqli_real_escape_string($conn, $_POST['study_name']);
-		$stu_desc = mysqli_real_escape_string($conn, $_POST['study_desc']);
-		$stu_loc = mysqli_real_escape_string($conn, $_POST['study_loc']);
-		$stu_time = mysqli_real_escape_string($conn, $_POST['study_time']);
-		$stu_com = mysqli_real_escape_string($conn, $_POST['study_com']);
-		$stu_tags = mysqli_real_escape_string($conn, $_POST['study_tags']);
-    
-		//$insert2 = "INSERT INTO study(,,study_name, study_desc, study_loc, study_time, study_com, study_tags) VALUES('','','$stu_name','$stu_desc','$stu_loc','$stu_time','$stu_com','$stu_tags')";
-		
-		//Creates new row into the study table
-		$insert2 = "INSERT INTO `study`(`ownerID`, `name`, `description`, `location`, `date`, `compensation`) VALUES ('$user_id','$stu_name','$stu_desc','$stu_loc','$stu_time','$stu_com')";
-		mysqli_query($conn, $insert2);
-		
-		//Gets the newly created row's id
-		$result = mysqli_insert_id($conn);
-		
-		//Creates new row into the user_study table
-		$insert3 = "INSERT INTO `user_study`(`userID`, `studyID`) VALUES ('$user_id','$result')";
-		mysqli_query($conn, $insert3);				
-	}
+		<input type="submit" name="createStudy" value="Create new study" class="form-btn"> <!-- createStudy button -->
+		<input type="button" onClick="window.location.href=\'studyModify.php\'" name="cancel" value="cancel" class="cancel-link"></input> <!-- cancel button links to studyModify.php-->
+        <br><br>
+	</form> <!-- form for create study info end-->
+    </div> <!-- create-studies end -->';
+
+    //If createStudy is posted
+    if (isset($_POST['createStudy'])) {
+
+        //Create name and description variables from the posted data
+        $name = mysqli_real_escape_string($conn, $_POST['study_name']);
+        $description = mysqli_real_escape_string($conn, $_POST['study_description']);
+		$date = mysqli_real_escape_string($conn, $_POST['study_date']);
+		$location = mysqli_real_escape_string($conn, $_POST['study_location']);
+		$compensation = mysqli_real_escape_string($conn, $_POST['study_compensation']);
+
+        //Insert into study table with the created variables
+        $insert = "INSERT INTO `study` (`studyID`, `ownerID`, `name`, `description`, `location`, `date`, `compensation`) VALUES (NULL, '$userID', '$name', '$description', '$date', '$location', '$compensation');";
+        
+        //If query was successful
+        if (mysqli_query($conn, $insert)) {
+            echo "Study inserted successfully!";
+        }
+
+        //If query was not successful
+        else { 
+            echo "Error: " . mysqli_error($conn);
+        }
+        unset($_POST['createStudy']);
+    } //If end
 }
 
 /**
  * Summary of studyModify
- * @param mixed $name,$userID,$conn
+ * @param mixed $name
+ * @param mixed $userID
+ * @param mixed $conn
  * @return void
  */
-function studyModify($name,$userID,$conn)
+function studyModify($name, $userID, $conn)
 {
     echo '
-    <div class="modify-surveys">
-    <h1>Hello <span>' . $name . '</span> this is the modify studies section</h1>
+    <div class="modify-studies">
+    <h1>Hello <span>' . $name . '</span> this is the manage study section</h1>
 
-    <h1>These are the studies you have created:</h1>
-    <div class="created-surveys-list">';
+    <h1> Created Studies: </h1>
+    <div class="created-studies-list">';
+
+    //Select from study table where userID is equal
     $select = "SELECT * FROM study WHERE `ownerID` = '$userID';";
     $result = mysqli_query($conn, $select);
   
-    unset($_SESSION['editSurveyID']);
-    if (mysqli_num_rows($result) == 0) { // If no surveys were found
+    unset($_SESSION['editStudyID']);
+
+    //If no studies were found
+    if (mysqli_num_rows($result) == 0) {
         echo '<h1>No studies were found</h1>';
-    } else if (mysqli_num_rows($result) > 0) { // If there are surveys
-        while ($row = mysqli_fetch_assoc($result)) {
-            /* Added styling to the queried search results */
-            echo '
-            <div class="survey-item">
-                <b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'] . '<br><b>Date:</b> ' . $row['date'] . '<br><b>Location:</b> ' . $row['location'] . '<br><b>Compensation:</b> ' . $row['compensation'].'
-            </div> <!-- survey-item end -->
-            <br>';
-
-            echo '
-            <form method="post" action="studyEdit.php">
-                <input type="hidden" name="editSurveyID" value="' . $row['studyID'] . '">
-				<button type="submit" name="editStudy" class="edit-button">Edit</button>
-            </form>';
-            echo'
-            <form method="post" action="" onsubmit="return confirm(\'Are you sure you want to delete this survey?\');">
-                  <input type="hidden" name="study_id" value="' . $row['studyID'] . '">
-                  <button name="deleteStudy" value="submit" type="submit">Delete</button>
-				</form>
-            <br>';
-        }
     }
-    echo '
-    </div> <!-- created-surveys-list end -->
 
-    <h1>These are the surveys you have completed:</h1>
-        <div class="created-surveys-list">';
+    //If there are studies
+    else if (mysqli_num_rows($result) > 0) {
+
+        //While row in table exists via result
+        while ($row = mysqli_fetch_assoc($result)) { 
+
+            //Lists studies where where userID is equal
+            echo '<div class="study-item">
+               <p> <b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'] .  '<br><b>Location:</b> ' . $row['location'] . '<br><b>Date:</b> ' . $row['date'] . '<br><b>Compensation:</b> ' . $row['compensation'].'</p>
+               
+                <div class="edit-delete-buttons"> <!-- edit and delete buttons div start  -->
+            
+                <form method="post" class="edit-method" action="studyEdit.php">
+                   <input type="hidden" name="editStudyID" value="' . $row['studyID'] . '">
+                   <button type="submit" name="editStudy">Edit</button>
+                </form>';
+   
+                echo'
+                <!-- deleteStudy button -->
+                <form method="post" action="" class="delete-method" onsubmit="return confirm(\'Are you sure you want to delete this study?\');">
+                    <input type="hidden" name="study_id" value="' . $row['studyID'] . '">
+                    <button name="deleteStudy" value="submit" type="submit">Delete</button>
+                </form>
+                </div> <!-- edit and delete buttons div start  -->
+            </div><br> <!-- study-item end -->';
+        } //While end
+    } //Else if end
+    echo '
+
+    <!-- Create study button -->
+
+    <button onclick="studyCreate()" class="create-btn"> <b>Create New Study</b>  </button>
+    </div> <!-- created-studies-list end -->
+    
+    <h1>Completed Studies:</h1>
+        <div class="created-studies-list">';
 
     echo '
-    </div> <!-- created-surveys-list end -->
-    </div> <!-- modify-surveys end -->
+    </div> <!-- created-studies-list end -->
+    </div> <!-- modify-studies end -->
     ';
 
-
+    //If deleteStudy is posted
     if (isset($_POST['deleteStudy'])) {
-        // Handle the delete logic here
+
+        //Creates studyID variable from the posted data
         $studyID = mysqli_real_escape_string($conn, $_POST['study_id']);
+
+        //Delete from study table where studyID is equal
         $deleteQuery = "DELETE FROM study WHERE studyID = '$studyID';";
-        if (mysqli_query($conn, $deleteQuery)) {
+       
+        //If query was successful
+        if (mysqli_query($conn, $deleteQuery)) { 
             echo "Study deleted successfully!";
-        } else {
+        }
+
+        //If query was not successful
+        else {
             echo "Error: " . mysqli_error($conn);
         }
-    }
+    } //If end
 }
 
-/**
- * Summary of studyDelete - used for editing a study
- * @param mixed $name, $userID, $conn
- * @return void
- */
-function studyDelete($name, $userID, $conn)
-{
-	// Initialize variables with default values
-	$stu_name = '';
-	$stu_desc = '';
-	$stu_loc = '';
-	$stu_time = '';
-	$stu_com = '';
-	$stu_tags = '';
+function studyEdit($name, $userID, $conn)
+{ 
+    //Initialize variables with default values
+    $studyName = '';
+    $studyDescription = '';
+	$studyDate = '';
+	$studyLocation = '';
+	$studyCompensation = '';
     $edittedStudyID = '';
-	
-    if (isset($_POST['editSurveyID'])) {
-        // Access the surveyID
-        $edittedStudyID = $_POST['editSurveyID'];
 
-        // Fetch survey data from the database using the $edittedSurveyID
+    //Checks if studyID to edit is posted
+    if (isset($_POST['editStudyID'])) {
+
+        //Access access and store the studyID in a variable
+        $edittedStudyID = $_POST['editStudyID'];
+
+        //Store the data for the name and description from the study table via the $studyID
         $selectStudyData = "SELECT `name`, `description`, `location`, `date`, `compensation` FROM `study` WHERE `studyID` ='$edittedStudyID';";
         $resultStudyData = mysqli_query($conn, $selectStudyData);
 
+        //If there is a result
         if ($resultStudyData && mysqli_num_rows($resultStudyData) > 0) {
+
+            //Make row variable to save name and description
             $row = mysqli_fetch_assoc($resultStudyData);
-			$stu_name = $row['name'];
-			$stu_desc = $row['description'];
-			$stu_loc = $row['location'];
-			$stu_time = $row['date'];
-			$stu_com = $row['compensation'];
-			$stu_tags = '';
-        }
-    }
+
+            //Info in the row to variables
+            $studyName = $row['name'];
+            $studyDescription = $row['description'];
+			$studyDate = $row['location'];
+			$studyLocation = $row['date'];
+			$studyCompensation = $row['compensation'];
+        } //Inner if end
+    } //Outter if end
     
     echo '
-    <h1>Hello <span>' . $name. ' '.$edittedStudyID.'</span> this is the edit study section</h1>';
+    <div class="edit-studies">
+    <h1>Hello <span>' . $name. '</span> this is the edit study section</h1>';
 
+    //Two forms, one for each part of the study table: ( `name`, `description`)
     echo '
     <form action="" method="post">
-    <input type="hidden" name="editSurveyID" value="' . $edittedStudyID . '">
-    <label for="studyName">Survey Name:</label>
-    <input type="text" name="studyName" value="' . $stu_name . '" class="form-input" required>
-    <br>
-    <label for="surveyDescription">Survey Description:</label>
-    <textarea name="studyDescription" class="form-textarea" required>' . $stu_desc . '</textarea>
-    <br>
-	<label for="studyLocation">Study Location:</label>
-    <textarea name="studyLocation" class="form-textarea" required>' . $stu_loc . '</textarea>
-    <br>
-	<label for="studyTime">Study Time:</label>
-    <textarea name="studyTime" class="form-textarea" required>' . $stu_time . '</textarea>
-    <br>
-	<label for="studyCompensation">Study Compensation:</label>
-    <textarea name="studyCompensation" class="form-textarea" required>' . $stu_com . '</textarea>
-    <br>
-    <input type="submit" name="updateStudy" value="Submit" class="form-btn"> 
-    <input type="button" onClick="window.location.href=\'study.php\'" name="cancel" value="Cancel" class="cancel-link">
-    <br>
 
-	</form>
-    ';
+        <input type="hidden" name="editStudyID" value="' . $edittedStudyID . '">
 
+        <!--$studyName data as a placeholder for the name form-->
+        <label for="studyName">Study Name:</label>
+        <br>
+        <input type="text" name="studyName" value="' . $studyName . '" class="form-input" required>
+        <br><br>
+
+        <!--$studyDescription data as a placeholder for the description form-->
+        <label for="studyDescription">Study Description:</label>
+        <br>
+        <textarea name="studyDescription" class="form-textarea" required>' . $studyDescription . '</textarea>
+        <br><br>
+		
+		<!--$studyLocation data as a placeholder for the location form-->
+        <label for="studyLocation">Study Location:</label>
+        <br>
+        <input type="text" name="studyLocation" value="' . $studyLocation . '" class="form-input" required>
+        <br><br>
+		
+		<!--$studyDate data as a placeholder for the date form-->
+        <label for="studyDate">Study Date:</label>
+        <br>
+        <input type="text" name="studyDate" value="' . $studyDate . '" class="form-input" required>
+        <br><br>
+		
+		<!--$studyCompensation data as a placeholder for the compensation form-->
+        <label for="studyCompensation">Study Compensation:</label>
+        <br>
+        <input type="text" name="studyCompensation" value="' . $studyCompensation . '" class="form-input" required>
+        <br><br>
+
+        <!--Submit form that posts updateStudy-->
+        <input type="submit" name="updateStudy" value="Submit" class="form-btn">
+
+        <!--Cancel button links to studyModify.php-->
+        <input type="button" onClick="window.location.href=\'studyModify.php\'" name="cancel" value="Cancel" class="cancel-link">
+        <br>
+    </form>
+    </div> <!-- edit-studies end -->';
+
+    //If updateStudy is posted
     if (isset($_POST['updateStudy'])) {
-        // Handle the edit logic here
-        $stu_name = mysqli_real_escape_string($conn, $_POST['studyName']);
-        $stu_desc = mysqli_real_escape_string($conn, $_POST['studyDescription']);
-		$stu_loc = mysqli_real_escape_string($conn, $_POST['studyLocation']);
-		$stu_time = mysqli_real_escape_string($conn, $_POST['studyTime']);
-		$stu_com = mysqli_real_escape_string($conn, $_POST['studyCompensation']);
-		$stu_tags = '';
-        echo $edittedStudyID;
-        $editQuery = "UPDATE `study` SET `name`='$stu_name',`description`='$stu_desc',`location`='$stu_loc',`date`='$stu_time',`compensation`='$stu_com' WHERE `study`.`studyID` = '$edittedStudyID';";
+
+        //Create name and description variables from the posted data
+        $studyName = mysqli_real_escape_string($conn, $_POST['studyName']);
+        $studyDescription = mysqli_real_escape_string($conn, $_POST['studyDescription']);
+		$studyDate = mysqli_real_escape_string($conn, $_POST['location']);
+		$studyLocation = mysqli_real_escape_string($conn, $_POST['date']);
+		$studyCompensation = mysqli_real_escape_string($conn, $_POST['compensation']);
+
+        //Update the study table row name and description column where the $studyID is equal
+        $editQuery = "UPDATE `study` SET `name` = '$studyName', `description` = '$studyDescription',`location`='$studyLocation',`date`='$studyDate',`compensation`='$studyCompensation' WHERE `study`.`studyID` = '$edittedStudyID';";
         
+        //If query was successful
         if (mysqli_query($conn, $editQuery)) {
             echo "update successful ";
-            //header('location: surveyModify.php');
+            //header('location: studyModify.php');
             //exit(); // Important to prevent further execution after the redirect
-        } else {
+        }
+
+        //If query was not successful
+        else {
             echo "Error: " . mysqli_error($conn);
         }
-    }
-    
+    } //Outter if end
 }
 
 echo '<script src="functions.js"></script>';

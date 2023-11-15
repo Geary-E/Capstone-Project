@@ -95,20 +95,17 @@ function supportGroupDelete() {
 // Displays the studySearch div, and hides the others
 function studySearch() {
     document.querySelector('.search-studies').style.display = 'block';
-	document.querySelector('.study-list').style.display = 'flex';
+    document.querySelector('.study-list').style.display = 'flex';
     document.querySelector('.study-item').style.width = '50%';
     document.querySelector('.search-study-list').style.display = 'none';
     document.querySelector('.create-studies').style.display = 'none';
     document.querySelector('.modify-studies').style.display = 'none';
-    document.querySelector('.delete-studies').style.display = 'none';
 }
 
 // Displays the studyCreate div, and hides the others
 function studyCreate() {
-    document.querySelector('.search-studies').style.display = 'none';
     document.querySelector('.create-studies').style.display = 'block';
     document.querySelector('.modify-studies').style.display = 'none';
-    document.querySelector('.delete-studies').style.display = 'none';
 }
 
 // Displays the studyModify div, and hides the others
@@ -116,7 +113,7 @@ function studyModify() {
     document.querySelector('.search-studies').style.display = 'none';
     document.querySelector('.create-studies').style.display = 'none';
     document.querySelector('.modify-studies').style.display = 'block';
-    document.querySelector('.delete-studies').style.display = 'none';
+    document.querySelector('.edit-studies').style.display = 'none';
 }
 
 // Displays the studyDelete div, and hides the others
@@ -124,7 +121,6 @@ function studyDelete() {
     document.querySelector('.search-studies').style.display = 'none';
     document.querySelector('.create-studies').style.display = 'none';
     document.querySelector('.modify-studies').style.display = 'none';
-    document.querySelector('.delete-studies').style.display = 'block';
 }
 
 // Used to hide specific modules when necessary
@@ -140,6 +136,10 @@ function hideAll() {
     document.querySelector('.supportGroup-list').style.display = 'none'
     document.querySelector('.search-supportGroup-list').style.display = 'flex';
     document.querySelector('.supportGroup-item').style.width = '50%';
+	
+	document.querySelector('.study-list').style.display = 'none'
+    document.querySelector('.search-study-list').style.display = 'flex';
+    document.querySelector('.study-item').style.width = '50%';
 }
 
 // Used to display the FAQ section when clicked on in the Account Page 

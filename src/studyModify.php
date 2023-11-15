@@ -1,5 +1,5 @@
 <?php
-
+//PHP coded by Jeremy Tollison
 
 //Include config file for database connection and functions
 @include 'config.php';
@@ -20,12 +20,12 @@ $userID=userID();
     <?php meta(); ?> <!--Prints meta data-->
 
     <link rel="stylesheet" href="generalStyle.css">
-    <title>StudiesEdit</title>
+    <title>StudiesModify</title>
 </head>
 
 <body>
     <?php
-        $pageName = 'StudiesEdit';
+        $pageName = 'StudiesModify';
         pageHeader(); //Displays the header
         pageNavbar($conn, $pageName, $name, $userID); //Displays the navbar
     ?>
