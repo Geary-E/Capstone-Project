@@ -10,6 +10,7 @@
  * 
  * @return $name
  */
+
 function nameType()
 {
     //If researcher_name is set make it name
@@ -23,6 +24,38 @@ function nameType()
     }
     return $name;
 }
+
+/* Functions implemented for use of retrieval of information on the accounts page */
+function emailType() 
+{
+    if(isset($_SESSION['email'])) {
+        $email = $_SESSION['email'];
+        }
+        return $email;
+} 
+
+function userType() {
+    if(isset($_SESSION['user_type'])) {
+        $user_type = $_SESSION['user_type'];
+    }
+    return $user_type;
+}
+
+function firstNameType() {
+    if(isset($_SESSION['firstName'])) {
+        $firstname = $_SESSION['firstName'];
+    }
+    return $firstname;
+}
+
+function lastNameType() {
+    if(isset($_SESSION['lastName'])) {
+        $lastname = $_SESSION['lastName'];
+    }
+    return $lastname;
+}
+/* End of retrieval functions for account page */
+
 /**
  * Uses the input to return a result through $conn
  * 
@@ -183,17 +216,40 @@ function pageNavbar($conn, $name, $pageName)
                 <a href="#" onclick="studyDelete()">Delete ' . $pageName . '</a>
             </div>
 
-            <div class="page-content">';
+            <div class="page-content">
+				<div class="search-studies">'; //Container for searchStudy module
+                studySearch($name, $conn);  //Displays the studySearch content
+                echo '
+                    </div>';
 
-                studySearch($name); //Displays the studySearch content
-                studyCreate($name); //Displays the studyCreate content
-                studyModify($name); //Displays the studyModify content
-                studyDelete($name); //Displays the studyDelete content
+                studyCreate($name, $conn);  //Displays the studyCreate content
+
+					
+                studyModify($name, $conn); //Displays the studyModify content
+                studyDelete($name,$conn); //Displays the studyDelete content
 
                 echo '
             </div>
         </div>
         ';
+    } 
+    else if($pageName = 'Account Page') {
+        echo '
+        <div class="navbar-content-container">
+            <div class="navbar"> <!-- Links for each module -->
+                <a href="#" onclick="studySearch()">FAQ ' . '</a>
+                <a href="#" onclick="studyCreate()">Compensation ' . '</a>
+                <a href="#" onclick="studyModify()">Privacy' .'</a>
+            </div> 
+            <div class="page-content">';
+                $last_name = lastNameType();
+                $email = emailType();
+                $user_type = userType();
+                accountPageDisplay($email, $user_type, $name, $last_name);
+            echo '
+            </div>
+            </div>';
+
     }
 } //Navbar for Studies end
 
@@ -211,6 +267,35 @@ function pageNavbar($conn, $name, $pageName)
  * @param mixed $conn
  * @return void
  */
+
+ function accountPageDisplay($email, $user_type, $first_name, $last_name) {
+    echo '
+        <div class="account-page-box">
+        <h1>Welcome to the Account Page.</h1>
+        
+        <!--Profile Information for account page -->
+
+        <div class="profile-header">
+            <img class="profile-pic" src="../profile_pic.png" alt="Profile pic"><br>
+            </div><br>
+            <div class="header-links">
+            <a href="#"> Upload </a>
+            <a href="#"> Edit </a>
+            </div>
+        <div class="profile-information">
+        <label for="myInput">First Name: </label><input type="text" id="myInput" value="'. $first_name .'" readonly><br>
+        <label for="myInput1">Last Name: </label><input type="text" id="myInput1" value="'. $last_name .'" readonly><br>
+         <label for="myInput2">Email:</label><input type="text" id="myInput2" value="'. $email .'" readonly><br>
+        <label for="myInput3">User-Type:</label><input type="text" id="myInput3" value="'. $user_type .'" readonly><br>
+            <div class="button-list">
+                <button class="save-btn"> Save </button>
+                <button class="cancel-btn"> Cancel </button>
+            </div>
+            </div>
+
+            <!-- Profile Information on account page ends -->
+        </div>';
+ }
 function surveySearch($name, $conn)
 {
     echo '
@@ -287,8 +372,29 @@ function surveyCreate($name)
     echo '
     <div class="create-surveys">
     <h1>Hello <span>' . $name . '</span> this is the create survey section</h1>
+    
+    
+        <form action="" method="post"> <!-- Buttons for the search -->
+            <div class="search-boxes"><!-- Search boxes section -->
+                <p style="display: block;">Enter info:</p> <br><br>
+                <!-- Added labels to the search boxes -->
+                <div class="survey-search-name-box"><label for="search">Name:</label><input type="text" name="surveyName" placeholder="Survey name"></div>
+                
+                <div class="survey-search-tag-box"><label for="tag"> Description:</label><input type="text" name="surveyDescription" placeholder="Description"></div>
+
+                <button name="submit" value="submit" type="submit">Search</button>
+            </div>
+        </form>
     </div>
     ';
+    unset($_POST['submit']);
+    /*
+    -form for survey name
+
+    -form for survey description
+
+    -submit button
+    */
 }
 
 /**
@@ -326,64 +432,23 @@ function surveyDelete($name)
  */
 function opportunitySearch($name)
 {
+    
     echo '
-    <div class="search-opportunities-item">
+    <div class="search-opportunities-box">
     <h1>Hello <span>' . $name . '</span> this is the search opportunity section</h1>
-    <form action="" method="post"> <!-- Form for the search -->
-        <div class="search-boxes"><!-- Search boxes section -->
-            <p style="display: block;">Search By:</p> <br><br>
-            <!-- Added labels to the search boxes -->
-            <div class="opportunity-search-name-box"><label for="search">Name:</label><input type="text" name="searchName" placeholder="Opportunity name"></div>
-            <div class="opportunity-search-tag-box"><label for="tag"> Tags:</label><input type="text" name="searchTag" placeholder="Tag name"></div>
-            <button name="submit" value="submit" type="submit">Search</button>
-        </div>
-    </form>
     
-    <div class = "opportunity-list">';
+    <!-- Implemented search boxes -->
+    <form action="" method="post"> <!-- Buttons for the search -->
+    <div class="search-boxes"><!-- Search boxes section -->
+    <p style="display: block;">Search By:</p> <br><br>
+    <!-- Added labels to the search boxes -->
+    <div class="opportunity-search-name-box"><label for="search">Name:</label><input type="text" name="searchName" placeholder="Study name"></div>
+    <div class="opportunity-search-tag-box"><label for="tag"> Tags:</label><input type="text" name="searchTag" placeholder="Tag name"></div>
+    <button name="submit" value="submit" type="submit">Search</button>
+    </div>
 
-    $select = "SELECT * FROM opportunity";
-    $result = mysqli_query($conn, $select);
-    
-    if (mysqli_num_rows($result) == 0) { //if result == 0
-        $error[] = "No opportunities were found";
-    }
-    else if (mysqli_num_rows($result) > 0) { //if there are opportunities 
-        while ($row = mysqli_fetch_assoc($result)) {
-            /* Added styling to the queried search results */
-            echo '<div class="opportunity-item"> ';
-            echo '<b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'];
-            echo '</div><br>';    /* <br> */
-        }
-    }
-
-    if (isset($_POST['submit'])) {
-        // Process the search query here and display the results
-        $searchName = $_POST['searchName'];
-        $searchTag = $_POST['searchTag'];
-
-        $select = "SELECT * FROM opportunity WHERE name LIKE '%$searchName%'"; 
-        $result = mysqli_query($conn, $select);
-
-        if (mysqli_num_rows($result) == 0) { //if result == 0
-            $error[] = 'No opportunity were found';
-        }
-        else if (mysqli_num_rows($result) > 0) {  //if there are opportunity 
-            while ( $row = mysqli_fetch_assoc($result) ) {
-                echo '<div class="opportunity-item"> ';
-                echo '<b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'];
-                echo '</div><br>';       
-            }
-        }
-        unset($_POST['submit']);
-        echo '<div class="search-results">';
-        echo '<h2>Search Results:</h2>';
-        echo '<p>Display your search results here</p>';
-        echo '</div>';
-    }
-
-    echo '
-    </div> <!-- opportunity-list end -->
-    </div> <!-- search-opportunities end -->
+</form>
+    </div>
     ';
 }
 
@@ -434,13 +499,70 @@ function opportunityDelete($name)
  * @param mixed $name
  * @return void
  */
-function studySearch($name)
+function studySearch($name,$conn)
 {
     
     echo '
-    <div class="search-studies">
+    <div class="search-studies-box">
     <h1>Hello <span>' . $name . '</span> this is the search study section</h1>
+
+    <!-- Implemented search boxes -->
+    <form action="" method="post"> <!-- Buttons for the search -->
+    <div class="search-boxes"><!-- Search boxes section -->
+    <p style="display: block;">Search By:</p> <br><br>
+    <!-- Added labels to the search boxes -->
+    <div class="study-search-name-box"><label for="search">Name:</label><input type="text" name="searchName" placeholder="Study name"></div>
+    <div class="study-search-tag-box"><label for="tag"> Tags:</label><input type="text" name="searchTag" placeholder="Tag name"></div>
+    <button name="submit" value="submit" type="submit">Search</button>
     </div>
+	</form>
+	
+    <div class="survey-list">';
+
+        $select = "SELECT * FROM study";
+        $result = mysqli_query($conn, $select);
+
+        if (mysqli_num_rows($result) == 0) { //if result == 0
+            $error[] = 'No studies were found';
+        }
+        else if (mysqli_num_rows($result) > 0) { //if there are studies 
+            while ( $row = mysqli_fetch_assoc($result) ) {
+                /* Added styling to the queried search results */
+                echo '<div class="survey-item"> ';
+                echo '<b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'] . '<br><b>Date:</b> ' . $row['date'] . '<br><b>Location:</b> ' . $row['location'] . '<br><b>Compensation:</b> ' . $row['compensation'];
+                echo '</div><br>';    /* <br> */
+            }
+        }
+
+    echo'
+        </div> <!-- study-list end -->
+        <div class="search-survey-list" style="display: none;">';
+    if (isset($_POST['submit'])) {
+        echo '<script>hideAll();</script>'; 
+
+        //Access searchName and searchTag variables
+        $searchName = $_POST['searchName'];
+        $searchTag = $_POST['searchTag'];
+
+        $select = "SELECT * FROM study WHERE name LIKE '%$searchName%'"; 
+        $result = mysqli_query($conn, $select);
+
+        if (mysqli_num_rows($result) == 0) { //if result == 0
+            $error[] = 'No studies were found';
+        }
+        else if (mysqli_num_rows($result) > 0) {  //if there are studies 
+            while ( $row = mysqli_fetch_assoc($result) ) {
+                /* Added styling to the queried search results */
+                echo '<div class="survey-item"> ';
+                echo '<b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'] . '<br><b>Date:</b> ' . $row['date'] . '<br><b>Location:</b> ' . $row['location'] . '<br><b>Compensation:</b> ' . $row['compensation'];
+                echo '</div><br>';       
+            }
+        }
+        unset($_POST['submit']);
+    }
+    echo'
+        </div> <!-- search-studys-list end -->
+    </div> <!-- search-studys-box end -->
     ';
 }
 
@@ -449,13 +571,70 @@ function studySearch($name)
  * @param mixed $name
  * @return void
  */
-function studyCreate($name)
+function studyCreate($name,$conn)
 {
-    echo '
-    <div class="create-studies">
+    echo '<div class="create-studies">
     <h1>Hello <span>' . $name . '</span> this is the create study section</h1>
-    </div>
-    ';
+    <form action="" method="post">';
+		if (isset($error)) {
+			foreach ($error as $error) {
+				echo '<span class="error-msg">' . $error . '</span>';
+			};
+		};
+		
+	echo'
+		<label for="studyname"><b>Study Name:</b></label><br>
+		<input type="text" name="study_name" required placeholder="Enter the study name">
+		<br><br>
+	
+		<label for="studydescription"><b>Study Description:</b></label><br>
+		<input type="text" name="study_desc" required placeholder="Enter the study description">
+		<br><br>
+		
+		<label for="studylocation"><b>Study location:</b></label><br>
+		<input type="text" name="study_loc" required placeholder="Enter the study location">
+		<br><br>
+		
+		<label for="studytime"><b>Study date(YYYY-MM-DD hh:mm):</b></label><br>
+		<input type="text" name="study_time" required placeholder="Enter the study time">
+		<br><br>
+		
+		<label for="studycompensation"><b>Study Compensation (in US dollors):</b></label><br>
+		<input type="text" name="study_com" required placeholder="Enter the study compensation">
+		<br><br>
+		
+		<label for="studytags"><b>Study tag(s):</b></label><br>
+		<input type="text" name="study_tags" value="tag1" required placeholder="Enter the study tag(s)">
+		<br><br>
+	
+		<input type="submit" name="createStudy" value="Create new study" class="form-btn">
+		<input type="button" onClick="" name="cancel" value="cancel" class="cancel-link"></input><br>
+		<br>
+	</form></div>';
+	
+	//Assigns input from input fields to varibles
+	if (isset($_POST['createStudy'])) {
+		$user_id = $_SESSION['userID'];
+		$stu_name = mysqli_real_escape_string($conn, $_POST['study_name']);
+		$stu_desc = mysqli_real_escape_string($conn, $_POST['study_desc']);
+		$stu_loc = mysqli_real_escape_string($conn, $_POST['study_loc']);
+		$stu_time = mysqli_real_escape_string($conn, $_POST['study_time']);
+		$stu_com = mysqli_real_escape_string($conn, $_POST['study_com']);
+		$stu_tags = mysqli_real_escape_string($conn, $_POST['study_tags']);
+    
+		//$insert2 = "INSERT INTO study(,,study_name, study_desc, study_loc, study_time, study_com, study_tags) VALUES('','','$stu_name','$stu_desc','$stu_loc','$stu_time','$stu_com','$stu_tags')";
+		
+		//Creates new row into the study table
+		$insert2 = "INSERT INTO `study`(`ownerID`, `name`, `description`, `location`, `date`, `compensation`) VALUES ('$user_id','$stu_name','$stu_desc','$stu_loc','$stu_time','$stu_com')";
+		mysqli_query($conn, $insert2);
+		
+		//Gets the newly created row's id
+		$result = mysqli_insert_id($conn);
+		
+		//Creates new row into the user_study table
+		$insert3 = "INSERT INTO `user_study`(`userID`, `studyID`) VALUES ('$user_id','$result')";
+		mysqli_query($conn, $insert3);				
+	}
 }
 
 /**
@@ -463,13 +642,15 @@ function studyCreate($name)
  * @param mixed $name
  * @return void
  */
-function studyModify($name)
+function studyModify($name,$conn)
 {
     echo '
     <div class="modify-studies">
     <h1>Hello <span>' . $name . '</span> this is the modify study section</h1>
     </div>
     ';
+
+
 }
 
 /**
@@ -477,13 +658,29 @@ function studyModify($name)
  * @param mixed $name
  * @return void
  */
-function studyDelete($name)
+function studyDelete($name,$conn)
 {
     echo '
     <div class="delete-studies">
     <h1>Hello <span>' . $name . '</span> this is the delete study section</h1>
     </div>
     ';
+    echo'
+    <div class="survey-list">';
+    $select = "SELECT * FROM study";
+    $result = mysqli_query($conn, $select);
+
+    if (mysqli_num_rows($result) == 0) { //if result == 0
+        $error[] = 'No studies were found';
+    }
+    else if (mysqli_num_rows($result) > 0) { //if there are surveys 
+        while ( $row = mysqli_fetch_assoc($result) ) {
+            /* Added styling to the queried search results */
+            echo '<div class="survey-item"> ';
+            echo '<b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'] . '<br><b>Date:</b> ' . $row['date'] . '<br><b>Location:</b> ' . $row['location'] . '<br><b>Compensation:</b> ' . $row['compensation'];
+            echo '</div><br>';    /* <br> */
+        }
+    }
 }
 
 /**
@@ -495,8 +692,20 @@ function supportGroupSearch($name)
 {
     
     echo '
-    <div class="search-supportGroups">
+    <div class="search-supportGroups-box">
     <h1>Hello <span>' . $name . '</span> this is the search support group section</h1>
+   
+    <!-- Implemented search boxes -->
+    <form action="" method="post"> <!-- Buttons for the search -->
+    <div class="search-boxes"><!-- Search boxes section -->
+    <p style="display: block;">Search By:</p> <br><br>
+    <!-- Added labels to the search boxes -->
+    <div class="support-search-name-box"><label for="search">Name:</label><input type="text" name="searchName" placeholder="Study name"></div>
+    <div class="support-search-tag-box"><label for="tag"> Tags:</label><input type="text" name="searchTag" placeholder="Tag name"></div>
+    <button name="submit" value="submit" type="submit">Search</button>
+    </div>
+
+</form>
     </div>
     ';
 }
@@ -545,9 +754,3 @@ function supportGroupDelete($name)
 
 echo '<script src="functions.js"></script>';
 ?>
-
-<div class="text-size-controls">
-    <button class="resize-button" onclick="increaseTextSize()">Increase Text Size</button>
-    <button class="resize-button" onclick="decreaseTextSize()">Decrease Text Size</button>
-</div>
-<script src="functions.js"></script>
