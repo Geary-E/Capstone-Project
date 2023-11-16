@@ -14,9 +14,6 @@ body {
     margin: 0; /*Sets boundaries properly*/
 }
 
-
-
-
 /*****************************/
 /*Start of styling for header*/
 /*****************************/
@@ -128,187 +125,6 @@ h1 {
 /**Start of styling for module-specific functions**/
 /**************************************************/
 /**************************************************/
-
-/************************/
-/* survey section start */
-/************************/
-/*searchSurveys styling start*/
-.search-surveys-box { /*Styling for all content in the searchSurvey module*/
-    display: block; /* Inital page display*/
-    margin: auto;
-} 
-
-/* Search boxes within the content styling */
-.search-boxes {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.survey-search-name-box, .survey-search-tag-box {
-    padding: 10px;
-}
-
-/* Styling of the individual search boxes */
-.survey-search-name-box input, .survey-search-tag-box input {
-    border: solid 1px black;
-    font-size: 15px;
-    border-radius: 20%;
-    padding: 10px;
-}
-
-
-/* Styling of the survey list class */
-.survey-list {
-    display: flex;
-    padding: 20px;  /* test */
-    justify-content: center;
-    align-items: center;
-    flex-flow: column wrap;
-    /*display: block;*/ /* Inital page display*/
-    text-align: center;
-}
-
-/* Styling of the search-survey-list class within the search surveys */
-.search-survey-list {
-    display: flex;
-    padding: 20px;
-    justify-content: center;
-    flex-flow: column wrap; 
-    align-items: center;
-    text-align: center;
-}
-
-/* styling of the individual queried searched survey results */
-.survey-item {
-    width: 50%;
-    padding: 15px;
-    border: solid 1px black;
-    cursor: pointer;
-}
-
-/* styling of the individual queried searched results when hovered over */
-.survey-item:hover {
-    background-color: var(--green);
-    color: white;
-}
-/*searchSurveys styling end*/
-
-
-
-/*modifySurveys styling start*/
-.modify-surveys { 
-    display: block; /* Inital page display*/
-}
-
-.edit-delete-buttons {
-    display: flex;
-    justify-content: center;
-    padding: 0px;
-}
-
-.edit-method {
-    margin: 0 5px;
-}
-
-.delete-method {
-    margin: 0 5px;
-}
-
-
-
-.created-surveys-list{
-    display: flex;
-    text-align: center;
-    justify-content: center;
-    flex-flow:column wrap;
-    align-items: center;
-    padding: 10px;
-}
-
-.create-btn {
-    width: 25%;
-    padding: 20px;
-    background-color: white;
-    color: black;
-    border: solid black 1px;
-    border-radius: 10%;
-}
-
-.create-btn:hover {
-    background-color: var(--green);
-    color: white;
-}
-
-/*modifySurveys styling end*/
-/*createSurveys styling start*/
-.create-surveys {
-    display: none; /* Hidden by default */
-    text-align: center;
-
-}
-/*createSurveys styling end*/
-/*editSurveys styling start*/
-.edit-surveys {
-    display: block; /* Hidden by default */
-    text-align: center;
-
-}
-/*editSurveys styling end*/
-
-/**********************/
-/* Survey section end */
-/**********************/
-
-
-
-/*****************************/
-/* opportunity section start */
-/*****************************/
-/*searchOpportunities styling start*/
-/* Implemented opportunity search boxes styling */
-.search-opportunities-box {
-    display: block; /* Inital page display*/
-    margin: auto;
-    text-align: center;
-} 
-
-.opportunity-search-name-box, .opportunity-search-tag-box {
-    padding: 10px;
-}
-
-.opportunity-search-name-box input, .opportunity-search-tag-box input {
-    border: solid 1px black;
-    font-size: 15px;
-    border-radius: 20%;
-    padding: 10px;
-}
-
-/*searchOpportunities styling end*/
-
-/*modifyOpportunities styling start*/
-.modify-opportunities  { 
-    display: none; /* Hidden by default */
-    text-align: center;
-}
-/*modifyOpportunities styling end*/
-
-/*createOpportunities styling start*/
-.create-opportunities  {
-    display: none; /* Hidden by default */
-    text-align: center;
-}
-/*createOpportunities styling end*/
-
-/*deleteOpportunities styling start*/
-.delete-opportunities  {
-    display: none; /* Hidden by default */
-    text-align: center;
-}
-/* deleteOpportunities styling end */
-/***************************/
-/* Opportunity section end */
-/***************************/
 
 /***************************/
 /* Styling on account page */
@@ -437,58 +253,406 @@ h1 {
     border: none;
 }
 /* Compensation Link styling end */
-
 /**************************************/
 /* Ending for styling on account page */
 /**************************************/
 
 
 
-/******************************/
-/* supportGroup section start */
-/******************************/
-/*searchSupportGroups styling start*/
-.search-supportGroups-box {
+/************************/
+/* survey section start */
+/************************/
+/*searchSurveys styling start*/
+.search-surveys-box { /*Styling for all content in the searchSurvey module*/
     display: block; /* Inital page display*/
-    text-align: center;
     margin: auto;
 } 
 
-.support-search-name-box, .support-search-tag-box {
+/* Search boxes within the content styling */
+.search-boxes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Styling of the individual search buttons */
+.survey-search-name-box, .survey-search-tag-box {
     padding: 10px;
 }
 
-.support-search-name-box input, .support-search-tag-box input {
+/* Styling of the individual search boxes */
+.survey-search-name-box input, .survey-search-tag-box input {
     border: solid 1px black;
     font-size: 15px;
     border-radius: 20%;
     padding: 10px;
 }
+
+
+/* Styling of the survey list class */
+.survey-list {
+    display: flex;
+    padding: 20px;  /* test */
+    justify-content: center;
+    align-items: center;
+    flex-flow: column wrap;
+    /*display: block;*/ /* Inital page display*/
+    text-align: center;
+}
+
+/* Styling of the search-survey-list class within the search surveys */
+.search-survey-list {
+    display: flex;
+    padding: 20px;
+    justify-content: center;
+    flex-flow: column wrap; 
+    align-items: center;
+    text-align: center;
+}
+
+/* styling of the individual queried searched survey results */
+.survey-item {
+    width: 50%;
+    padding: 15px;
+    border: solid 1px black;
+    cursor: pointer;
+}
+
+/* styling of the individual queried searched results when hovered over */
+.survey-item:hover {
+    background-color: var(--green);
+    color: white;
+}
+/*searchSurveys styling end*/
+
+
+
+/*modifySurveys styling start*/
+.modify-surveys { 
+    display: block; /* Inital page display*/
+}
+
+.edit-delete-buttons {
+    display: flex;
+    justify-content: center;
+    padding: 0px;
+}
+
+.edit-method {
+    margin: 0 5px;
+}
+
+.delete-method {
+    margin: 0 5px;
+}
+
+
+
+.created-surveys-list{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    flex-flow:column wrap;
+    align-items: center;
+    padding: 10px;
+}
+
+.create-btn {
+    width: 25%;
+    padding: 20px;
+    background-color: white;
+    color: black;
+    border: solid black 1px;
+    border-radius: 10%;
+}
+
+.create-btn:hover {
+    background-color: var(--green);
+    color: white;
+}
+
+/*modifySurveys styling end*/
+/*createSurveys styling start*/
+.create-surveys {
+    display: none; /* Hidden by default */
+    text-align: center;
+
+}
+/*createSurveys styling end*/
+/*editSurveys styling start*/
+.edit-surveys {
+    display: block; /* Hidden by default */
+    text-align: center;
+
+}
+/*editSurveys styling end*/
+/**********************/
+/* Survey section end */
+/**********************/
+
+
+
+/*****************************/
+/* opportunity section start */
+/*****************************/
+/*searchOpportunities styling start*/
+.search-opportunities-box { /*Styling for all content in the searchOpportunity module*/
+    display: block; /* Inital page display*/
+    margin: auto;
+} 
+
+/* Search boxes within the content styling */
+.search-boxes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Styling of the individual search buttons */
+.opportunity-search-name-box, .opportunity-search-tag-box {
+    padding: 10px;
+}
+
+/* Styling of the individual search boxes */
+.opportunity-search-name-box input, .opportunity-search-tag-box input {
+    border: solid 1px black;
+    font-size: 15px;
+    border-radius: 20%;
+    padding: 10px;
+}
+
+
+/* Styling of the opportunity list class */
+.opportunity-list {
+    display: flex;
+    padding: 20px;  /* test */
+    justify-content: center;
+    align-items: center;
+    flex-flow: column wrap;
+    /*display: block;*/ /* Inital page display*/
+    text-align: center;
+}
+
+/* Styling of the search-opportunity-list class within the search opportunities */
+.search-opportunity-list {
+    display: flex;
+    padding: 20px;
+    justify-content: center;
+    flex-flow: column wrap; 
+    align-items: center;
+    text-align: center;
+}
+
+/* styling of the individual queried searched opportunity results */
+.opportunity-item {
+    width: 50%;
+    padding: 15px;
+    border: solid 1px black;
+    cursor: pointer;
+}
+
+/* styling of the individual queried searched results when hovered over */
+.opportunity-item:hover {
+    background-color: var(--green);
+    color: white;
+}
+/*searchOpportunities styling end*/
+
+
+
+/*modifyOpportunities styling start*/
+.modify-opportunities { 
+    display: block; /* Inital page display*/
+}
+
+.edit-delete-buttons {
+    display: flex;
+    justify-content: center;
+    padding: 0px;
+}
+
+.edit-method {
+    margin: 0 5px;
+}
+
+.delete-method {
+    margin: 0 5px;
+}
+
+
+
+.created-opportunities-list{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    flex-flow:column wrap;
+    align-items: center;
+    padding: 10px;
+}
+
+.create-btn {
+    width: 25%;
+    padding: 20px;
+    background-color: white;
+    color: black;
+    border: solid black 1px;
+    border-radius: 10%;
+}
+
+.create-btn:hover {
+    background-color: var(--green);
+    color: white;
+}
+
+/*modifyOpportunities styling end*/
+/*createOpportunities styling start*/
+.create-opportunities {
+    display: none; /* Hidden by default */
+    text-align: center;
+
+}
+/*createOpportunities styling end*/
+/*editOpportunities styling start*/
+.edit-opportunities {
+    display: block; /* Hidden by default */
+    text-align: center;
+
+}
+/*editOpportunities styling end*/
+/***************************/
+/* Opportunity section end */
+/***************************/
+
+
+
+/************************/
+/* Support group section start */
+/************************/
+/*searchSupportGroups styling start*/
+.search-supportGroups-box { /*Styling for all content in the searchSupportGroup module*/
+    display: block; /* Inital page display*/
+    margin: auto;
+} 
+
+/* Search boxes within the content styling */
+.search-boxes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Styling of the individual search buttons */
+.supportGroup-search-name-box, .supportGroup-search-tag-box {
+    padding: 10px;
+}
+
+/* Styling of the individual search boxes */
+.supportGroup-search-name-box input, .supportGroup-search-tag-box input {
+    border: solid 1px black;
+    font-size: 15px;
+    border-radius: 20%;
+    padding: 10px;
+}
+
+
+/* Styling of the supportGroup list class */
+.supportGroup-list {
+    display: flex;
+    padding: 20px;  /* test */
+    justify-content: center;
+    align-items: center;
+    flex-flow: column wrap;
+    /*display: block;*/ /* Inital page display*/
+    text-align: center;
+}
+
+/* Styling of the search-supportGroup-list class within the search supportGroups */
+.search-supportGroup-list {
+    display: flex;
+    padding: 20px;
+    justify-content: center;
+    flex-flow: column wrap; 
+    align-items: center;
+    text-align: center;
+}
+
+/* styling of the individual queried searched supportGroup results */
+.supportGroup-item {
+    width: 50%;
+    padding: 15px;
+    border: solid 1px black;
+    cursor: pointer;
+}
+
+/* styling of the individual queried searched results when hovered over */
+.supportGroup-item:hover {
+    background-color: var(--green);
+    color: white;
+}
 /*searchSupportGroups styling end*/
+
+
 
 /*modifySupportGroups styling start*/
 .modify-supportGroups { 
-    display: none; /* Hidden by default */
-    text-align: center;
+    display: block; /* Inital page display*/
 }
-/*modifySupportGroups styling end*/
 
+.edit-delete-buttons {
+    display: flex;
+    justify-content: center;
+    padding: 0px;
+}
+
+.edit-method {
+    margin: 0 5px;
+}
+
+.delete-method {
+    margin: 0 5px;
+}
+
+.created-supportGroups-list{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    flex-flow:column wrap;
+    align-items: center;
+    padding: 10px;
+}
+
+.create-btn {
+    width: 25%;
+    padding: 20px;
+    background-color: white;
+    color: black;
+    border: solid black 1px;
+    border-radius: 10%;
+}
+
+.create-btn:hover {
+    background-color: var(--green);
+    color: white;
+}
+
+/*modifySupportGroups styling end*/
 /*createSupportGroups styling start*/
 .create-supportGroups {
     display: none; /* Hidden by default */
     text-align: center;
+
 }
 /*createSupportGroups styling end*/
-
-/*deleteSupportGroups styling start*/
-.delete-supportGroups {
-    display: none; /* Hidden by default */
+/*editSupportGroups styling start*/
+.edit-supportGroups {
+    display: block; /* Hidden by default */
     text-align: center;
+
 }
-/* deleteSupportGroups styling end */
-/****************************/
-/* supportGroup section end */
-/****************************/
+/*editSupportGroups styling end*/
+/*****************************/
+/* Support group section end */
+/*****************************/
 
 
 
@@ -496,16 +660,24 @@ h1 {
 /* Study section start */
 /***********************/
 /*searchStudies styling start*/
-.search-studies-box {
+.search-studies-box { /*Styling for all content in the searchStudy module*/
     display: block; /* Inital page display*/
-    text-align: center;
     margin: auto;
 } 
 
+/* Search boxes within the content styling */
+.search-boxes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Styling of the individual search buttons */
 .study-search-name-box, .study-search-tag-box {
     padding: 10px;
 }
 
+/* Styling of the individual search boxes */
 .study-search-name-box input, .study-search-tag-box input {
     border: solid 1px black;
     font-size: 15px;
@@ -513,29 +685,97 @@ h1 {
     padding: 10px;
 }
 
-
-/*searchStudies styling end*/
-
-/*modifyStudies styling start*/
-.modify-studies { 
-    display: none; /* Hidden by default */
+/* Styling of the study list class */
+.study-list {
+    display: flex;
+    padding: 20px;  /* test */
+    justify-content: center;
+    align-items: center;
+    flex-flow: column wrap;
+    /*display: block;*/ /* Inital page display*/
     text-align: center;
 }
-/*modifyStudies styling end*/
 
+/* Styling of the search-study-list class within the search studies */
+.search-study-list {
+    display: flex;
+    padding: 20px;
+    justify-content: center;
+    flex-flow: column wrap; 
+    align-items: center;
+    text-align: center;
+}
+
+/* styling of the individual queried searched study results */
+.study-item {
+    width: 50%;
+    padding: 15px;
+    border: solid 1px black;
+    cursor: pointer;
+}
+
+/* styling of the individual queried searched results when hovered over */
+.study-item:hover {
+    background-color: var(--green);
+    color: white;
+}
+/*searchStudies styling end*/
+/*modifyStudies styling start*/
+.modify-studies { 
+    display: block; /* Inital page display*/
+}
+
+.edit-delete-buttons {
+    display: flex;
+    justify-content: center;
+    padding: 0px;
+}
+
+.edit-method {
+    margin: 0 5px;
+}
+
+.delete-method {
+    margin: 0 5px;
+}
+
+.created-studies-list{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    flex-flow:column wrap;
+    align-items: center;
+    padding: 10px;
+}
+
+.create-btn {
+    width: 25%;
+    padding: 20px;
+    background-color: white;
+    color: black;
+    border: solid black 1px;
+    border-radius: 10%;
+}
+
+.create-btn:hover {
+    background-color: var(--green);
+    color: white;
+}
+/*modifyStudies styling end*/
 /*createStudies styling start*/
 .create-studies {
     display: none; /* Hidden by default */
     text-align: center;
+
 }
 /*createStudies styling end*/
-
-/*deleteStudies styling start*/
-.delete-studies {
-    display: none; /* Hidden by default */
+/*editStudies styling start*/
+.edit-studies {
+    display: block; /* Hidden by default */
     text-align: center;
+
 }
-/*deleteStudies styling end*/
+/*editStudies styling end*/
 /*********************/
 /* Study section end */
 /*********************/

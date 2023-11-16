@@ -20,7 +20,7 @@ $userID=userID();
     <?php meta(); ?> <!--Prints meta data-->
 
     <link rel="stylesheet" href="generalStyle.css">
-    <title>Survey</title>
+    <title>Surveys</title>
 </head>
 
 <body>

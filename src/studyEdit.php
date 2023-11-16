@@ -1,4 +1,6 @@
 <?php
+//PHP coded by Jeremy Tollison
+
 //Include config file for database connection and functions
 @include 'config.php';
 
@@ -10,7 +12,7 @@ $name=nameType();
 $userID=userID();
 ?>
 
-<!DOCTYPE html>
+<!DOCTYPE html> <!--HTML coded by Geary -->
 <html lang="en">
 
 <head>

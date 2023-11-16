@@ -20,12 +20,12 @@ $userID=userID();
     <?php meta(); ?> <!--Prints meta data-->
 
     <link rel="stylesheet" href="generalStyle.css">
-    <title>SurveysEdit</title>
+    <title>SupportGroupsModify</title>
 </head>
 
 <body>
     <?php
-        $pageName = 'SurveysEdit';
+        $pageName = 'SupportGroupsModify';
         pageHeader(); //Displays the header
         pageNavbar($conn, $pageName, $name, $userID); //Displays the navbar
     ?>
