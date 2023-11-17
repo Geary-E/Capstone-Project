@@ -1775,7 +1775,6 @@ function studyEdit($name, $userID, $conn)
 
         //Store the data for the name and description from the study table via the $studyID
         $selectStudyData = "SELECT `name`, `description`, `location`, `date`, `compensation` FROM `study` WHERE `studyID` ='$edittedStudyID';";
-        $selectStudyData = "SELECT `name`, `description` FROM `study` WHERE `studyID` ='$edittedStudyID';";
         $resultStudyData = mysqli_query($conn, $selectStudyData);
 
         //If there is a result
