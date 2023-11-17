@@ -1002,25 +1002,26 @@ function opportunityModify($name, $userID, $conn)
 
             //Lists opportunities where where userID is equal
             echo '<div class="opportunity-item">
+
                     <b>Name:</b> ' . $row['name'] . '<br>
                     <b>Description:</b> ' . $row['description'] . '<br>
                     <b>Location:</b> ' . $row['location'] . '<br>
                     <b>Date:</b> ' . date('Y-m-d H:i:s', strtotime($row['date'])) . '<br>
                     <b>Compensation:</b> ' . $row['compensation'] . '<br>
 
-                <div class="edit-delete-buttons"> <!-- edit and delete buttons div start  -->
+                    <div class="edit-delete-buttons"> <!-- edit and delete buttons div start  -->
             
-                <form method="post" class="edit-method" action="opportunityEdit.php">
-                   <input type="hidden" name="editOpportunityID" value="' . $row['opportunityID'] . '">
-                   <button type="submit" name="editOpportunity">Edit</button>
-                </form>';
+                    <form method="post" class="edit-method" action="opportunityEdit.php">
+                       <input type="hidden" name="editOpportunityID" value="' . $row['opportunityID'] . '">
+                       <button type="submit" name="editOpportunity">Edit</button>
+                    </form>';
    
-                echo'
-                <!-- deleteOpportunity button -->
-                <form method="post" action="" class="delete-method" onsubmit="return confirm(\'Are you sure you want to delete this opportunity?\');">
-                    <input type="hidden" name="opportunity_id" value="' . $row['opportunityID'] . '">
-                    <button name="deleteOpportunity" value="submit" type="submit">Delete</button>
-                </form>
+                    echo'
+                    <!-- deleteOpportunity button -->
+                    <form method="post" action="" class="delete-method" onsubmit="return confirm(\'Are you sure you want to delete this opportunity?\');">
+                        <input type="hidden" name="opportunity_id" value="' . $row['opportunityID'] . '">
+                        <button name="deleteOpportunity" value="submit" type="submit">Delete</button>
+                    </form>
                 </div> <!-- edit and delete buttons div start  -->
             </div><br> <!-- opportunity-item end -->';
         } //While end
@@ -1536,9 +1537,14 @@ function studySearch($name, $conn)
             while ( $row = mysqli_fetch_assoc($result) ) {
 
                 //Lists all studies
-                echo '<div class="study-item"> ';
-                echo '<b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'];
-                echo '</div><br>';
+                echo '
+                <div class="study-item">
+                    <b>Name:</b> ' . $row['name'] . '<br>
+                    <b>Description:</b> ' . $row['description'] . '<br>
+                    <b>Location:</b> ' . $row['location'] . '<br>
+                    <b>Date:</b> ' . date('Y-m-d H:i:s', strtotime($row['date'])) . '<br>
+                    <b>Compensation:</b> ' . $row['compensation'] . '<br>
+                </div><br>';
             } //While end
         } //Else if end
 
@@ -1570,9 +1576,14 @@ function studySearch($name, $conn)
             while ( $row = mysqli_fetch_assoc($result) ) {
                 
                 //Lists studies where name and tag is included in the search fields
-                echo '<div class="study-item"> ';
-                echo '<b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'];
-                echo '</div><br>';       
+                echo '
+                <div class="study-item">
+                    <b>Name:</b> ' . $row['name'] . '<br>
+                    <b>Description:</b> ' . $row['description'] . '<br>
+                    <b>Location:</b> ' . $row['location'] . '<br>
+                    <b>Date:</b> ' . date('Y-m-d H:i:s', strtotime($row['date'])) . '<br>
+                    <b>Compensation:</b> ' . $row['compensation'] . '<br>
+                </div><br>';   
             } //While end
         } //Else if end
         unset($_POST['studySearch']);
@@ -1597,20 +1608,32 @@ function studyCreate($name, $userID, $conn)
     <h1>Hello <span>' . $name . '</span> this is the create study section</h1>
 
     <form action="" method="post"> <!-- form for create study info start-->
-		<label for="studyname"><b>Study name:</b></label><br> <!-- studyName button -->
-		<input type="text" id="study_name" name="study_name" required placeholder="Study name">
-		<br><br>
-	
-		<label for="studydescription"><b>Study description:</b></label><br> <!-- studyDescription button -->
-		<input type="text" id="study_description" name="study_description" required placeholder="Study description">
-		<br><br>
-		
-		<label for="studytags"><b>Study tag(s):</b></label><br> <!-- studyTags button -->
-		<input type="text" id="study_tags" name="study_tags" required placeholder="Study tag(s)">
-		<br><br>
-	
-		<input type="submit" name="createStudy" value="Create new study" class="form-btn"> <!-- createStudy button -->
-		<input type="button" onClick="window.location.href=\'studyModify.php\'" name="cancel" value="cancel" class="cancel-link"></input> <!-- cancel button links to studyModify.php-->
+        <label for="studyname"><b>Study name:</b></label><br><!-- studyName button -->
+        <input type="text" id="study_name" name="study_name" required placeholder="Study name">
+        <br><br>
+
+        <label for="studydescription"><b>Study description:</b></label><br><!-- studyDescription button -->
+        <input type="text" id="study_description" name="study_description" required placeholder="Study description">
+        <br><br>
+        
+        <label for="studylocation"><b>Study location:</b></label><br><!-- studyLocation button -->
+        <input type="text" id="study_location" name="study_location" required placeholder="Study location">
+        <br><br>
+        
+        <label for="studydate"><b>Study date:</b></label><br><!-- studyDate button -->
+        <input type="datetime-local" id="study_date" name="study_date" required placeholder="Study date">
+        <br><br>
+        
+        <label for="studycompensation"><b>Study compensation amount: ( Leave at 0 if none )</b></label><br><!-- studyCompensation button -->
+        <input type="number" id="study_compensation" name="study_compensation" placeholder="0" min="0">
+        <br><br>
+        
+        <label for="studytags"><b>Study tag(s):</b></label><br> <!-- studyTags button -->
+        <input type="text" id="study_tags" name="study_tags" required placeholder="Study tag(s)">
+        <br><br>
+        
+        <input type="submit" name="createStudy" value="Create new study" class="form-btn"> <!-- createStudy button -->
+        <input type="button" onClick="window.location.href=\'studyModify.php\'" name="cancel" value="cancel" class="cancel-link"></input> <!-- cancel button links to studyModify.php-->
         <br><br>
 	</form> <!-- form for create study info end-->
     </div> <!-- create-studies end -->';
@@ -1621,10 +1644,13 @@ function studyCreate($name, $userID, $conn)
         //Create name and description variables from the posted data
         $name = mysqli_real_escape_string($conn, $_POST['study_name']);
         $description = mysqli_real_escape_string($conn, $_POST['study_description']);
+        $location = mysqli_real_escape_string($conn, $_POST['study_location']);
+        $date = mysqli_real_escape_string($conn, $_POST['study_date']);
+        $compensation = mysqli_real_escape_string($conn, $_POST['study_compensation']);
+        //$tags = mysqli_real_escape_string($conn, $_POST['study_tags']);
 
         //Insert into study table with the created variables
-        $insert = "INSERT INTO `study` (`studyID`, `ownerID`, `name`, `description`) VALUES (NULL, '$userID', '$name', '$description');";
-        
+        $insert = "INSERT INTO `study` (`studyID`, `ownerID`, `name`, `description`, `location`, `date`, `compensation`) VALUES (NULL, '$userID', '$name', '$description', '$location', '$date', '$compensation');";
         //If query was successful
         if (mysqli_query($conn, $insert)) {
             echo "Study inserted successfully!";
@@ -1673,8 +1699,11 @@ function studyModify($name, $userID, $conn)
 
             //Lists studies where where userID is equal
             echo '<div class="study-item">
-               <p> <b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'] . '</p>
-               
+                    <b>Name:</b> ' . $row['name'] . '<br>
+                    <b>Description:</b> ' . $row['description'] . '<br>
+                    <b>Location:</b> ' . $row['location'] . '<br>
+                    <b>Date:</b> ' . date('Y-m-d H:i:s', strtotime($row['date'])) . '<br>
+                    <b>Compensation:</b> ' . $row['compensation'] . '<br>
                 <div class="edit-delete-buttons"> <!-- edit and delete buttons div start  -->
             
                 <form method="post" class="edit-method" action="studyEdit.php">
@@ -1733,6 +1762,9 @@ function studyEdit($name, $userID, $conn)
     //Initialize variables with default values
     $studyName = '';
     $studyDescription = '';
+    $studyLocation = '';
+    $studyDate = '';
+    $studyCompensation = '';
     $edittedStudyID = '';
 
     //Checks if studyID to edit is posted
@@ -1742,6 +1774,7 @@ function studyEdit($name, $userID, $conn)
         $edittedStudyID = $_POST['editStudyID'];
 
         //Store the data for the name and description from the study table via the $studyID
+        $selectStudyData = "SELECT `name`, `description`, `location`, `date`, `compensation` FROM `study` WHERE `studyID` ='$edittedStudyID';";
         $selectStudyData = "SELECT `name`, `description` FROM `study` WHERE `studyID` ='$edittedStudyID';";
         $resultStudyData = mysqli_query($conn, $selectStudyData);
 
@@ -1754,6 +1787,9 @@ function studyEdit($name, $userID, $conn)
             //Info in the row to variables
             $studyName = $row['name'];
             $studyDescription = $row['description'];
+            $studyLocation = $row['location'];
+            $studyDate = $row['date'];
+            $studyCompensation = $row['compensation'];
         } //Inner if end
     } //Outter if end
     
@@ -1761,7 +1797,7 @@ function studyEdit($name, $userID, $conn)
     <div class="edit-studies">
     <h1>Hello <span>' . $name. '</span> this is the edit study section</h1>';
 
-    //Two forms, one for each part of the study table: ( `name`, `description`)
+    //Five forms, one for each part of the study table: ( `name`, `description`, `location`, `date`, `compensation`)
     echo '
     <form action="" method="post">
 
@@ -1779,6 +1815,24 @@ function studyEdit($name, $userID, $conn)
         <textarea name="studyDescription" class="form-textarea" required>' . $studyDescription . '</textarea>
         <br><br>
 
+        <!--$studyLocation data as a placeholder for the location form-->
+        <label for="studyLocation">Study Location:</label>
+        <br>
+        <input type="text" name="studyLocation" value="' . $studyLocation . '" class="form-input" required>
+        <br><br>
+
+        <!--$studyDate data as a placeholder for the date form-->
+        <label for="studyDate">Study Date:</label>
+        <br>
+        <input type="datetime-local" name="studyDate" value="' . date('Y-m-d\TH:i', strtotime(str_replace(' ', 'T', $studyDate))) . '" class="form-input" required>
+        <br><br>
+
+        <!--$studyCompensation data as a placeholder for the compensation form-->
+        <label for="studyCompensation">Study Compensation:</label>
+        <br>
+        <input type="text" name="studyCompensation" value="' . $studyCompensation . '" class="form-input">
+        <br><br>
+
         <!--Submit form that posts updateStudy-->
         <input type="submit" name="updateStudy" value="Submit" class="form-btn">
 
@@ -1794,9 +1848,12 @@ function studyEdit($name, $userID, $conn)
         //Create name and description variables from the posted data
         $studyName = mysqli_real_escape_string($conn, $_POST['studyName']);
         $studyDescription = mysqli_real_escape_string($conn, $_POST['studyDescription']);
+        $studyLocation = mysqli_real_escape_string($conn, $_POST['studyLocation']);
+        $studyDate = mysqli_real_escape_string($conn, $_POST['studyDate']);
+        $studyCompensation = mysqli_real_escape_string($conn, $_POST['studyCompensation']);
 
         //Update the study table row name and description column where the $studyID is equal
-        $editQuery = "UPDATE `study` SET `name` = '$studyName', `description` = '$studyDescription' WHERE `study`.`studyID` = '$edittedStudyID';";
+        $editQuery = "UPDATE `study` SET `name` = '$studyName', `description` = '$studyDescription', `location`='$studyLocation', `date`='$studyDate', `compensation`='$studyCompensation' WHERE `study`.`studyID` = '$edittedStudyID';";
         
         //If query was successful
         if (mysqli_query($conn, $editQuery)) {
