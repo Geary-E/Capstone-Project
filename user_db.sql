@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 31, 2023 at 06:12 PM
+-- Generation Time: Nov 15, 2023 at 03:59 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.0.25
 
@@ -37,6 +37,13 @@ CREATE TABLE `opportunity` (
   `compensation` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `opportunity`
+--
+
+INSERT INTO `opportunity` (`opportunityID`, `ownerID`, `name`, `description`, `location`, `date`, `compensation`) VALUES
+(1, 5, 'testOpportunity', 'testOpportunityDescription', 'Denton, TX', '2023-11-23 23:59:00.000000', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -67,6 +74,13 @@ CREATE TABLE `study` (
   `compensation` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `study`
+--
+
+INSERT INTO `study` (`studyID`, `ownerID`, `name`, `description`, `location`, `date`, `compensation`) VALUES
+(1, 5, 'test study', 'test study description', 'denton, TX', '2023-11-23 20:40:09.000000', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -79,6 +93,13 @@ CREATE TABLE `supportgroup` (
   `name` varchar(255) NOT NULL,
   `description` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `supportgroup`
+--
+
+INSERT INTO `supportgroup` (`supportGroupID`, `ownerID`, `name`, `description`) VALUES
+(1, 5, 'support group test', 'support group description test');
 
 -- --------------------------------------------------------
 
@@ -128,7 +149,9 @@ CREATE TABLE `survey` (
 
 INSERT INTO `survey` (`surveyID`, `ownerID`, `name`, `description`) VALUES
 (1, 5, 'test', 'testing'),
-(2, 2, 'secondtest', 'secondsurveytest');
+(2, 2, 'secondtest', 'secondsurveytest'),
+(4, 4, 'survey 3', 'test description 3'),
+(24, 5, 'survey 4update', 'survey 4 test');
 
 -- --------------------------------------------------------
 
@@ -463,7 +486,7 @@ ALTER TABLE `user_survey`
 -- AUTO_INCREMENT for table `opportunity`
 --
 ALTER TABLE `opportunity`
-  MODIFY `opportunityID` int(255) NOT NULL AUTO_INCREMENT;
+  MODIFY `opportunityID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `opportunitycomment`
@@ -475,13 +498,13 @@ ALTER TABLE `opportunitycomment`
 -- AUTO_INCREMENT for table `study`
 --
 ALTER TABLE `study`
-  MODIFY `studyID` int(255) NOT NULL AUTO_INCREMENT;
+  MODIFY `studyID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `supportgroup`
 --
 ALTER TABLE `supportgroup`
-  MODIFY `supportGroupID` int(255) NOT NULL AUTO_INCREMENT;
+  MODIFY `supportGroupID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `supportgroupcomment`
@@ -499,7 +522,7 @@ ALTER TABLE `supportgrouppost`
 -- AUTO_INCREMENT for table `survey`
 --
 ALTER TABLE `survey`
-  MODIFY `surveyID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `surveyID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `surveyquestion`

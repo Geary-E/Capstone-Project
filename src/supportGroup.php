@@ -17,17 +17,15 @@ $userID=userID();
 
 <head>
 
-    <?php //Prints meta data
-    meta(); ?>
-
+    <?php meta(); ?> <!--Prints meta data-->
 
     <link rel="stylesheet" href="generalStyle.css">
-    <title>supportGroup</title>
+    <title>SupportGroups</title>
 </head>
 
 <body>
     <?php
-    $pageName = 'Support Groups';
+        $pageName = 'Support Groups';
         pageHeader(); //Displays the header
         pageNavbar($conn, $pageName, $name, $userID); //Displays the navbar
     ?>

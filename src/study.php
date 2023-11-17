@@ -22,6 +22,7 @@ $userID=userID();
     <link rel="stylesheet" href="generalStyle.css">
     <title>Studies</title>
 </head>
+
 <body>
     <?php
         $pageName = 'Studies';
@@ -30,5 +31,3 @@ $userID=userID();
     ?>
 </body>
 </html>
-
-
