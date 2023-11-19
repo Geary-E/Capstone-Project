@@ -67,3 +67,23 @@ function generalAccountDisplay() {
     document.querySelector('.faq-section').style.display = 'none';
 } 
 
+// When edit is clicked on in account page, it links to this function to be called. Function is used to allow user editing
+function editUserAccountInput() {
+    document.querySelector('.save-btn').style.display = 'block';
+    document.querySelector('.cancel-btn').style.display = 'block';
+    var inputElements = document.querySelectorAll('.myInput');
+    inputElements.forEach(function(input) {
+      input.readOnly = false;
+    });
+  }
+
+  // Allows form updated information to stay updated when updating the user information on the account page
+  function updateUserAccountInfo(firstname, lastname, email, user_type) {    
+   
+    // Update the information:
+    document.getElementById("myInput0").value = firstname;
+    document.getElementById("myInput1").value = lastname;
+    document.getElementById("myInput2").value = email;
+    document.getElementById("myInput3").value = user_type;
+
+  }
