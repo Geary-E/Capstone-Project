@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 15, 2023 at 03:59 AM
+-- Generation Time: Nov 17, 2023 at 09:58 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.0.25
 
@@ -34,7 +34,7 @@ CREATE TABLE `opportunity` (
   `description` varchar(255) NOT NULL,
   `location` varchar(255) NOT NULL,
   `date` datetime(6) NOT NULL,
-  `compensation` tinyint(1) NOT NULL
+  `compensation` int(255) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -42,7 +42,8 @@ CREATE TABLE `opportunity` (
 --
 
 INSERT INTO `opportunity` (`opportunityID`, `ownerID`, `name`, `description`, `location`, `date`, `compensation`) VALUES
-(1, 5, 'testOpportunity', 'testOpportunityDescription', 'Denton, TX', '2023-11-23 23:59:00.000000', 1);
+(1, 5, 'testOpportunity', 'testOpportunityDescription', 'Denton, TX', '2023-11-23 23:59:00.000000', 1),
+(2, 5, 'oppasd', 'asdasdasdasd', 'denton', '2023-11-14 21:40:00.000000', 0);
 
 -- --------------------------------------------------------
 
@@ -71,7 +72,7 @@ CREATE TABLE `study` (
   `description` varchar(255) NOT NULL,
   `location` varchar(255) NOT NULL,
   `date` datetime(6) NOT NULL,
-  `compensation` tinyint(1) NOT NULL
+  `compensation` int(255) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -151,7 +152,7 @@ INSERT INTO `survey` (`surveyID`, `ownerID`, `name`, `description`) VALUES
 (1, 5, 'test', 'testing'),
 (2, 2, 'secondtest', 'secondsurveytest'),
 (4, 4, 'survey 3', 'test description 3'),
-(24, 5, 'survey 4update', 'survey 4 test');
+(25, 5, 'survey 4', 'survey 4 test');
 
 -- --------------------------------------------------------
 
@@ -486,7 +487,7 @@ ALTER TABLE `user_survey`
 -- AUTO_INCREMENT for table `opportunity`
 --
 ALTER TABLE `opportunity`
-  MODIFY `opportunityID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `opportunityID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `opportunitycomment`
@@ -522,7 +523,7 @@ ALTER TABLE `supportgrouppost`
 -- AUTO_INCREMENT for table `survey`
 --
 ALTER TABLE `survey`
-  MODIFY `surveyID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `surveyID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `surveyquestion`
