@@ -357,7 +357,7 @@ function pageNavbar($conn, $pageName, $name, $userID)
                 $email = emailType();
                 $user_type = userType();
                 echo '<div class="account-page-display">';
-                accountPageDisplay($email, $user_type, $name, $last_name);
+                accountPageDisplay($conn,$email, $user_type, $name, $last_name, $userID);
                 echo '</div>'; 
                 accountPageFaq();   /* the FAQ page */
                 accountPageComp($name);   /* the compensation page */
@@ -384,12 +384,13 @@ function pageNavbar($conn, $pageName, $name, $userID)
   * @param mixed $last_name
   * @return void
   */
+
 /* Display for the account page */
-  function accountPageDisplay($email, $user_type, $first_name, $last_name) { //Created by Geary
+function accountPageDisplay($conn, $email, $user_type, $first_name, $last_name, $userID) { //Created by Geary
     echo '
-        <div class="account-page-box">';
+        <div class="account-page-box">';    // Account page div element
         echo '
-        <h1>Welcome to the Account Page.</h1>
+        <h1>Welcome to the Account Page.</h1>	<!-- Header for the account page -->
         
         <!--Profile Information for account page -->
 
@@ -399,23 +400,66 @@ function pageNavbar($conn, $pageName, $name, $userID)
         <div class="header-links">
        <form class="upload-form" action="upload.php"  method="POST" enctype="multipart/form-data">
         <label for="img-form">Upload</label><input id="img-form" type="file" name="file"/>
-         <!--<button class="submit-form" type="submit" name="submit"> UPLOAD </button> -->
+         <!--<button class="submit-form" type="submit" name="submit"> UPLOAD </button> Still testing this functionality -->
         </form>
-            <a href="#"> Edit </a>
+            <a href="#/_edit_info" id="edit-link" onclick="editUserAccountInput()"> Edit </a>
             </div>
         <div class="profile-information">
-        <label for="myInput">First Name: </label><input type="text" id="myInput" value="'. $first_name .'" readonly><br>
-        <label for="myInput1">Last Name: </label><input type="text" id="myInput1" value="'. $last_name .'" readonly><br>
-         <label for="myInput2">Email:</label><input type="text" id="myInput2" value="'. $email .'" readonly><br>
-        <label for="myInput3">User-Type:</label><input type="text" id="myInput3" value="'. $user_type .'" readonly><br>
-            <div class="button-list">
-                <button class="save-btn"> Save </button>
-                <button class="cancel-btn"> Cancel </button>
-            </div>
-            </div>
+        <form class="input-form" action="" method="POST"> <!-- Form to record edited user data -->
+            <label for="myInput0">First Name: </label><input type="text" name="firstname" id="myInput0" class="myInput" value="'. $first_name .'" readonly><br><br>
+            <label for="myInput1">Last Name: </label><input type="text" id="myInput1" name="lastname" class="myInput" value="'. $last_name .'" readonly><br><br>
+            <label for="myInput2">Email:</label><input type="text" id="myInput2" name="email" class="myInput" value="'. $email .'" readonly><br><br>
+            <label for="myInput3">User-Type:</label><input type="text" id="myInput3" name="user_type" class="myInput" value="'. $user_type .'" readonly><br>
+                <div class="button-list">	<! -- Buttons -->
+                    <button type="submit" class="save-btn" name="save-button"> Save </button>  <!-- TEST 1 -->
+                    <button class="cancel-btn"> Cancel </button>
+                    </div>
+             </form> <!-- End of form -->
+            </div> <!-- End of profile-information div element -->
 
-            <!-- Profile Information on account page ends -->
-        </div>';
+        
+        </div>';    // Account page div element ending 
+
+  
+	/* This is where the updating of the information is, it is recorded by isset($_POST[]). From there there is an SQL update statement to update
+	the database with the new values. The session variables are also updated as well, so the newly updated information can display throughout the other pages
+	*/
+
+        if(isset($_POST["save-button"])) {
+            $first_name = mysqli_real_escape_string($conn, $_POST['firstname']);    // firstname
+            $last_name = mysqli_real_escape_string($conn, $_POST['lastname']);      // lastname
+            $email = mysqli_real_escape_string($conn, $_POST['email']);		    // email
+            $user_type = mysqli_real_escape_string($conn, $_POST['user_type']);	   // user_type
+    
+	    // Update SQL statement
+            $editUser = "UPDATE `user` SET `firstname` = '$first_name', `lastname` = '$last_name', `email`  = '$email', `user_type` = '$user_type' WHERE `userID` = '$userID';";
+            
+            if (mysqli_query($conn, $editUser)) {
+                
+                if (isset($_SESSION['researcher_name'])) {
+                    $_SESSION['researcher_name'] = $first_name;		// updated researcher_name with $first_name
+                }
+            
+                
+                elseif (isset($_SESSION['person_name'])) {
+                    $_SESSION['person_name'] = $first_name;		// updated person_name with $first_name
+                }
+                
+                $_SESSION['lastName'] = $last_name;
+                $_SESSION['email'] = $email;				// updated email with $email
+                $_SESSION['user_type'] = $user_type;			// updated user_type with $user_type
+
+
+                echo "Record updated successfully!";
+                echo " <script>
+                updateUserAccountInfo('$first_name', '$last_name', '$email', '$user_type');
+                </script>
+                ";
+            } else {
+                echo "Error updating record: " . mysqli_error($conn);
+            }
+        
+        } 
  }
  /* Account page display end */
 

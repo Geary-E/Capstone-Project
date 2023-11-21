@@ -160,6 +160,10 @@ h1 {
     color: var(--green);
 }
 
+.header-links a:hover {
+    color: black;
+}
+
 #img-form {
     display: none;
 }
