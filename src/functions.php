@@ -561,6 +561,12 @@ function surveySearch($name, $conn)
                 //Lists all surveys
                 echo '<div class="survey-item"> ';
                 echo '<b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'];
+
+                  // Join button to be displayed within the search section
+                echo '<br><br><div class="view-button"> 
+                  <button class="join-btn"> Join </button>
+                  </div>';
+
                 echo '</div><br>';
             } //While end
         } //Else if end
@@ -719,6 +725,7 @@ function surveyModify($name, $userID, $conn)
                }
                     // Researcher name display end
 
+                    /* Commented out View and Join buttons    
                     // Person name display
                     elseif(isset($_SESSION['person_name'])) {
                         echo '
@@ -727,7 +734,8 @@ function surveyModify($name, $userID, $conn)
                             <button type="submit" class="join" name="join"> Join </button>
                             </div>
                             <!-- Display for person end -->';
-                    } // Person name display end
+                    } // Person name display end: Commented out */
+
             echo '        
             </div><br> <!-- survey-item end -->';
         } //While end
@@ -910,7 +918,15 @@ function opportunitySearch($name, $conn)
                     <b>Description:</b> ' . $row['description'] . '<br>
                     <b>Location:</b> ' . $row['location'] . '<br>
                     <b>Date:</b> ' . date('Y-m-d H:i:s', strtotime($row['date'])) . '<br>
-                    <b>Compensation:</b> ' . $row['compensation'] . '<br>
+                    <b>Compensation:</b> ' . $row['compensation'] . '<br>';
+
+                    
+                // Join button to be displayed within the search section
+                echo '<br><div class="join-button"> 
+                <button class="view-btn"> Join </button>
+            </div>';
+
+              echo '  
                 </div><br>';
             } //While end
         } //Else if end
@@ -952,7 +968,8 @@ function opportunitySearch($name, $conn)
                     <b>Description:</b> ' . $row['description'] . '<br>
                     <b>Location:</b> ' . $row['location'] . '<br>
                     <b>Date:</b> ' . date('Y-m-d H:i:s', strtotime($row['date'])) . '<br>
-                    <b>Compensation:</b> ' . $row['compensation'] . '<br>
+                    <b>Compensation:</b> ' . $row['compensation'] . '<br>';
+                echo '
                 </div><br>';
             } //While end
         } //Else if end
@@ -1096,6 +1113,7 @@ function opportunityModify($name, $userID, $conn)
                 </div> <!-- edit and delete buttons div start  -->';
                 } // Researcher display end
 
+                /* Commented out View and Join buttons
                 // Person name display
                 elseif(isset($_SESSION['person_name'])) {
                     echo '
@@ -1104,7 +1122,7 @@ function opportunityModify($name, $userID, $conn)
                         <button type="submit" class="join" name="join"> Join </button>
                         </div>
                         <!-- Display for person end -->';
-                }   // person name display end
+                }   // person name display end: Commented out View and Join buttons */
 
              echo '   
             </div><br> <!-- opportunity-item end -->';
@@ -1310,6 +1328,12 @@ function supportGroupSearch($name, $conn)
                 //Lists all support groups
                 echo '<div class="supportGroup-item"> ';
                 echo '<b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'];
+                
+                // Join button to be displayed within the search section
+                echo '<br><br><div class="join-button"> 
+                        <button class="join-btn"> Join </button>
+                        </div>';
+
                 echo '</div><br>';
             } //While end
         } //Else if end
@@ -1465,6 +1489,8 @@ function supportGroupModify($name, $userID, $conn)
                             </div> <!-- edit and delete buttons div end  -->
                             <!-- Display for researcher end -->';
                } // Display for researcher end
+
+               /* View and Join buttons commented out 
                if(isset($_SESSION['person_name'])) {    // Display for person name
                     echo '
                         <div class="view-join-buttons"> <!-- View and join buttons -->
@@ -1472,7 +1498,7 @@ function supportGroupModify($name, $userID, $conn)
                             <button type="submit" class="join" name="join"> Join </button>
                             </div>
                             <!-- Display for person end -->';
-               }    // Display for person name end
+               }    // Display for person name end: Commented out */
 
             echo '   
             </div><br> <!-- supportGroup-item end -->';
@@ -1653,7 +1679,14 @@ function studySearch($name, $conn)
                     <b>Description:</b> ' . $row['description'] . '<br>
                     <b>Location:</b> ' . $row['location'] . '<br>
                     <b>Date:</b> ' . date('Y-m-d H:i:s', strtotime($row['date'])) . '<br>
-                    <b>Compensation:</b> ' . $row['compensation'] . '<br>
+                    <b>Compensation:</b> ' . $row['compensation'] . '<br>';
+                    
+                    // Join button to be displayed within the search section
+                echo '<br><div class="join-button"> 
+                    <button class="join-btn"> Join </button>
+                </div>';
+
+                echo '
                 </div><br>';
             } //While end
         } //Else if end
@@ -1836,6 +1869,7 @@ function studyModify($name, $userID, $conn)
                         </div> <!-- edit and delete buttons div start  -->';
                 }  // Researcher name display 
 
+                /* View and Join buttons commented out 
                 // Person name display start
                 elseif(isset($_SESSION['person_name'])) {
                     echo '
@@ -1844,7 +1878,9 @@ function studyModify($name, $userID, $conn)
                             <button type="submit" class="join" name="join"> Join </button>
                         </div>
                         <!-- Display for person end -->';
-                } // Person name display end
+                } // Person name display end : Commented out */
+
+
              echo '   
             </div><br> <!-- study-item end -->';
         } //While end
