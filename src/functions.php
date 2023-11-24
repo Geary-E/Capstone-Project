@@ -321,7 +321,7 @@ function pageNavbar($conn, $pageName, $name, $userID)
             <a href="studyModify.php">Manage ' . $pageNameDisplay . '</a>
             </div>
             <div class="page-content">  <!-- Container for all the content -->';
-                studyModify($name, $userID, $conn); //Displays the studyModify content
+                studyModify($name, $userID, $conn); //Displays the studyModify content   
                 studyCreate($name, $userID, $conn); //Displays the studyCreate content
                 echo '
             </div>
@@ -696,37 +696,61 @@ function surveyModify($name, $userID, $conn)
 
             //Lists surveys where where userID is equal
             echo '<div class="survey-item">
-               <p> <b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'] . '</p>
-               
-                <div class="edit-delete-buttons"> <!-- edit and delete buttons div start  -->
+               <p> <b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'] . '</p>';
+
+               // Researcher display for surveys
+               if (isset($_SESSION['researcher_name'])) {
+
+                echo '
+                    <div class="edit-delete-buttons"> <!-- edit and delete buttons div start  -->
             
-                <form method="post" class="edit-method" action="surveyEdit.php">
-                   <input type="hidden" name="editSurveyID" value="' . $row['surveyID'] . '">
-                   <button type="submit" name="editSurvey">Edit</button>
-                </form>';
+                    <form method="post" class="edit-method" action="surveyEdit.php">
+                        <input type="hidden" name="editSurveyID" value="' . $row['surveyID'] . '">
+                        <button type="submit" name="editSurvey">Edit</button>
+                    </form>';
    
-                echo'
-                <!-- deleteSurvey button -->
-                <form method="post" action="" class="delete-method" onsubmit="return confirm(\'Are you sure you want to delete this survey?\');">
-                    <input type="hidden" name="survey_id" value="' . $row['surveyID'] . '">
-                    <button name="deleteSurvey" value="submit" type="submit">Delete</button>
-                </form>
-                </div> <!-- edit and delete buttons div start  -->
+                    echo'
+                    <!-- deleteSurvey button -->
+                        <form method="post" action="" class="delete-method" onsubmit="return confirm(\'Are you sure you want to delete this survey?\');">
+                            <input type="hidden" name="survey_id" value="' . $row['surveyID'] . '">
+                            <button name="deleteSurvey" value="submit" type="submit">Delete</button>
+                        </form>
+                    </div> <!-- edit and delete buttons div start  -->';
+               }
+                    // Researcher name display end
+
+                    // Person name display
+                    elseif(isset($_SESSION['person_name'])) {
+                        echo '
+                        <div class="view-join-buttons"> <!-- View and join buttons -->
+                            <button type="submit" class="view" name="view"> View </button>
+                            <button type="submit" class="join" name="join"> Join </button>
+                            </div>
+                            <!-- Display for person end -->';
+                    } // Person name display end
+            echo '        
             </div><br> <!-- survey-item end -->';
         } //While end
     } //Else if end
+
+    /* Create surveys can only be done by the researchers, as it is being 
+    implemented here: Researcher display start */
+    if (isset($_SESSION['researcher_name'])) {
     echo '
-
     <!-- Create survey button -->
-
     <button onclick="surveyCreate()" class="create-btn"> <b>Create New Survey</b>  </button>
-    </div> <!-- created-surveys-list end -->
-    
+    </div> <!-- created-surveys-list end -->';
+    } // Researcher display end
+
+    echo '
     <h1>Completed Surveys:</h1>
         <div class="created-surveys-list">';
 
     echo '
-    </div> <!-- created-surveys-list end -->
+    </div> <!-- created-surveys-list end -->';
+       // Researcher display end
+
+    echo '
     </div> <!-- modify-surveys end -->
     ';
 
@@ -1051,31 +1075,53 @@ function opportunityModify($name, $userID, $conn)
                     <b>Description:</b> ' . $row['description'] . '<br>
                     <b>Location:</b> ' . $row['location'] . '<br>
                     <b>Date:</b> ' . date('Y-m-d H:i:s', strtotime($row['date'])) . '<br>
-                    <b>Compensation:</b> ' . $row['compensation'] . '<br>
-
-                    <div class="edit-delete-buttons"> <!-- edit and delete buttons div start  -->
-            
-                    <form method="post" class="edit-method" action="opportunityEdit.php">
-                       <input type="hidden" name="editOpportunityID" value="' . $row['opportunityID'] . '">
-                       <button type="submit" name="editOpportunity">Edit</button>
-                    </form>';
+                    <b>Compensation:</b> ' . $row['compensation'] . '<br>';
+                    // Display for researcher
+                    if (isset($_SESSION['researcher_name'])) {
+                    echo '    
+                        <div class="edit-delete-buttons"> <!-- edit and delete buttons div start  -->
+                            
+                            <form method="post" class="edit-method" action="opportunityEdit.php">
+                                <input type="hidden" name="editOpportunityID" value="' . $row['opportunityID'] . '">
+                                <button type="submit" name="editOpportunity">Edit</button>
+                        </form>';
    
                     echo'
                     <!-- deleteOpportunity button -->
-                    <form method="post" action="" class="delete-method" onsubmit="return confirm(\'Are you sure you want to delete this opportunity?\');">
-                        <input type="hidden" name="opportunity_id" value="' . $row['opportunityID'] . '">
-                        <button name="deleteOpportunity" value="submit" type="submit">Delete</button>
+                        <form method="post" action="" class="delete-method" onsubmit="return confirm(\'Are you sure you want to delete this opportunity?\');">
+                            <input type="hidden" name="opportunity_id" value="' . $row['opportunityID'] . '">
+                            <button name="deleteOpportunity" value="submit" type="submit">Delete</button>
                     </form>
-                </div> <!-- edit and delete buttons div start  -->
+
+                </div> <!-- edit and delete buttons div start  -->';
+                } // Researcher display end
+
+                // Person name display
+                elseif(isset($_SESSION['person_name'])) {
+                    echo '
+                    <div class="view-join-buttons"> <!-- View and join buttons -->
+                        <button type="submit" class="view" name="view"> View </button>
+                        <button type="submit" class="join" name="join"> Join </button>
+                        </div>
+                        <!-- Display for person end -->';
+                }   // person name display end
+
+             echo '   
             </div><br> <!-- opportunity-item end -->';
         } //While end
     } //Else if end
-    echo '
 
+
+    /* Create opportunities can only be done by the researchers, as it is being 
+    implemented here: Researcher display start */
+    if (isset($_SESSION['researcher_name'])) {
+    echo '
     <!-- Create opportunity button -->
     <button onclick="opportunityCreate()" class="create-btn"> <b>Create New Opportunity</b>  </button>
-    </div> <!-- created-opportunities-list end -->
-    
+    </div> <!-- created-opportunities-list end -->';
+    } // Researcher display end
+
+    echo '
     <h1>Joined Opportunities:</h1>
         <div class="created-opportunities-list">';
 
@@ -1398,31 +1444,51 @@ function supportGroupModify($name, $userID, $conn)
 
             //Lists support groups where where userID is equal
             echo '<div class="supportGroup-item">
-               <p> <b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'] . '</p>
+               <p> <b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'] . '</p>';
                
-                <div class="edit-delete-buttons"> <!-- edit and delete buttons div start  -->
+               // Display only for researcher -- Testing
+               if (isset($_SESSION['researcher_name'])) {
+                    echo '
+                        <div class="edit-delete-buttons"> <!-- edit and delete buttons div start  -->
             
-                <form method="post" class="edit-method" action="supportGroupEdit.php">
-                   <input type="hidden" name="editSupportGroupID" value="' . $row['supportGroupID'] . '">
-                   <button type="submit" name="editSupportGroup">Edit</button>
-                </form>';
+                     <form method="post" class="edit-method" action="supportGroupEdit.php">
+                      <input type="hidden" name="editSupportGroupID" value="' . $row['supportGroupID'] . '">
+                        <button type="submit" name="editSupportGroup">Edit</button>
+                    </form>';
    
-                echo'
-                <!-- deleteSupportGroup button -->
-                <form method="post" action="" class="delete-method" onsubmit="return confirm(\'Are you sure you want to delete this support group?\');">
-                    <input type="hidden" name="supportGroup_id" value="' . $row['supportGroupID'] . '">
-                    <button name="deleteSupportGroup" value="submit" type="submit">Delete</button>
-                </form>
-                </div> <!-- edit and delete buttons div start  -->
+                    echo'
+                        <!-- deleteSupportGroup button -->
+                            <form method="post" action="" class="delete-method" onsubmit="return confirm(\'Are you sure you want to delete this support group?\');">
+                              <input type="hidden" name="supportGroup_id" value="' . $row['supportGroupID'] . '"> 
+                                <button name="deleteSupportGroup" value="submit" type="submit">Delete</button>
+                            </form>
+                            </div> <!-- edit and delete buttons div end  -->
+                            <!-- Display for researcher end -->';
+               } // Display for researcher end
+               if(isset($_SESSION['person_name'])) {    // Display for person name
+                    echo '
+                        <div class="view-join-buttons"> <!-- View and join buttons -->
+                            <button type="submit" class="view" name="view"> View </button>
+                            <button type="submit" class="join" name="join"> Join </button>
+                            </div>
+                            <!-- Display for person end -->';
+               }    // Display for person name end
+
+            echo '   
             </div><br> <!-- supportGroup-item end -->';
         } //While end
     } //Else if end
+        
+    /* Create supportGroups can only be done by the researchers, as it is being 
+    implemented here: Researcher display start */
+    if (isset($_SESSION['researcher_name'])) {
     echo '
-
     <!-- Create supportGroup button -->
     <button onclick="supportGroupCreate()" class="create-btn"> <b>Create New Support Group</b>  </button>
-    </div> <!-- created-supportGroups-list end -->
-    
+    </div> <!-- created-supportGroups-list end -->';
+    } // Researcher display end
+
+    echo '
     <h1>Joined Support Groups:</h1>
         <div class="created-supportGroups-list">';
 
@@ -1747,31 +1813,53 @@ function studyModify($name, $userID, $conn)
                     <b>Description:</b> ' . $row['description'] . '<br>
                     <b>Location:</b> ' . $row['location'] . '<br>
                     <b>Date:</b> ' . date('Y-m-d H:i:s', strtotime($row['date'])) . '<br>
-                    <b>Compensation:</b> ' . $row['compensation'] . '<br>
-                <div class="edit-delete-buttons"> <!-- edit and delete buttons div start  -->
+                    <b>Compensation:</b> ' . $row['compensation'] . '<br>';
+
+
+
+                // Research name display 
+                if (isset($_SESSION['researcher_name'])) {    
+                    echo'
+                        <div class="edit-delete-buttons"> <!-- edit and delete buttons div start  -->
             
-                <form method="post" class="edit-method" action="studyEdit.php">
-                   <input type="hidden" name="editStudyID" value="' . $row['studyID'] . '">
-                   <button type="submit" name="editStudy">Edit</button>
-                </form>';
+                            <form method="post" class="edit-method" action="studyEdit.php">
+                                <input type="hidden" name="editStudyID" value="' . $row['studyID'] . '">
+                                <button type="submit" name="editStudy">Edit</button>
+                            </form>';
    
-                echo'
-                <!-- deleteStudy button -->
-                <form method="post" action="" class="delete-method" onsubmit="return confirm(\'Are you sure you want to delete this study?\');">
-                    <input type="hidden" name="study_id" value="' . $row['studyID'] . '">
-                    <button name="deleteStudy" value="submit" type="submit">Delete</button>
-                </form>
-                </div> <!-- edit and delete buttons div start  -->
+                    echo'
+                    <!-- deleteStudy button -->
+                        <form method="post" action="" class="delete-method" onsubmit="return confirm(\'Are you sure you want to delete this study?\');">
+                            <input type="hidden" name="study_id" value="' . $row['studyID'] . '">
+                            <button name="deleteStudy" value="submit" type="submit">Delete</button>
+                        </form>
+                        </div> <!-- edit and delete buttons div start  -->';
+                }  // Researcher name display 
+
+                // Person name display start
+                elseif(isset($_SESSION['person_name'])) {
+                    echo '
+                        <div class="view-join-buttons"> <!-- View and join buttons -->
+                            <button type="submit" class="view" name="view"> View </button>
+                            <button type="submit" class="join" name="join"> Join </button>
+                        </div>
+                        <!-- Display for person end -->';
+                } // Person name display end
+             echo '   
             </div><br> <!-- study-item end -->';
         } //While end
     } //Else if end
+
+    /* Create studies can only be done by the researchers, as it is being 
+    implemented here: Researcher display start */
+    if (isset($_SESSION['researcher_name'])) {
+        echo '
+            <!-- Create study button -->
+            <button onclick="studyCreate()" class="create-btn"> <b>Create New Study</b>  </button>
+            </div> <!-- created-studies-list end -->';
+    } // Researcher display end
+
     echo '
-
-    <!-- Create study button -->
-
-    <button onclick="studyCreate()" class="create-btn"> <b>Create New Study</b>  </button>
-    </div> <!-- created-studies-list end -->
-    
     <h1>Completed Studies:</h1>
         <div class="created-studies-list">';
 
