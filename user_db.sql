@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 17, 2023 at 09:58 PM
+-- Generation Time: Nov 27, 2023 at 08:51 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.0.25
 
@@ -80,7 +80,7 @@ CREATE TABLE `study` (
 --
 
 INSERT INTO `study` (`studyID`, `ownerID`, `name`, `description`, `location`, `date`, `compensation`) VALUES
-(1, 5, 'test study', 'test study description', 'denton, TX', '2023-11-23 20:40:09.000000', 1);
+(1, 5, 'test study', 'test study description', 'denton, TX', '2023-11-23 20:40:00.000000', 1);
 
 -- --------------------------------------------------------
 
@@ -100,7 +100,8 @@ CREATE TABLE `supportgroup` (
 --
 
 INSERT INTO `supportgroup` (`supportGroupID`, `ownerID`, `name`, `description`) VALUES
-(1, 5, 'support group test', 'support group description test');
+(1, 5, 'support group test', 'support group description test'),
+(2, 5, 'asdasd', 'asdasda');
 
 -- --------------------------------------------------------
 
@@ -163,18 +164,17 @@ INSERT INTO `survey` (`surveyID`, `ownerID`, `name`, `description`) VALUES
 CREATE TABLE `surveyquestion` (
   `questionID` int(255) NOT NULL,
   `surveyID` int(255) NOT NULL,
-  `question` varchar(255) NOT NULL
+  `question` varchar(255) NOT NULL,
+  `questionNumber` int(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `surveyquestion`
 --
 
-INSERT INTO `surveyquestion` (`questionID`, `surveyID`, `question`) VALUES
-(1, 1, 'whats your name'),
-(2, 1, 'whats your age'),
-(3, 2, 'what is the date'),
-(4, 2, 'what state do you live in?');
+INSERT INTO `surveyquestion` (`questionID`, `surveyID`, `question`, `questionNumber`) VALUES
+(1, 25, 'whats ur name?', 1),
+(2, 25, 'whats ur age?', 2);
 
 -- --------------------------------------------------------
 
@@ -499,13 +499,13 @@ ALTER TABLE `opportunitycomment`
 -- AUTO_INCREMENT for table `study`
 --
 ALTER TABLE `study`
-  MODIFY `studyID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `studyID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `supportgroup`
 --
 ALTER TABLE `supportgroup`
-  MODIFY `supportGroupID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `supportGroupID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `supportgroupcomment`

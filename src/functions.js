@@ -77,13 +77,43 @@ function editUserAccountInput() {
     });
   }
 
-  // Allows form updated information to stay updated when updating the user information on the account page
-  function updateUserAccountInfo(firstname, lastname, email, user_type) {    
-   
+// Allows form updated information to stay updated when updating the user information on the account page
+function updateUserAccountInfo(firstname, lastname, email, user_type) {    
+
     // Update the information:
     document.getElementById("myInput0").value = firstname;
     document.getElementById("myInput1").value = lastname;
     document.getElementById("myInput2").value = email;
     document.getElementById("myInput3").value = user_type;
+}
 
-  }
+//Adds a question label and form-input for the surveyEdit function.
+function addQuestionHere() {
+
+    // Retrieve questionCounter from the hidden input
+    var questionCounter = document.querySelector('input[name="questionCounter"]');
+    var container = document.querySelector('#questionContainer');
+
+    // Create new label element and set to "question #:" using var questionCounter
+    var label = document.createElement('label');
+    label.setAttribute('for', 'question');
+    label.textContent = 'Question ' + questionCounter.value + ':';
+
+    // Create form-input elements
+    var input = document.createElement('input');
+    input.setAttribute('type', 'text');
+    input.setAttribute('name', 'question[]');
+    input.setAttribute('class', 'form-input');
+    input.setAttribute('required', 'required');
+
+    // Append the new elements to the container
+    container.appendChild(label);
+    container.appendChild(document.createElement('br'));
+    container.appendChild(input);
+    container.appendChild(document.createElement('br'));
+    container.appendChild(document.createElement('br'));
+
+    // Increment question counter for the next question
+    questionCounter.value = parseInt(questionCounter.value) + 1;
+}
+
