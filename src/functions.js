@@ -79,6 +79,7 @@ function editUserAccountInput() {
 
 // Allows form updated information to stay updated when updating the user information on the account page
 function updateUserAccountInfo(firstname, lastname, email, user_type) {    
+
     // Update the information:
     document.getElementById("myInput0").value = firstname;
     document.getElementById("myInput1").value = lastname;
@@ -115,3 +116,4 @@ function addQuestionHere() {
     // Increment question counter for the next question
     questionCounter.value = parseInt(questionCounter.value) + 1;
 }
+

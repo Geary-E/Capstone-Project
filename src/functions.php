@@ -565,7 +565,7 @@ function surveySearch($name, $conn)
                 echo '<b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'];
 
                   // Join button to be displayed within the search section
-                echo '<br><br><div class="view-button">
+                echo '<br><br><div class="view-button"> 
                   <button class="join-btn"> Join </button>
                   </div>';
 
@@ -741,13 +741,12 @@ function surveyModify($name, $userID, $conn)
 
             echo '        
             </div><br> <!-- survey-item end -->';
-        } // While end
-    } // Else-if end
+        } //While end
+    } //Else if end
 
     /* Create surveys can only be done by the researchers, as it is being 
     implemented here: Researcher display start */
     if (isset($_SESSION['researcher_name'])) {
-
     echo '
     <!-- Create survey button -->
     <button onclick="surveyCreate()" class="create-btn"> <b>Create New Survey</b>  </button>
@@ -987,6 +986,7 @@ function opportunitySearch($name, $conn)
                     <b>Date:</b> ' . date('Y-m-d H:i:s', strtotime($row['date'])) . '<br>
                     <b>Compensation:</b> ' . $row['compensation'] . '<br>';
 
+                    
                 // Join button to be displayed within the search section
                 echo '<br><div class="join-button"> 
                 <button class="view-btn"> Join </button>
