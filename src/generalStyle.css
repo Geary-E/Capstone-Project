@@ -160,6 +160,10 @@ h1 {
     color: var(--green);
 }
 
+.header-links a:hover {
+    color: black;
+}
+
 #img-form {
     display: none;
 }
@@ -346,6 +350,21 @@ h1 {
     margin: 0 5px;
 }
 
+.view-join-buttons {
+    display: flex;
+    justify-content: center;
+    padding: 0px;
+}
+
+.view {
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.join {
+    margin: 0 5px;
+    cursor: pointer;
+}
 
 
 .created-surveys-list{
