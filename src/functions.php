@@ -170,6 +170,22 @@ function pageNavbar($conn, $pageName, $name, $userID)
             </div>
         </div>';
     } //Navbar for surveys end
+    elseif($pageName=='SurveysComplete') //Navbar for surveysEdit start
+    {
+        $pageNameDisplay='Surveys';
+        echo '
+        <div class="navbar-content-container">
+            <div class="navbar"> <!-- Links for each module -->
+            <a href="survey.php">Search ' . $pageNameDisplay . '</a>
+            <a href="surveyModify.php">Manage ' . $pageNameDisplay . '</a>
+            </div>
+
+            <div class="page-content">  <!-- Container for all the content -->';
+                surveyComplete($name, $userID, $conn); //Displays the surveyEdit content
+                echo '
+            </div>
+        </div>';
+    }//Navbar for surveysEdit end
     elseif($pageName=='SurveysModify') //Navbar for surveysModify start
     {
         $pageNameDisplay='Surveys';
@@ -524,7 +540,7 @@ function accountPageDisplay($conn, $email, $user_type, $first_name, $last_name, 
  */
 function surveySearch($name, $conn)
 {
-    //Used to display errors
+    // Used to display errors
     if (isset($error)) {
         foreach ($error as $error) {
             echo '<span class="error-msg">' . $error . '</span>';
@@ -545,51 +561,55 @@ function surveySearch($name, $conn)
 
         <div class="survey-list">';
 
-        //Select from all surveys
+        // Select from all surveys
         $select = "SELECT * FROM survey";
         $result = mysqli_query($conn, $select);
 
-        //If there are no surveys
+        // If there are no surveys
         if (mysqli_num_rows($result) == 0) {
             $error[] = 'No surveys were found';
         }
 
-        //If there are surveys
+        // If there are surveys
         else if (mysqli_num_rows($result) > 0) {
 
-            //While row in table exists via result
+            // While row in table exists via result
             while ( $row = mysqli_fetch_assoc($result) ) {
 
-                //Lists all surveys
-                echo '<div class="survey-item"> ';
-                echo '<b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'];
-
-                  // Join button to be displayed within the search section
-                echo '<br><br><div class="view-button"> 
-                  <button class="join-btn"> Join </button>
-                  </div>';
-
-                echo '</div><br>';
-            } //While end
-        } //Else if end
+                // Lists all surveys
+                echo '
+                <div class="survey-item">
+                    <b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'].'
+                    <br><br>
+                    
+                    <div class="view-button">
+                        <form method="post" class="complete-method" action="surveyComplete.php">
+                            <input type="hidden" name="completeSurveyID" value="' . $row['surveyID'] . '">
+                            <button type="submit" name="completeSurvey">Complete survey</button>
+                        </form>
+                    </div>
+                </div>
+                <br>';
+            } // While end
+        } // Else if end
 
     echo'
         </div> <!-- survey-list end -->
         <div class="search-survey-list" style="display: none;">';
 
-    //If surveySearch is posted
+    // If surveySearch is posted
     if (isset($_POST['surveySearch'])) {
         echo '<script>hideAll();</script>';
 
-        //Access searchName and searchTag variables from the posted data
+        // Access searchName and searchTag variables from the posted data
         $searchName = mysqli_real_escape_string($conn, $_POST['searchName']);
         $searchTag = mysqli_real_escape_string($conn, $_POST['searchTag']);
 
-        //Select from survey table where name variable is similar
+        // Select from survey table where name variable is similar
         $select = "SELECT * FROM survey WHERE name LIKE '%$searchName%'";
         $result = mysqli_query($conn, $select);
 
-        //If there are no surveys
+        // If there are no surveys
         if (mysqli_num_rows($result) == 0) {
             $error[] = 'No surveys were found';
         }
@@ -597,20 +617,143 @@ function surveySearch($name, $conn)
         //If there are surveys
         else if (mysqli_num_rows($result) > 0) { 
 
-            //While row in table exists via result
+            // While row in table exists via result
             while ( $row = mysqli_fetch_assoc($result) ) {
 
                 // Lists surveys where name and tag is included in the search fields
                 echo '<div class="survey-item"> ';
-                echo '<b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'];
-                echo '</div><br>';     
+                echo '<b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'] . '
+                <br><br>
+                    
+                <div class="view-button">
+                    <!-- Complete survey button -->
+                    <button onclick="surveyComplete()" class="complete-btn"> <b>Complete Survey</b>  </button>
+                </div>
+            </div>
+            <br>';   
             } // While end
         } // Else if end
         unset($_POST['surveySearch']);
     } // If end
     echo'
         </div> <!-- search-surveys-list end -->
-    </div> <!-- search-surveys-box end -->';
+    </div> <!-- search-surveys-box end -->
+    </div>';
+}
+
+/**
+ * Summary of surveyComplete
+ * @param mixed $name
+ * @param mixed $userID
+ * @param mixed $conn
+ * @return void
+ */
+function surveyComplete($name, $userID, $conn){
+    // Initialize variables with default values
+    $surveyName = '';
+    $surveyDescription = '';
+    $submittedSurveyID = '';
+    $question = array(); // Array to store questions
+
+    // Checks if surveyID to edit is posted
+    if (isset($_POST['completeSurveyID'])) {
+
+        // Access and store the surveyID in a variable
+        $submittedSurveyID = $_POST['completeSurveyID'];
+        
+        // Store the data for the name and description from the survey table via the $surveyID
+        $selectedSurveyData = "SELECT `name`, `description` FROM `survey` WHERE `surveyID` = '$submittedSurveyID';";
+        $resultSurveyData = mysqli_query($conn, $selectedSurveyData);
+        $selectedSurveyQuestions = "SELECT *  FROM `surveyquestion` WHERE `surveyID` = '$submittedSurveyID';";
+        $resultSurveyQuestions = mysqli_query($conn, $selectedSurveyQuestions);
+
+        // If there is a result for the name & description
+        if ($resultSurveyData && mysqli_num_rows($resultSurveyData) > 0) {
+
+            //Make row variable to save name and description
+            $row = mysqli_fetch_assoc($resultSurveyData);
+
+            //Info in the row to variables
+            $surveyName = $row['name'];
+            $surveyDescription = $row['description'];
+        }
+
+        // If there is a result for the survey questions
+        if ($resultSurveyQuestions && mysqli_num_rows($resultSurveyQuestions) > 0) {
+            // Gets the number of rows & used as counter to track the number of questions
+            $questionCounter = mysqli_num_rows($resultSurveyQuestions);
+        }
+    } // Outer if end
+    
+    echo '
+    <div class="complete-surveys">
+        <h1>Hello <span>' . $name . '</span>, this is the complete survey section</h1>';
+
+        // Display survey questions and answer input-forms here
+
+        echo '
+        <form action="" method="post">
+    
+            <!--$submittedSurveyID for submitting-->
+            <input type="hidden" name="completeSurveyID" value="' . $submittedSurveyID . '">
+    
+            <!--$surveyName data as a placeholder for the name form-->
+            <label for="surveyName">Survey Name:<br>' . $surveyName . '</label>
+            <br><br>
+            
+            <!--$surveyDescription data as a placeholder for the description form-->
+            <label for="surveyDescription">Survey Description:<br>' . $surveyDescription . '</label>
+            <br><br>';
+
+    
+            for ($i = 1; $i <= $questionCounter; $i++) {
+                // Fetch the question data for the current iteration
+                $questionData = mysqli_fetch_assoc($resultSurveyQuestions);
+            
+                echo '
+                <label for="question' . $i . '">Question ' . $i . ': ' . $questionData['question'] . '</label>
+                <br>
+                <input type="text" name="response[]" class="form-input" placeholder="Enter answer here">
+                <br><br>';
+            }
+            
+        echo '
+            <!--Submit form that posts submitSurvey-->
+            <input type="submit" name="submitSurvey" value="Submit" class="form-btn">
+    
+            <!--Cancel button links to surveyModify.php-->
+            <input type="button" onClick="window.location.href=\'survey.php\'" name="cancel" value="Cancel" class="cancel-link">
+            <br>
+        </form>
+    </div> <!-- complete-surveys end -->';
+
+
+
+    // If submitSurvey is posted
+    if (isset($_POST['submitSurvey'])) {
+
+                // Reset the result set pointer to the beginning
+                mysqli_data_seek($resultSurveyQuestions, 0);
+        // Update questions in the surveyquestion table
+        foreach ($_POST['response'] as $responseIndex => $responseText) {
+            // Fetch the question data for the current iteration
+            $questionData = mysqli_fetch_assoc($resultSurveyQuestions);
+        
+            //Insert a new response
+            $insertResponseQuery = "INSERT INTO `surveyresponse` (`responseID`, `surveyID`, `questionID`, `response`) VALUES (NULL, '$submittedSurveyID', '{$questionData['questionID']}', '$responseText');";
+            
+            // If query was successful
+            if (mysqli_query($conn, $insertResponseQuery)) {
+                echo "Response inserted successfully <br>";
+                $userSurveyQuery = "INSERT INTO `user_survey` (`userID`, `surveyID`, `questionID`, `responseID`) VALUES ('', '$submittedSurveyID', '{$questionData['questionID']}', '');";
+            }
+                
+            // If query was not successful
+            else {
+                echo "Error inserting response: " . mysqli_error($conn) . "<br>";
+            }
+        }// Foreach end
+    } // If end
 }
 
 /**
@@ -622,7 +765,6 @@ function surveySearch($name, $conn)
  */
 function surveyCreate($name, $userID, $conn)
 {
-
     echo '
     <div class="create-surveys">
     <h1>Hello <span>' . $name . '</span> this is the create survey section</h1>
@@ -741,12 +883,13 @@ function surveyModify($name, $userID, $conn)
 
             echo '        
             </div><br> <!-- survey-item end -->';
-        } //While end
-    } //Else if end
+        } // While end
+    } // Else-if end
 
     /* Create surveys can only be done by the researchers, as it is being 
     implemented here: Researcher display start */
     if (isset($_SESSION['researcher_name'])) {
+
     echo '
     <!-- Create survey button -->
     <button onclick="surveyCreate()" class="create-btn"> <b>Create New Survey</b>  </button>
@@ -824,7 +967,7 @@ function surveyEdit($name, $userID, $conn)
             $surveyDescription = $row['description'];
         }
 
-        // If there is a result for the name & description
+        // If there is a result for the survey questions
         if ($resultSurveyQuestions && mysqli_num_rows($resultSurveyQuestions) > 0) {
             // Gets the number of rows & used as counter to track the number of questions
             $questionCounter = mysqli_num_rows($resultSurveyQuestions);
@@ -914,7 +1057,9 @@ function surveyEdit($name, $userID, $conn)
             // Fetch the existing question data for the current iteration
             $existingQuestionData = mysqli_fetch_assoc($resultSurveyQuestions);
 
+            //If there is an existing question
             if ($existingQuestionData !== null) {
+
                 // Update the existing row with the new question text
                 $questionID = $existingQuestionData['questionID'];
                 $updateQuestionQuery = "UPDATE `surveyquestion` SET `question` = '$questionText' WHERE `questionID` = '$questionID';";
@@ -922,11 +1067,26 @@ function surveyEdit($name, $userID, $conn)
                 // If query was successful
                 if (mysqli_query($conn, $updateQuestionQuery)) {
                     echo "Question updated successfully <br>";
-                } else {
-                    echo "Error updating question: " . mysqli_error($conn) ."<br>";
                 }
-            } else {
-                echo "Error fetching existing question data<br>";
+                
+                // If query was not successful
+                else {
+                    echo "Error updating question: " . mysqli_error($conn) . "<br>";
+                }
+            }
+            //If there is no existing question, insert a new question
+            else {
+                $insertQuestionQuery = "INSERT INTO `surveyquestion` (`questionID`, `surveyID`, `question`, `questionNumber`) VALUES (NULL, '$edittedSurveyID', '$questionText', '" . ($questionCounter + 1) . "');";
+
+                // If query was successful
+                if (mysqli_query($conn, $insertQuestionQuery)) {
+                    echo "Question inserted successfully <br>";
+                }
+                
+                // If query was not successful
+                else {
+                    echo "Error inserting question: " . mysqli_error($conn) . "<br>";
+                }
             }
         }
     } // Outer if end
@@ -986,7 +1146,6 @@ function opportunitySearch($name, $conn)
                     <b>Date:</b> ' . date('Y-m-d H:i:s', strtotime($row['date'])) . '<br>
                     <b>Compensation:</b> ' . $row['compensation'] . '<br>';
 
-                    
                 // Join button to be displayed within the search section
                 echo '<br><div class="join-button"> 
                 <button class="view-btn"> Join </button>

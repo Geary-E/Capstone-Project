@@ -395,9 +395,24 @@ h1 {
 .create-surveys {
     display: none; /* Hidden by default */
     text-align: center;
-
 }
 /*createSurveys styling end*/
+/*completeSurveys styling start*/
+.complete-surveys {
+    display: block; /* Hidden by default */
+    text-align: center;
+}
+
+.submit-cancel-buttons {
+    display: flex;
+    justify-content: center;
+    padding: 0px;
+}
+
+.complete-method {
+    margin: 0 5px;
+}
+/*completeSurveys styling end*/
 /*editSurveys styling start*/
 .edit-surveys {
     display: block; /* Hidden by default */
