@@ -33,6 +33,7 @@ $userID=userID();
     <?php pageHeader(); //Displays the header
     $pageName = 'Account Page';
     pageNavbar($conn, $pageName, $name, $userID); 
+   /* accountPageDisplay($name, $email, $user_type);*/
     ?>
 </body>
 </html>

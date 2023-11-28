@@ -10,7 +10,6 @@ function opportunityCreate() {
     document.querySelector('.modify-opportunities').style.display = 'none';
 }
 
-
 // Displays the supportGroupCreate div, and hides the others
 function supportGroupCreate() {
     document.querySelector('.create-supportGroups').style.display = 'block';
@@ -79,7 +78,6 @@ function editUserAccountInput() {
 
 // Allows form updated information to stay updated when updating the user information on the account page
 function updateUserAccountInfo(firstname, lastname, email, user_type) {    
-
     // Update the information:
     document.getElementById("myInput0").value = firstname;
     document.getElementById("myInput1").value = lastname;
@@ -116,4 +114,3 @@ function addQuestionHere() {
     // Increment question counter for the next question
     questionCounter.value = parseInt(questionCounter.value) + 1;
 }
-
