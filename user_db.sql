@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 27, 2023 at 08:51 PM
+-- Generation Time: Dec 01, 2023 at 12:24 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.0.25
 
@@ -173,8 +173,12 @@ CREATE TABLE `surveyquestion` (
 --
 
 INSERT INTO `surveyquestion` (`questionID`, `surveyID`, `question`, `questionNumber`) VALUES
-(1, 25, 'whats ur name?', 1),
-(2, 25, 'whats ur age?', 2);
+(1, 25, 'What is your name?', 1),
+(2, 25, 'What is your age?', 2),
+(3, 25, 'Where do you live?', 3),
+(9, 25, 'Question 4 test', 4),
+(10, 1, 'survey 1 first question', 1),
+(11, 1, 'survey 1 second question', 2);
 
 -- --------------------------------------------------------
 
@@ -324,6 +328,7 @@ CREATE TABLE `user_supportgroup` (
 --
 
 CREATE TABLE `user_survey` (
+  `userSurveyID` int(255) NOT NULL,
   `userID` int(255) NOT NULL,
   `surveyID` int(255) NOT NULL,
   `questionID` int(255) NOT NULL,
@@ -474,6 +479,7 @@ ALTER TABLE `user_supportgroup`
 -- Indexes for table `user_survey`
 --
 ALTER TABLE `user_survey`
+  ADD PRIMARY KEY (`userSurveyID`),
   ADD KEY `userID` (`userID`),
   ADD KEY `surveyID` (`surveyID`),
   ADD KEY `questionID` (`questionID`),
@@ -499,7 +505,7 @@ ALTER TABLE `opportunitycomment`
 -- AUTO_INCREMENT for table `study`
 --
 ALTER TABLE `study`
-  MODIFY `studyID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `studyID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `supportgroup`
@@ -529,13 +535,13 @@ ALTER TABLE `survey`
 -- AUTO_INCREMENT for table `surveyquestion`
 --
 ALTER TABLE `surveyquestion`
-  MODIFY `questionID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `questionID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `surveyresponse`
 --
 ALTER TABLE `surveyresponse`
-  MODIFY `responseID` int(255) NOT NULL AUTO_INCREMENT;
+  MODIFY `responseID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `tag`
@@ -548,6 +554,12 @@ ALTER TABLE `tag`
 --
 ALTER TABLE `user`
   MODIFY `userID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `user_survey`
+--
+ALTER TABLE `user_survey`
+  MODIFY `userSurveyID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
