@@ -33,6 +33,11 @@ body {
     color: white;
 }
 
+.logo-img {
+    width: 3.5rem;
+    padding: 5px;
+}
+
 /* page-header: buttons */
 .page-header .buttons {  
     float: right;   /* puts the dashboard button to the right */
@@ -222,6 +227,11 @@ h1 {
 }
 
 .profile-information input {
+    width: 100%;
+    padding: 10px;
+}
+
+.profile-information select {  /* select button on profile information for user type */
     width: 100%;
     padding: 10px;
 }

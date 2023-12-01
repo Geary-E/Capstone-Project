@@ -128,7 +128,7 @@ function pageHeader()
     <div class="page-header" id="header">
         <div class="header-content">
             <div class="page-logo">
-                <h2>Logo</h2>
+                <img src="./images/eagle.png" class="logo-img">
             </div>
             <div class="buttons">
                 <a href="dashboard.php">
@@ -432,10 +432,14 @@ function accountPageDisplay($conn, $email, $user_type, $first_name, $last_name, 
         <img class="profile-pic" src="./images/profile_pic.png" alt="Profile pic"><br>
         </div><br>
         <div class="header-links">
-       <form class="upload-form" action="upload.php"  method="POST" enctype="multipart/form-data">
-        <label for="img-form">Upload</label><input id="img-form" type="file" name="file"/>
-         <!--<button class="submit-form" type="submit" name="submit"> UPLOAD </button> Still testing this functionality -->
+      
+        <!-- Functionality still being worked on  
+       <form class="upload-form" action=""  method="POST" enctype="multipart/form-data">
+        <label for="img-form">Choose File</label><input id="img-form" type="file" name="file"/> 
+            <button class="submit-form" type="submit" name="upload"> UPLOAD </button>       
         </form>
+        -->
+        
             <a href="#/_edit_info" id="edit-link" onclick="editUserAccountInput()"> Edit </a>
             </div>
         <div class="profile-information">
@@ -443,7 +447,22 @@ function accountPageDisplay($conn, $email, $user_type, $first_name, $last_name, 
             <label for="myInput0">First Name: </label><input type="text" name="firstname" id="myInput0" class="myInput" value="'. $first_name .'" readonly><br><br>
             <label for="myInput1">Last Name: </label><input type="text" id="myInput1" name="lastname" class="myInput" value="'. $last_name .'" readonly><br><br>
             <label for="myInput2">Email:</label><input type="text" id="myInput2" name="email" class="myInput" value="'. $email .'" readonly><br><br>
-            <label for="myInput3">User-Type:</label><input type="text" id="myInput3" name="user_type" class="myInput" value="'. $user_type .'" readonly><br>
+            <label for="myInput3">User-Type:</label><br>
+                <select id="myInput3" name="user_type" class="myInput" disabled>';
+
+            // Displaying the types of usertypes and displaying them
+                    $list_of_usertypes = ['person', 'researcher'];  // list of different usertyoes to be displayed in select dropdown
+                    $indexOfUsertype = array_search($user_type,$list_of_usertypes); // used to find the index
+                    if($indexOfUsertype === 0) {
+                        echo '<option value="'.$user_type.'"> '.$user_type.'</option>
+                        <option value="'.$list_of_usertypes[1].'">'.$list_of_usertypes[1].'</option>';
+                    } else {
+                        echo '<option value="'.$list_of_usertypes[1].'">'.$list_of_usertypes[1].'</option>
+                        <option value="'.$list_of_usertypes[0].'">'.$list_of_usertypes[0].'</option>';
+                    }
+
+                     echo '
+                    </select> 
                 <div class="button-list">	<! -- Buttons -->
                     <button type="submit" class="save-btn" name="save-button"> Save </button>  <!-- TEST 1 -->
                     <button class="cancel-btn"> Cancel </button>
@@ -469,12 +488,12 @@ function accountPageDisplay($conn, $email, $user_type, $first_name, $last_name, 
             $editUser = "UPDATE `user` SET `firstname` = '$first_name', `lastname` = '$last_name', `email`  = '$email', `user_type` = '$user_type' WHERE `userID` = '$userID';";
             
             if (mysqli_query($conn, $editUser)) {
-                
+                // if researcher name
                 if (isset($_SESSION['researcher_name'])) {
                     $_SESSION['researcher_name'] = $first_name;		// updated researcher_name with $first_name
                 }
             
-                
+                // else if person name
                 elseif (isset($_SESSION['person_name'])) {
                     $_SESSION['person_name'] = $first_name;		// updated person_name with $first_name
                 }
@@ -887,7 +906,8 @@ function surveyModify($name, $userID, $conn) {
             echo '<div class="survey-item">
                <p> <b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'] . '</p>';
 
-               // Researcher display for surveys
+            // Researcher display for surveys: if user type is equal to researcher
+             if(userType() === 'researcher') {   
                if (isset($_SESSION['researcher_name'])) {
 
                 echo '
@@ -906,19 +926,8 @@ function surveyModify($name, $userID, $conn) {
                         </form>
                     </div> <!-- edit and delete buttons div end  -->';
                }
+            }
                     // Researcher name display end
-
-                    /* Commented out View and Join buttons    
-                    // Person name display
-                    elseif(isset($_SESSION['person_name'])) {
-                        echo '
-                        <div class="view-join-buttons"> <!-- View and join buttons -->
-                            <button type="submit" class="view" name="view"> View </button>
-                            <button type="submit" class="join" name="join"> Join </button>
-                            </div>
-                            <!-- Display for person end -->';
-                    } // Person name display end: Commented out */
-
             echo '        
             </div><br> <!-- survey-item end -->';
         } // While end
@@ -926,15 +935,15 @@ function surveyModify($name, $userID, $conn) {
     
     /* Create surveys can only be done by the researchers, as it is being 
     implemented here: Researcher display start */
-    if (isset($_SESSION['researcher_name'])) {
+    if(userType() === 'researcher') {
+        if (isset($_SESSION['researcher_name'])) {
+            echo '
+                <!-- Create survey button -->
+                <button onclick="surveyCreate()" class="create-btn"> <b>Create New Survey</b>  </button>
+                </div> <!-- created-surveys-list end -->';
+        }
+     } // Researcher display end
 
-    echo '
-    </div> <!-- modify-surveys end -->
-    <div class="create-survey-button">
-        <button onclick="surveyCreate()" class="create-btn"> <b>Create New Survey</b></button> <!-- Create survey button -->
-    </div> <!-- create-survey-button end -->
-    </div> <!-- created-surveys-list end -->';
-    } // Researcher display end
 
     echo '
     <div class="modify-survey">
@@ -1586,6 +1595,7 @@ function opportunityModify($name, $userID, $conn) {
                     <b>Date:</b> ' . date('Y-m-d H:i:s', strtotime($row['date'])) . '<br>
                     <b>Compensation:</b> ' . $row['compensation'] . '<br>';
                     // Display for researcher
+                if(userType() === 'researcher') {     
                     if (isset($_SESSION['researcher_name'])) {
                     echo '    
                         <div class="edit-delete-buttons"> <!-- edit and delete buttons div start  -->
@@ -1603,18 +1613,9 @@ function opportunityModify($name, $userID, $conn) {
                     </form>
 
                 </div> <!-- edit and delete buttons div start  -->';
-                } // Researcher display end
-
-                /* Commented out View and Join buttons
-                // Person name display
-                elseif(isset($_SESSION['person_name'])) {
-                    echo '
-                    <div class="view-join-buttons"> <!-- View and join buttons -->
-                        <button type="submit" class="view" name="view"> View </button>
-                        <button type="submit" class="join" name="join"> Join </button>
-                        </div>
-                        <!-- Display for person end -->';
-                }   // person name display end: Commented out View and Join buttons */
+                }
+            } 
+            // Researcher display end
 
              echo '   
             </div><br> <!-- opportunity-item end -->';
@@ -1624,12 +1625,14 @@ function opportunityModify($name, $userID, $conn) {
 
     /* Create opportunities can only be done by the researchers, as it is being 
     implemented here: Researcher display start */
-    if (isset($_SESSION['researcher_name'])) {
-    echo '
-    <!-- Create opportunity button -->
-    <button onclick="opportunityCreate()" class="create-btn"> <b>Create New Opportunity</b>  </button>
-    </div> <!-- created-opportunities-list end -->';
-    } // Researcher display end
+    if(userType() === 'researcher') {
+        if (isset($_SESSION['researcher_name'])) {
+        echo '
+        <!-- Create opportunity button -->
+        <button onclick="opportunityCreate()" class="create-btn"> <b>Create New Opportunity</b>  </button>
+        </div> <!-- created-opportunities-list end -->';
+        }
+     } // Researcher display end
 
     echo '
     <h1>Joined Opportunities:</h1>
@@ -1966,6 +1969,7 @@ function supportGroupModify($name, $userID, $conn) {
                <p> <b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'] . '</p>';
                
                // Display only for researcher -- Testing
+            if(userType() === 'researcher') {     
                if (isset($_SESSION['researcher_name'])) {
                     echo '
                         <div class="edit-delete-buttons"> <!-- edit and delete buttons div start  -->
@@ -1983,7 +1987,9 @@ function supportGroupModify($name, $userID, $conn) {
                             </form>
                             </div> <!-- edit and delete buttons div end  -->
                             <!-- Display for researcher end -->';
-               } // Display for researcher end
+               }
+            }
+               // Display for researcher end
 
                /* View and Join buttons commented out 
                if(isset($_SESSION['person_name'])) {    // Display for person name
@@ -2002,12 +2008,14 @@ function supportGroupModify($name, $userID, $conn) {
         
     /* Create supportGroups can only be done by the researchers, as it is being 
     implemented here: Researcher display start */
-    if (isset($_SESSION['researcher_name'])) {
-    echo '
-    <!-- Create supportGroup button -->
-    <button onclick="supportGroupCreate()" class="create-btn"> <b>Create New Support Group</b>  </button>
-    </div> <!-- created-supportGroups-list end -->';
-    } // Researcher display end
+    if(userType() === 'researcher') {
+        if (isset($_SESSION['researcher_name'])) {
+        echo '
+        <!-- Create supportGroup button -->
+        <button onclick="supportGroupCreate()" class="create-btn"> <b>Create New Support Group</b>  </button>
+        </div> <!-- created-supportGroups-list end -->';
+        }
+     } // Researcher display end
 
     echo '
     <h1>Joined Support Groups:</h1>
@@ -2347,7 +2355,8 @@ function studyModify($name, $userID, $conn) {
 
 
 
-                // Research name display 
+                // Research name display
+            if(userType() === 'researcher') {        
                 if (isset($_SESSION['researcher_name'])) {    
                     echo'
                         <div class="edit-delete-buttons"> <!-- edit and delete buttons div start  -->
@@ -2364,20 +2373,9 @@ function studyModify($name, $userID, $conn) {
                             <button name="deleteStudy" value="submit" type="submit">Delete</button>
                         </form>
                         </div> <!-- edit and delete buttons div start  -->';
-                }  // Researcher name display 
-
-                /* View and Join buttons commented out 
-                // Person name display start
-                elseif(isset($_SESSION['person_name'])) {
-                    echo '
-                        <div class="view-join-buttons"> <!-- View and join buttons -->
-                            <button type="submit" class="view" name="view"> View </button>
-                            <button type="submit" class="join" name="join"> Join </button>
-                        </div>
-                        <!-- Display for person end -->';
-                } // Person name display end : Commented out */
-
-
+                }
+            } 
+                // Researcher name display 
              echo '   
             </div><br> <!-- study-item end -->';
         } //While end
@@ -2385,12 +2383,14 @@ function studyModify($name, $userID, $conn) {
 
     /* Create studies can only be done by the researchers, as it is being 
     implemented here: Researcher display start */
-    if (isset($_SESSION['researcher_name'])) {
-        echo '
-            <!-- Create study button -->
-            <button onclick="studyCreate()" class="create-btn"> <b>Create New Study</b>  </button>
-            </div> <!-- created-studies-list end -->';
-    } // Researcher display end
+    if(userType() === 'researcher') {
+        if (isset($_SESSION['researcher_name'])) {
+            echo '
+                <!-- Create study button -->
+                <button onclick="studyCreate()" class="create-btn"> <b>Create New Study</b>  </button>
+                </div> <!-- created-studies-list end -->';
+        }
+     } // Researcher display end
 
     echo '
     <h1>Completed Studies:</h1>
