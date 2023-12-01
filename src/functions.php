@@ -1082,33 +1082,51 @@ function surveyModify($name, $userID, $conn) {
 
 }
 
+/**
+ * Summary of surveyAnswerEdit
+ * @param mixed $name
+ * @param mixed $userID
+ * @param mixed $conn
+ * @return void
+ */
 function surveyAnswerEdit($name, $userID, $conn) {
-    
+
     // Initialize variables with default values
     $surveyName = '';
     $surveyDescription = '';
-    $submittedSurveyID = '';
+    $SurveyID = '';
+    $questionCounter = 0; // Initialize questionCounter
 
     // Checks if surveyID to edit is posted
     if (isset($_POST['editSurveyID'])) {
 
         // Access and store the surveyID in a variable
-        $submittedSurveyID = $_POST['editSurveyID'];
-        
+        $SurveyID = $_POST['editSurveyID'];
+
         // Store the data for the name and description from the survey table via the $surveyID
-        $selectedSurveyData = "SELECT `name`, `description` FROM `survey` WHERE `surveyID` = '$submittedSurveyID';";
+        $selectedSurveyData = "SELECT `name`, `description` FROM `survey` WHERE `surveyID` = '$SurveyID';";
         $resultSurveyData = mysqli_query($conn, $selectedSurveyData);
-        
-        $selectedSurveyQuestions = "SELECT * FROM `surveyquestion` WHERE `surveyID` = '$submittedSurveyID';";
+
+        $selectedSurveyQuestions = "SELECT * FROM `surveyquestion` WHERE `surveyID` = '$SurveyID';";
         $resultSurveyQuestions = mysqli_query($conn, $selectedSurveyQuestions);
+
+        // Retrieve all responseIDs from user_survey
+        $selectResponseID = "SELECT responseID FROM user_survey WHERE surveyID = '$SurveyID' AND userID = '$userID';";
+        $resultResponseID = mysqli_query($conn, $selectResponseID);
+
+        $responseIDs = array();
+
+        while ($rowResponseID = mysqli_fetch_assoc($resultResponseID)) {
+            $responseIDs[] = $rowResponseID['responseID'];
+        }
 
         // If there is a result for the name & description
         if ($resultSurveyData && mysqli_num_rows($resultSurveyData) > 0) {
 
-            //Make row variable to save name and description
+            // Make row variable to save name and description
             $row = mysqli_fetch_assoc($resultSurveyData);
 
-            //Info in the row to variables
+            // Info in the row to variables
             $surveyName = $row['name'];
             $surveyDescription = $row['description'];
         }
@@ -1116,11 +1134,13 @@ function surveyAnswerEdit($name, $userID, $conn) {
         // If there is a result for the survey questions
         if ($resultSurveyQuestions && mysqli_num_rows($resultSurveyQuestions) > 0) {
 
-            // Gets the number of rows & used as counter to track the number of questions
+            // Gets the number of rows & used as a counter to track the number of questions
             $questionCounter = mysqli_num_rows($resultSurveyQuestions);
         }
     } // Outer if end
-    
+    else {
+        echo "editSurveyID is not set after form submission!";
+    }
     echo '
     <div class="complete-surveys">
         <h1>Hello <span>' . $name . '</span>, this is the edit survey answers section</h1>';
@@ -1130,73 +1150,54 @@ function surveyAnswerEdit($name, $userID, $conn) {
     echo '
         <form action="" method="post">
     
-            <!--$submittedSurveyID for submitting-->
-            <input type="hidden" name="completeSurveyID" value="' . $submittedSurveyID . '">
-    
-            <!--$surveyName data as a placeholder for the name form-->
+        <!--$edittedSurveyID for editing and $questionCounter for editing the answers-->
+        <input type="hidden" name="editSurveyID" value="' . $SurveyID . '">
+        <input type="hidden" name="questionCounter" value="' . ($questionCounter + 1) . '">
+
+            <!-- $surveyName data as a placeholder for the name form -->
             <label for="surveyName">Survey Name:<br>' . $surveyName . '</label>
             <br><br>
             
-            <!--$surveyDescription data as a placeholder for the description form-->
+            <!-- $surveyDescription data as a placeholder for the description form -->
             <label for="surveyDescription">Survey Description:<br>' . $surveyDescription . '</label>
             <br><br>';
 
-    // If there is questions
-    if (mysqli_num_rows($resultSurveyQuestions) > 0) {
-        for ($i = 1; $i <= $questionCounter; $i++) {
+    // Display question input-forms based on the number of questions
+    for ($i = 1; $i <= $questionCounter; $i++) {
+        // Fetch the question data for the current iteration
+        $questionData = mysqli_fetch_assoc($resultSurveyQuestions);
 
-            // Fetch the question data for the current iteration
-            $questionData = mysqli_fetch_assoc($resultSurveyQuestions);
+        echo '
+        <label for="question">Question ' . $i . ':' . $questionData['question'] . '</label>
+        <br>';
 
-            // Fetch responses associated with the current question for the user
-            $selectResponses = "SELECT * FROM `user_survey` us
-                                JOIN `surveyresponse` sr ON us.`responseID` = sr.`responseID`
-                                WHERE us.`surveyID` = '$submittedSurveyID' 
-                                AND us.`questionID` = '{$questionData['questionID']}' 
-                                AND us.`userID` = '$userID';";
-            $resultResponses = mysqli_query($conn, $selectResponses);
+        // Fetch responses associated with the current question for the user
+        $selectResponses = "SELECT * FROM `surveyresponse` WHERE `questionID` = '" . $questionData['questionID'] . "';";
+        $resultResponses = mysqli_query($conn, $selectResponses);
 
+        while ($responseData = mysqli_fetch_assoc($resultResponses)) {
             echo '
-            <label for="question' . $i . '">Question ' . $i . ': ' . $questionData['question'] . '</label>
+            <input type="text" name="response[' . $responseData['responseID'] . ']" class="form-input" value="' . $responseData['response'] . '" required>
             <br>';
-
-            // Display existing responses for editing
-            while ($responseData = mysqli_fetch_assoc($resultResponses)) {
-                echo '
-                <input type="text" name="response[' . $responseData['responseID'] . ']" class="form-input" value="' . $responseData['response'] . '" required>
-                <br>';
-            }
-
-            echo '<br>';
         }
-    }
 
-    // If there is no questions
-    else {
-        echo "There are no questions to answer!<br><br>";
+        echo '<br>';
     }
 
     echo '
-        <!--Submit form that posts submitSurvey-->
-        <input type="submit" name="submitSurvey" value="Submit" class="form-btn">
-    
-        <!--Cancel button links to surveyModify.php-->
-        <input type="button" onClick="window.location.href=\'survey.php\'" name="cancel" value="Cancel" class="cancel-link">
+        <!-- Submit form that posts updateSurvey -->
+        <input type="submit" name="updateSurvey" value="Submit" class="form-btn">
+
+        <!-- Cancel button links to surveyModify.php -->
+        <input type="button" onClick="window.location.href=\'surveyModify.php\'" name="cancel" value="Cancel" class="cancel-link">
         <br>
     </form>
-    </div> <!-- complete-surveys end -->';
+    </div> <!-- edit-surveys end -->';
 
-    // If submitSurvey is posted
-    if (isset($_POST['submitSurvey'])) {
-
-        // Reset the result set pointer to the beginning
-        mysqli_data_seek($resultSurveyQuestions, 0);
-
+    // If updateSurvey is posted
+    if (isset($_POST['updateSurvey'])) {
         foreach ($_POST['response'] as $responseID => $responseText) {
-            // Fetch the question data for the current iteration
-            $questionData = mysqli_fetch_assoc($resultSurveyQuestions);
-
-            // Update the existing response in the user_survey and surveyresponse tables
+            // Perform SQL update for each response
             $updateResponseQuery = "UPDATE `surveyresponse` SET `response` = '$responseText' WHERE `responseID` = '$responseID';";
 
             if (mysqli_query($conn, $updateResponseQuery)) {
@@ -1205,10 +1206,11 @@ function surveyAnswerEdit($name, $userID, $conn) {
                 echo "Error updating response: " . mysqli_error($conn) . "<br>";
             }
         }
+
+        // You may also want to redirect the user after updating responses
+        // header("Location: surveyAnswerEdit.php");
     }
 }
-
-
 
 /**
  * Summary of surveyEdit

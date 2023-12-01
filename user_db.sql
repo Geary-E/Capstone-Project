@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 01, 2023 at 12:24 AM
+-- Generation Time: Dec 01, 2023 at 11:08 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.0.25
 
@@ -193,6 +193,16 @@ CREATE TABLE `surveyresponse` (
   `response` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `surveyresponse`
+--
+
+INSERT INTO `surveyresponse` (`responseID`, `surveyID`, `questionID`, `response`) VALUES
+(36, 25, 1, 'Jeremy'),
+(37, 25, 2, '29'),
+(38, 25, 3, 'McKinney'),
+(39, 25, 9, 'its working');
+
 -- --------------------------------------------------------
 
 --
@@ -334,6 +344,16 @@ CREATE TABLE `user_survey` (
   `questionID` int(255) NOT NULL,
   `responseID` int(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user_survey`
+--
+
+INSERT INTO `user_survey` (`userSurveyID`, `userID`, `surveyID`, `questionID`, `responseID`) VALUES
+(26, 5, 25, 1, 36),
+(27, 5, 25, 2, 37),
+(28, 5, 25, 3, 38),
+(29, 5, 25, 9, 39);
 
 --
 -- Indexes for dumped tables
@@ -541,7 +561,7 @@ ALTER TABLE `surveyquestion`
 -- AUTO_INCREMENT for table `surveyresponse`
 --
 ALTER TABLE `surveyresponse`
-  MODIFY `responseID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `responseID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `tag`
@@ -559,7 +579,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `user_survey`
 --
 ALTER TABLE `user_survey`
-  MODIFY `userSurveyID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `userSurveyID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- Constraints for dumped tables
