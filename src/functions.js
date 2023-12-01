@@ -68,6 +68,7 @@ function generalAccountDisplay() {
 
 // When edit is clicked on in account page, it links to this function to be called. Function is used to allow user editing
 function editUserAccountInput() {
+    document.getElementById('myInput3').removeAttribute('disabled');    // makes the select button dropdown editable
     document.querySelector('.save-btn').style.display = 'block';
     document.querySelector('.cancel-btn').style.display = 'block';
     var inputElements = document.querySelectorAll('.myInput');

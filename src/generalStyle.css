@@ -33,6 +33,11 @@ body {
     color: white;
 }
 
+.logo-img {
+    width: 3.5rem;
+    padding: 5px;
+}
+
 /* page-header: buttons */
 .page-header .buttons {  
     float: right;   /* puts the dashboard button to the right */
@@ -120,6 +125,42 @@ h1 {
 /*End of styling for navbar*/
 /***************************/
 
+
+/* Dashboard images styling
+    Added images to each of the buttons on the dashboard
+*/
+.support-group-pic {
+    width: 5em;
+    border: none;
+    border-radius: 10%;
+}
+
+.opportunity-pic {
+    width: 5em;
+    border: none;
+    border-radius: 10%;
+}
+
+.survey-pic {
+    width: 5em;
+    border: none;
+    border-radius: 10%;
+}
+
+.studies-pic {
+    width: 5em;
+    border: none;
+    border-radius: 10%;
+}
+
+.user-account-pic {
+    width: 5em;
+    border: none;
+    border-radius: 10%;
+}
+/* Dashboard image styling end */
+
+
 /**************************************************/
 /**************************************************/
 /**Start of styling for module-specific functions**/
@@ -186,6 +227,11 @@ h1 {
 }
 
 .profile-information input {
+    width: 100%;
+    padding: 10px;
+}
+
+.profile-information select {  /* select button on profile information for user type */
     width: 100%;
     padding: 10px;
 }
