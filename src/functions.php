@@ -218,6 +218,22 @@ function pageNavbar($conn, $pageName, $name, $userID)
             </div>
         </div>';
     }//Navbar for surveysEdit end
+    elseif($pageName=='SurveysAnswerEdit') //Navbar for surveysEdit start
+    {
+        $pageNameDisplay='Surveys';
+        echo '
+        <div class="navbar-content-container">
+            <div class="navbar"> <!-- Links for each module -->
+            <a href="survey.php">Search ' . $pageNameDisplay . '</a>
+            <a href="surveyModify.php">Manage ' . $pageNameDisplay . '</a>
+            </div>
+
+            <div class="page-content">  <!-- Container for all the content -->';
+                surveyAnswerEdit($name, $userID, $conn); //Displays the surveyEdit content
+                echo '
+            </div>
+        </div>';
+    }//Navbar for surveysEdit end
     elseif($pageName=='Opportunities') //Navbar opportunities start
     {
         echo '
@@ -538,8 +554,7 @@ function accountPageDisplay($conn, $email, $user_type, $first_name, $last_name, 
  * @param mixed $conn
  * @return void
  */
-function surveySearch($name, $conn)
-{
+function surveySearch($name, $conn) {
     // Used to display errors
     if (isset($error)) {
         foreach ($error as $error) {
@@ -630,7 +645,7 @@ function surveySearch($name, $conn)
                     <button onclick="surveyComplete()" class="complete-btn"> <b>Complete Survey</b>  </button>
                 </div>
             </div>
-            <br>';   
+            <br>';
             } // While end
         } // Else if end
         unset($_POST['surveySearch']);
@@ -648,12 +663,12 @@ function surveySearch($name, $conn)
  * @param mixed $conn
  * @return void
  */
-function surveyComplete($name, $userID, $conn){
+function surveyComplete($name, $userID, $conn) {
+    
     // Initialize variables with default values
     $surveyName = '';
     $surveyDescription = '';
     $submittedSurveyID = '';
-    $question = array(); // Array to store questions
 
     // Checks if surveyID to edit is posted
     if (isset($_POST['completeSurveyID'])) {
@@ -680,6 +695,7 @@ function surveyComplete($name, $userID, $conn){
 
         // If there is a result for the survey questions
         if ($resultSurveyQuestions && mysqli_num_rows($resultSurveyQuestions) > 0) {
+
             // Gets the number of rows & used as counter to track the number of questions
             $questionCounter = mysqli_num_rows($resultSurveyQuestions);
         }
@@ -705,18 +721,26 @@ function surveyComplete($name, $userID, $conn){
             <label for="surveyDescription">Survey Description:<br>' . $surveyDescription . '</label>
             <br><br>';
 
-    
-            for ($i = 1; $i <= $questionCounter; $i++) {
-                // Fetch the question data for the current iteration
-                $questionData = mysqli_fetch_assoc($resultSurveyQuestions);
-            
-                echo '
-                <label for="question' . $i . '">Question ' . $i . ': ' . $questionData['question'] . '</label>
-                <br>
-                <input type="text" name="response[]" class="form-input" placeholder="Enter answer here">
-                <br><br>';
+            // If there is questions
+            if (mysqli_num_rows($resultSurveyQuestions) > 0) {
+                for ($i = 1; $i <= $questionCounter; $i++) {
+
+                    // Fetch the question data for the current iteration
+                    $questionData = mysqli_fetch_assoc($resultSurveyQuestions);
+                
+                    echo '
+                    <label for="question' . $i . '">Question ' . $i . ': ' . $questionData['question'] . '</label>
+                    <br>
+                    <input type="text" name="response[]" class="form-input" placeholder="Enter answer here">
+                    <br><br>';
+                }
             }
-            
+
+            // If there is no questions
+            else {
+                echo "There are no questions to answer!<br><br>";
+            }
+
         echo '
             <!--Submit form that posts submitSurvey-->
             <input type="submit" name="submitSurvey" value="Submit" class="form-btn">
@@ -727,32 +751,48 @@ function surveyComplete($name, $userID, $conn){
         </form>
     </div> <!-- complete-surveys end -->';
 
-
-
     // If submitSurvey is posted
     if (isset($_POST['submitSurvey'])) {
 
-                // Reset the result set pointer to the beginning
-                mysqli_data_seek($resultSurveyQuestions, 0);
+        // Reset the result set pointer to the beginning
+        mysqli_data_seek($resultSurveyQuestions, 0);
+
         // Update questions in the surveyquestion table
         foreach ($_POST['response'] as $responseIndex => $responseText) {
             // Fetch the question data for the current iteration
             $questionData = mysqli_fetch_assoc($resultSurveyQuestions);
-        
-            //Insert a new response
+
+            // Insert a new response
             $insertResponseQuery = "INSERT INTO `surveyresponse` (`responseID`, `surveyID`, `questionID`, `response`) VALUES (NULL, '$submittedSurveyID', '{$questionData['questionID']}', '$responseText');";
-            
-            // If query was successful
+
+            // If $insertResponseQuery was successful
             if (mysqli_query($conn, $insertResponseQuery)) {
-                echo "Response inserted successfully <br>";
-                $userSurveyQuery = "INSERT INTO `user_survey` (`userID`, `surveyID`, `questionID`, `responseID`) VALUES ('', '$submittedSurveyID', '{$questionData['questionID']}', '');";
-            }
-                
-            // If query was not successful
+                // Get the responseID of the inserted record
+                $responseID = mysqli_insert_id($conn);
+
+                // Check if the responseID is valid
+                if ($responseID > 0) {
+                    echo "Response inserted successfully <br>";
+
+                    $userSurveyQuery = "INSERT INTO `user_survey` (`userID`, `surveyID`, `questionID`, `responseID`) VALUES ('$userID', '$submittedSurveyID', '{$questionData['questionID']}', '$responseID');";
+
+                    // If query was not successful
+                    if (!mysqli_query($conn, $userSurveyQuery)) {
+                        echo "Error inserting user_survey record: " . mysqli_error($conn) . "<br>";
+                    }
+                } 
+
+                // If the responseID is not valid
+                else {
+                    echo "Error getting responseID <br>";
+                }
+            } 
+            
+            // If $insertResponseQuery was successful
             else {
                 echo "Error inserting response: " . mysqli_error($conn) . "<br>";
             }
-        }// Foreach end
+        } // Foreach end
     } // If end
 }
 
@@ -763,8 +803,7 @@ function surveyComplete($name, $userID, $conn){
  * @param mixed $conn
  * @return void
  */
-function surveyCreate($name, $userID, $conn)
-{
+function surveyCreate($name, $userID, $conn) {
     echo '
     <div class="create-surveys">
     <h1>Hello <span>' . $name . '</span> this is the create survey section</h1>
@@ -819,8 +858,7 @@ function surveyCreate($name, $userID, $conn)
  * @param mixed $conn
  * @return void
  */
-function surveyModify($name, $userID, $conn)
-{
+function surveyModify($name, $userID, $conn) {
     echo '
     <div class="modify-surveys">
     <h1>Hello <span>' . $name . '</span> this is the manage survey section</h1>
@@ -866,7 +904,7 @@ function surveyModify($name, $userID, $conn)
                             <input type="hidden" name="survey_id" value="' . $row['surveyID'] . '">
                             <button name="deleteSurvey" value="submit" type="submit">Delete</button>
                         </form>
-                    </div> <!-- edit and delete buttons div start  -->';
+                    </div> <!-- edit and delete buttons div end  -->';
                }
                     // Researcher name display end
 
@@ -885,28 +923,88 @@ function surveyModify($name, $userID, $conn)
             </div><br> <!-- survey-item end -->';
         } // While end
     } // Else-if end
-
+    
     /* Create surveys can only be done by the researchers, as it is being 
     implemented here: Researcher display start */
     if (isset($_SESSION['researcher_name'])) {
 
     echo '
-    <!-- Create survey button -->
-    <button onclick="surveyCreate()" class="create-btn"> <b>Create New Survey</b>  </button>
+    </div> <!-- modify-surveys end -->
+    <div class="create-survey-button">
+        <button onclick="surveyCreate()" class="create-btn"> <b>Create New Survey</b></button> <!-- Create survey button -->
+    </div> <!-- create-survey-button end -->
     </div> <!-- created-surveys-list end -->';
     } // Researcher display end
 
     echo '
+    <div class="modify-survey">
     <h1>Completed Surveys:</h1>
-        <div class="created-surveys-list">';
+    <div class="created-surveys-list">';
 
-    echo '
-    </div> <!-- created-surveys-list end -->';
-       // Researcher display end
+    // Select distinct surveyIDs from user_survey where $userID is equal to userID column
+    $surveyIDQuery = "SELECT DISTINCT surveyID FROM `user_survey` WHERE `userID` = '$userID';";
+    
+    $completedSurveyIDs = array();
 
+    $result = mysqli_query($conn, $surveyIDQuery);
+  
+    // Check for errors
+    if (!$result) {
+        echo "Error in query: " . mysqli_error($conn);
+    } else {
+        // Obtaining Completed Survey IDs
+        while ($row = mysqli_fetch_assoc($result)) {
+            $completedSurveyIDs[] = $row['surveyID'];
+        }
+
+        // Check if there are completedSurveyIDs before executing the query
+        if (!empty($completedSurveyIDs)) {
+            // Create a New Query for Surveys where $userID is equal to userID column with the commas removed from the completedSurveysIDs array.
+            $newSelect = "SELECT * FROM survey WHERE surveyID IN (" . implode(',', $completedSurveyIDs) . ");";
+            $newResult = mysqli_query($conn, $newSelect);
+
+            // Check for errors
+            if (!$newResult) {
+                echo "Error in query: " . mysqli_error($conn);
+            } 
+            
+            else {
+                $uniqueSurveyIDs = array();
+
+                // Display Only Unique Surveys
+                while ($newRow = mysqli_fetch_assoc($newResult)) {
+                    $surveyID = $newRow['surveyID'];
+
+                    // Display only if the surveyID is not already displayed
+                    if (!in_array($surveyID, $uniqueSurveyIDs)) {
+                        echo '<div class="survey-item">
+                            <p> <b>Name:</b> ' . $newRow['name'] . '<br>  <b>Description:</b> ' . $newRow['description'] . '</p>
+                            <div class="edit-delete-answers-buttons">
+                                <form method="post" class="edit-answers-method" action="surveyAnswerEdit.php">
+                                    <input type="hidden" name="editSurveyID" value="' . $surveyID . '">
+                                    <button type="submit" name="editAnswers">Edit answers</button>
+                                </form>
+                                <form method="post" action="" class="delete-answers-method" onsubmit="return confirm(\'Are you sure you want to delete your answers to this survey?\');">
+                                    <input type="hidden" name="survey_id" value="' . $surveyID . '">
+                                    <button name="deleteAnswers" value="submit" type="submit">Delete answers</button>
+                                </form>
+                            </div>
+                        </div><br>';
+
+                        // Add surveyID to the uniqueSurveyIDs array
+                        $uniqueSurveyIDs[] = $surveyID;
+                    }
+                }
+            }
+        } else {
+            // Display message if there are no completedSurveyIDs
+            echo '<h1>No completed surveys found</h1>';
+        }
+    }
+    
     echo '
-    </div> <!-- modify-surveys end -->
-    ';
+    </div>
+    </div> <!-- modify-surveys end -->';
 
     // If deleteSurvey is posted
     if (isset($_POST['deleteSurvey'])) {
@@ -927,7 +1025,181 @@ function surveyModify($name, $userID, $conn)
             echo "Error: " . mysqli_error($conn);
         }
     } // If end
+
+    // If deleteSurvey is posted
+    if (isset($_POST['deleteAnswers'])) {
+
+        // Creates surveyID variable from the posted data
+        $surveyID = mysqli_real_escape_string($conn, $_POST['survey_id']);
+
+        // Retrieve all responseIDs from user_survey
+        $selectResponseID = "SELECT responseID FROM user_survey WHERE surveyID = '$surveyID' AND userID = '$userID';";
+        $resultResponseID = mysqli_query($conn, $selectResponseID);
+
+        $responseIDs = array();
+
+        while ($rowResponseID = mysqli_fetch_assoc($resultResponseID)) {
+            $responseIDs[] = $rowResponseID['responseID'];
+        }
+
+        // Delete from user_survey table where surveyID is equal and userID is equal
+        $deleteQuery = "DELETE FROM user_survey WHERE surveyID = '$surveyID' AND userID = '$userID';";
+
+        // If query was successful
+        if (mysqli_query($conn, $deleteQuery)) {
+            echo "User survey entries deleted successfully!";
+
+            // Check if there are any responseIDs to delete
+            if (!empty($responseIDs)) {
+                // Construct IN clause for responseIDs
+                $responseIDsString = implode(',', $responseIDs);
+
+                // Delete from surveyresponse using the retrieved responseID(s)
+                $deleteAnswerQuery = "DELETE FROM surveyresponse WHERE responseID IN ($responseIDsString);";
+                if (mysqli_query($conn, $deleteAnswerQuery)) {
+                    echo "Responses deleted successfully!";
+                } 
+                
+                else {
+                    echo "Error deleting responses: " . mysqli_error($conn);
+                }
+            }
+        } 
+        
+        else {
+            echo "Error deleting survey: " . mysqli_error($conn);
+        }
+    } // If end
+
 }
+
+function surveyAnswerEdit($name, $userID, $conn) {
+    
+    // Initialize variables with default values
+    $surveyName = '';
+    $surveyDescription = '';
+    $submittedSurveyID = '';
+
+    // Checks if surveyID to edit is posted
+    if (isset($_POST['editSurveyID'])) {
+
+        // Access and store the surveyID in a variable
+        $submittedSurveyID = $_POST['editSurveyID'];
+        
+        // Store the data for the name and description from the survey table via the $surveyID
+        $selectedSurveyData = "SELECT `name`, `description` FROM `survey` WHERE `surveyID` = '$submittedSurveyID';";
+        $resultSurveyData = mysqli_query($conn, $selectedSurveyData);
+        
+        $selectedSurveyQuestions = "SELECT * FROM `surveyquestion` WHERE `surveyID` = '$submittedSurveyID';";
+        $resultSurveyQuestions = mysqli_query($conn, $selectedSurveyQuestions);
+
+        // If there is a result for the name & description
+        if ($resultSurveyData && mysqli_num_rows($resultSurveyData) > 0) {
+
+            //Make row variable to save name and description
+            $row = mysqli_fetch_assoc($resultSurveyData);
+
+            //Info in the row to variables
+            $surveyName = $row['name'];
+            $surveyDescription = $row['description'];
+        }
+
+        // If there is a result for the survey questions
+        if ($resultSurveyQuestions && mysqli_num_rows($resultSurveyQuestions) > 0) {
+
+            // Gets the number of rows & used as counter to track the number of questions
+            $questionCounter = mysqli_num_rows($resultSurveyQuestions);
+        }
+    } // Outer if end
+    
+    echo '
+    <div class="complete-surveys">
+        <h1>Hello <span>' . $name . '</span>, this is the edit survey answers section</h1>';
+
+    // Display survey questions and answer input-forms here
+
+    echo '
+        <form action="" method="post">
+    
+            <!--$submittedSurveyID for submitting-->
+            <input type="hidden" name="completeSurveyID" value="' . $submittedSurveyID . '">
+    
+            <!--$surveyName data as a placeholder for the name form-->
+            <label for="surveyName">Survey Name:<br>' . $surveyName . '</label>
+            <br><br>
+            
+            <!--$surveyDescription data as a placeholder for the description form-->
+            <label for="surveyDescription">Survey Description:<br>' . $surveyDescription . '</label>
+            <br><br>';
+
+    // If there is questions
+    if (mysqli_num_rows($resultSurveyQuestions) > 0) {
+        for ($i = 1; $i <= $questionCounter; $i++) {
+
+            // Fetch the question data for the current iteration
+            $questionData = mysqli_fetch_assoc($resultSurveyQuestions);
+
+            // Fetch responses associated with the current question for the user
+            $selectResponses = "SELECT * FROM `user_survey` us
+                                JOIN `surveyresponse` sr ON us.`responseID` = sr.`responseID`
+                                WHERE us.`surveyID` = '$submittedSurveyID' 
+                                AND us.`questionID` = '{$questionData['questionID']}' 
+                                AND us.`userID` = '$userID';";
+            $resultResponses = mysqli_query($conn, $selectResponses);
+
+            echo '
+            <label for="question' . $i . '">Question ' . $i . ': ' . $questionData['question'] . '</label>
+            <br>';
+
+            // Display existing responses for editing
+            while ($responseData = mysqli_fetch_assoc($resultResponses)) {
+                echo '
+                <input type="text" name="response[' . $responseData['responseID'] . ']" class="form-input" value="' . $responseData['response'] . '" required>
+                <br>';
+            }
+
+            echo '<br>';
+        }
+    }
+
+    // If there is no questions
+    else {
+        echo "There are no questions to answer!<br><br>";
+    }
+
+    echo '
+        <!--Submit form that posts submitSurvey-->
+        <input type="submit" name="submitSurvey" value="Submit" class="form-btn">
+    
+        <!--Cancel button links to surveyModify.php-->
+        <input type="button" onClick="window.location.href=\'survey.php\'" name="cancel" value="Cancel" class="cancel-link">
+        <br>
+    </form>
+    </div> <!-- complete-surveys end -->';
+
+    // If submitSurvey is posted
+    if (isset($_POST['submitSurvey'])) {
+
+        // Reset the result set pointer to the beginning
+        mysqli_data_seek($resultSurveyQuestions, 0);
+
+        foreach ($_POST['response'] as $responseID => $responseText) {
+            // Fetch the question data for the current iteration
+            $questionData = mysqli_fetch_assoc($resultSurveyQuestions);
+
+            // Update the existing response in the user_survey and surveyresponse tables
+            $updateResponseQuery = "UPDATE `surveyresponse` SET `response` = '$responseText' WHERE `responseID` = '$responseID';";
+
+            if (mysqli_query($conn, $updateResponseQuery)) {
+                echo "Response updated successfully <br>";
+            } else {
+                echo "Error updating response: " . mysqli_error($conn) . "<br>";
+            }
+        }
+    }
+}
+
+
 
 /**
  * Summary of surveyEdit
@@ -936,13 +1208,11 @@ function surveyModify($name, $userID, $conn)
  * @param mixed $conn
  * @return void
  */
-function surveyEdit($name, $userID, $conn)
-{
+function surveyEdit($name, $userID, $conn) {
     // Initialize variables with default values
     $surveyName = '';
     $surveyDescription = '';
     $edittedSurveyID = '';
-    $question = array(); // Array to store questions
 
     // Checks if surveyID to edit is posted
     if (isset($_POST['editSurveyID'])) {
@@ -1098,8 +1368,7 @@ function surveyEdit($name, $userID, $conn)
  * @param mixed $conn
  * @return void
  */
-function opportunitySearch($name, $conn)
-{
+function opportunitySearch($name, $conn) {
     //Used to display errors
     if (isset($error)) {
         foreach ($error as $error) {
@@ -1212,8 +1481,7 @@ function opportunitySearch($name, $conn)
  * @param mixed $conn
  * @return void
  */
-function opportunityCreate($name, $userID, $conn)
-{
+function opportunityCreate($name, $userID, $conn) {
 
     echo '
     <div class="create-opportunities">
@@ -1284,8 +1552,7 @@ function opportunityCreate($name, $userID, $conn)
  * @param mixed $conn
  * @return void
  */
-function opportunityModify($name, $userID, $conn)
-{
+function opportunityModify($name, $userID, $conn) {
     echo '
     <div class="modify-opportunities">
     <h1>Hello <span>' . $name . '</span> this is the manage opportunity section</h1>
@@ -1401,8 +1668,7 @@ function opportunityModify($name, $userID, $conn)
  * @param mixed $conn
  * @return void
  */
-function opportunityEdit($name, $userID, $conn)
-{ 
+function opportunityEdit($name, $userID, $conn) { 
     
     //Initialize variables with default values
     $opportunityName = '';
@@ -1519,8 +1785,7 @@ function opportunityEdit($name, $userID, $conn)
  * @param mixed $conn
  * @return void
  */
-function supportGroupSearch($name, $conn)
-{
+function supportGroupSearch($name, $conn) {
     //Used to display errors
     if (isset($error)) {
         foreach ($error as $error) {
@@ -1617,8 +1882,7 @@ function supportGroupSearch($name, $conn)
  * @param mixed $conn
  * @return void
  */
-function supportGroupCreate($name, $userID, $conn)
-{
+function supportGroupCreate($name, $userID, $conn) {
     echo '
     <div class="create-supportGroups">
     <h1>Hello <span>' . $name . '</span> this is the create support group section</h1>
@@ -1672,8 +1936,7 @@ function supportGroupCreate($name, $userID, $conn)
  * @param mixed $conn
  * @return void
  */
-function supportGroupModify($name, $userID, $conn)
-{
+function supportGroupModify($name, $userID, $conn) {
     echo '
     <div class="modify-supportGroups">
     <h1>Hello <span>' . $name . '</span> this is the manage support group section</h1>
@@ -1783,8 +2046,7 @@ function supportGroupModify($name, $userID, $conn)
  * @param mixed $conn
  * @return void
  */
-function supportGroupEdit($name, $userID, $conn)
-{ 
+function supportGroupEdit($name, $userID, $conn) { 
     //Initialize variables with default values
     $supportGroupName = '';
     $supportGroupDescription = '';
@@ -1872,8 +2134,7 @@ function supportGroupEdit($name, $userID, $conn)
  * @param mixed $conn
  * @return void
  */
-function studySearch($name, $conn)
-{
+function studySearch($name, $conn) {
     //Used to display errors
     if (isset($error)) {
         foreach ($error as $error) {
@@ -1981,8 +2242,7 @@ function studySearch($name, $conn)
  * @param mixed $conn
  * @return void
  */
-function studyCreate($name, $userID, $conn)
-{
+function studyCreate($name, $userID, $conn) {
 
     echo '
     <div class="create-studies">
@@ -2052,8 +2312,7 @@ function studyCreate($name, $userID, $conn)
  * @param mixed $conn
  * @return void
  */
-function studyModify($name, $userID, $conn)
-{
+function studyModify($name, $userID, $conn) {
     echo '
     <div class="modify-studies">
     <h1>Hello <span>' . $name . '</span> this is the manage study section</h1>
@@ -2170,8 +2429,7 @@ function studyModify($name, $userID, $conn)
  * @param mixed $conn
  * @return void
  */
-function studyEdit($name, $userID, $conn)
-{ 
+function studyEdit($name, $userID, $conn) { 
     //Initialize variables with default values
     $studyName = '';
     $studyDescription = '';
