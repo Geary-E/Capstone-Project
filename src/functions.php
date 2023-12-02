@@ -907,8 +907,8 @@ function surveyModify($name, $userID, $conn) {
                <p> <b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'] . '</p>';
 
             // Researcher display for surveys: if user type is equal to researcher
-             if(userType() === 'researcher') {   
-               if (isset($_SESSION['researcher_name'])) {
+          //   if(userType() === 'researcher') {   
+           //    if (isset($_SESSION['researcher_name'])) {
 
                 echo '
                     <div class="edit-delete-buttons"> <!-- edit and delete buttons div start  -->
@@ -925,8 +925,8 @@ function surveyModify($name, $userID, $conn) {
                             <button name="deleteSurvey" value="submit" type="submit">Delete</button>
                         </form>
                     </div> <!-- edit and delete buttons div end  -->';
-               }
-            }
+            //   }
+           // }
                     // Researcher name display end
             echo '        
             </div><br> <!-- survey-item end -->';
@@ -935,17 +935,18 @@ function surveyModify($name, $userID, $conn) {
     
     /* Create surveys can only be done by the researchers, as it is being 
     implemented here: Researcher display start */
-    if(userType() === 'researcher') {
-        if (isset($_SESSION['researcher_name'])) {
+  //  if(userType() === 'researcher') {
+   //     if (isset($_SESSION['researcher_name'])) {
             echo '
                 <!-- Create survey button -->
                 <button onclick="surveyCreate()" class="create-btn"> <b>Create New Survey</b>  </button>
                 </div> <!-- created-surveys-list end -->';
-        }
-     } // Researcher display end
+      //  }
+     //} // Researcher display end
 
 
     echo '
+    </div>
     <div class="modify-survey">
     <h1>Completed Surveys:</h1>
     <div class="created-surveys-list">';
@@ -1278,17 +1279,26 @@ function surveyEdit($name, $userID, $conn) {
         <textarea name="surveyDescription" class="form-textarea" required>' . $surveyDescription . '</textarea>
         <br><br>';
 
-        // Display question input-forms based on the number of questions
-        for ($i = 1; $i <= $questionCounter; $i++) {
-            // Fetch the question data for the current iteration
-            $questionData = mysqli_fetch_assoc($resultSurveyQuestions);
+// Display question input-forms based on the number of questions
+for ($i = 1; $i <= $questionCounter; $i++) {
+    // Fetch the question data for the current iteration
+    $questionData = mysqli_fetch_assoc($resultSurveyQuestions);
 
-            echo '
+    echo '
+    <div class="question-container">
+        <div class="question-input-container">
             <label for="question">Question ' . $i . ':</label>
-            <br>
             <input type="text" name="question[]" class="form-input" value="' . $questionData['question'] . '" required>
-            <br><br>';
-        }
+        </div>
+        
+        <!-- Delete button for each question -->
+        <form method="post" action="" class="delete-question-method" onsubmit="return confirm(\'Are you sure you want to delete this question?\');">
+            <input type="hidden" name="deleteQuestionID" value="' . $questionData['questionID'] . '">
+            <button name="deleteQuestion" value="submit" type="submit">Delete</button>
+        </form>
+    </div>';
+}
+
 
 
     echo '
@@ -1349,7 +1359,7 @@ function surveyEdit($name, $userID, $conn) {
                 if (mysqli_query($conn, $updateQuestionQuery)) {
                     echo "Question updated successfully <br>";
                 }
-                
+
                 // If query was not successful
                 else {
                     echo "Error updating question: " . mysqli_error($conn) . "<br>";
@@ -1371,6 +1381,42 @@ function surveyEdit($name, $userID, $conn) {
             }
         }
     } // Outer if end
+
+    // If deleteQuestion is posted
+    if (isset($_POST['deleteQuestion'])) {
+        // Creates questionID variable from the posted data
+        $questionID = mysqli_real_escape_string($conn, $_POST['deleteQuestionID']);
+
+        // Delete from user_survey table where questionID and userID match
+        $deleteUserSurveyQuery = "DELETE FROM user_survey WHERE questionID = '$questionID' AND userID = '$userID';";
+
+        // Delete from surveyresponse table where questionID matches
+        $deleteSurveyResponseQuery = "DELETE FROM surveyresponse WHERE questionID = '$questionID';";
+
+        // Delete from surveyquestion table where questionID matches
+        $deleteSurveyQuestionQuery = "DELETE FROM surveyquestion WHERE questionID = '$questionID';";
+
+        // Execute the first query
+        if (mysqli_query($conn, $deleteUserSurveyQuery)) {
+            echo "Deleted entries successfully from user_survey <br>";
+
+            // Execute the second query
+            if (mysqli_query($conn, $deleteSurveyResponseQuery)) {
+                echo "Deleted entries successfully from surveyresponse <br>";
+                
+                // Execute the third query
+                if (mysqli_query($conn, $deleteSurveyQuestionQuery)) {
+                    echo "Deleted entries successfully from surveyquestion <br>";
+                } else {
+                    echo "Error deleting surveyquestion entries: " . mysqli_error($conn) . "<br>";
+                }
+            } else {
+                echo "Error deleting surveyresponse entries: " . mysqli_error($conn) . "<br>";
+            }
+        } else {
+            echo "Error deleting user_survey entries: " . mysqli_error($conn) . "<br>";
+        }
+    }
 }
 
 /**

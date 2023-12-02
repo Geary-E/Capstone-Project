@@ -2,6 +2,7 @@
 function surveyCreate() {
     document.querySelector('.create-surveys').style.display = 'block';
     document.querySelector('.modify-surveys').style.display = 'none';
+    document.querySelector('.modify-survey').style.display = 'none';
 }
 
 // Displays the opportunityCreate div, and hides the others
@@ -114,4 +115,8 @@ function addQuestionHere() {
 
     // Increment question counter for the next question
     questionCounter.value = parseInt(questionCounter.value) + 1;
+}
+
+function confirmDelete() {
+    return confirm('Are you sure you want to delete this question?');
 }
