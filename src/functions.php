@@ -199,7 +199,7 @@ function pageNavbar($conn, $pageName, $name, $userID)
             </div>
         </div>';
     } //Navbar for surveys end
-    elseif($pageName=='SurveysComplete') //Navbar for surveysEdit start
+    elseif($pageName=='SurveysComplete') //Navbar for surveysComplete start
     {
         $pageNameDisplay='Surveys';
         echo '
@@ -210,11 +210,11 @@ function pageNavbar($conn, $pageName, $name, $userID)
             </div>
 
             <div class="page-content">  <!-- Container for all the content -->';
-                surveyComplete($name, $userID, $conn); //Displays the surveyEdit content
+                surveyComplete($name, $userID, $conn); //Displays the surveyComplete content
                 echo '
             </div>
         </div>';
-    }//Navbar for surveysEdit end
+    }//Navbar for surveysComplete end
     elseif($pageName=='SurveysModify') //Navbar for surveysModify start
     {
         $pageNameDisplay='Surveys';
@@ -247,7 +247,7 @@ function pageNavbar($conn, $pageName, $name, $userID)
             </div>
         </div>';
     }//Navbar for surveysEdit end
-    elseif($pageName=='SurveysAnswerEdit') //Navbar for surveysEdit start
+    elseif($pageName=='SurveysAnswerEdit') //Navbar for surveysAnswerEdit start
     {
         $pageNameDisplay='Surveys';
         echo '
@@ -258,11 +258,27 @@ function pageNavbar($conn, $pageName, $name, $userID)
             </div>
 
             <div class="page-content">  <!-- Container for all the content -->';
-                surveyAnswerEdit($name, $userID, $conn); //Displays the surveyEdit content
+                surveyAnswerEdit($name, $userID, $conn); //Displays the surveyAnswerEdit content
                 echo '
             </div>
         </div>';
-    }//Navbar for surveysEdit end
+    }//Navbar for surveysAnswerEdit end
+    elseif($pageName=='SurveysView') //Navbar for surveysView start
+    {
+        $pageNameDisplay='Surveys';
+        echo '
+        <div class="navbar-content-container">
+            <div class="navbar"> <!-- Links for each module -->
+            <a href="survey.php">Search ' . $pageNameDisplay . '</a>
+            <a href="surveyModify.php">Manage ' . $pageNameDisplay . '</a>
+            </div>
+
+            <div class="page-content">  <!-- Container for all the content -->';
+                surveyView($name, $userID, $conn); //Displays the surveyView content
+                echo '
+            </div>
+        </div>';
+    }//Navbar for surveysView end
     elseif($pageName=='Opportunities') //Navbar opportunities start
     {
         echo '
@@ -273,7 +289,7 @@ function pageNavbar($conn, $pageName, $name, $userID)
             </div>
             <div class="page-content">  <!-- Container for all the content -->
                 <div class="search-opportunities">'; //Container for searchOpportunity module
-                    opportunitySearch($name, $conn);  //Displays the opportunitySearch content
+                    opportunitySearch($name, $userID, $conn);  //Displays the opportunitySearch content
                     echo '
                 </div>
             </div>
@@ -320,7 +336,7 @@ function pageNavbar($conn, $pageName, $name, $userID)
             </div>
             <div class="page-content">  <!-- Container for all the content -->
                 <div class="search-supportGroups">'; //Container for searchOpportunity module
-                    supportGroupSearch($name, $conn);  //Displays the opportunitySearch content
+                    supportGroupSearch($name, $userID, $conn);  //Displays the opportunitySearch content
                     echo '
                 </div>
             </div>
@@ -368,7 +384,7 @@ function pageNavbar($conn, $pageName, $name, $userID)
 
             <div class="page-content">  <!-- Container for all the content -->
                 <div class="search-studies">'; //Container for searchStudy module
-                    studySearch($name, $conn);  //Displays the studySearch content
+                    studySearch($name, $userID, $conn);  //Displays the studySearch content
                     echo '
                 </div>
             </div>
@@ -405,7 +421,7 @@ function pageNavbar($conn, $pageName, $name, $userID)
                 echo '
             </div>
         </div>';
-    }//Navbar for surveysEdit end
+    }//Navbar for studiesEdit end
     elseif($pageName=='Account Page') { //Navbar for Account Page start
 
         echo '
@@ -430,10 +446,6 @@ function pageNavbar($conn, $pageName, $name, $userID)
 
     }//Navbar for Account Page end
 } //Navbar end
-
-
-
-
 
 //***************************
 //*Module-Specific Functions*
@@ -614,10 +626,10 @@ function surveySearch($name, $conn) {
         <h1>Hello <span>' . $name . '</span> this is the search survey section</h1>
         <form action="" method="post"> <!-- Buttons for the search -->
             <div class="search-boxes">
-            <p style="display: block;">Search By:</p> <br><br>
+            <p style="display: block;"><b>Search By:</b></p> <br><br>
             <!-- Added labels to the search boxes -->
-            <div class="survey-search-name-box"><label for="search">Name:</label><input type="text" name="searchName" placeholder="Survey name"></div>
-            <div class="survey-search-tag-box"><label for="tag"> Tags:</label><input type="text" name="searchTag" placeholder="Tag name"></div>
+            <div class="survey-search-name-box"><label for="search"><b>Name:</b></label><input type="text" name="searchName" placeholder="Survey name"></div>
+            <div class="survey-search-tag-box"><label for="tag"><b>Tags:</b></label><input type="text" name="searchTag" placeholder="Tag name"></div>
             <button name="surveySearch" value="submit" type="submit">Search</button>
             </div> <!-- search-boxes end -->
         </form>
@@ -761,12 +773,11 @@ function surveyComplete($name, $userID, $conn) {
             <!--$submittedSurveyID for submitting-->
             <input type="hidden" name="completeSurveyID" value="' . $submittedSurveyID . '">
     
-            <!--$surveyName data as a placeholder for the name form-->
-            <label for="surveyName">Survey Name:<br>' . $surveyName . '</label>
+            
+            <label for="surveyName"><b>Survey Name:</b><br>' . $surveyName . '</label>
             <br><br>
             
-            <!--$surveyDescription data as a placeholder for the description form-->
-            <label for="surveyDescription">Survey Description:<br>' . $surveyDescription . '</label>
+            <label for="surveyDescription"><b>Survey Description:</b><br>' . $surveyDescription . '</label>
             <br><br>';
 
             // If there is questions
@@ -777,7 +788,7 @@ function surveyComplete($name, $userID, $conn) {
                     $questionData = mysqli_fetch_assoc($resultSurveyQuestions);
                 
                     echo '
-                    <label for="question' . $i . '">Question ' . $i . ': ' . $questionData['question'] . '</label>
+                    <label for="question' . $i . '"><b>Question ' . $i . ':</b> ' . $questionData['question'] . '</label>
                     <br>
                     <input type="text" name="response[]" class="form-input" placeholder="Enter answer here">
                     <br><br>';
@@ -930,10 +941,11 @@ function surveyModify($name, $userID, $conn) {
 
         // While row in table exists via result
         while ($row = mysqli_fetch_assoc($result)) { 
-
+            $surveySubmissionCount=0;
             // Lists surveys where where userID is equal
             echo '<div class="survey-item">
-               <p> <b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'] . '</p>';
+
+                <p> <b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'] . '</p>';
 
             // Researcher display for surveys: if user type is equal to researcher
           //   if(userType() === 'researcher') {   
@@ -945,15 +957,44 @@ function surveyModify($name, $userID, $conn) {
                     <form method="post" class="edit-method" action="surveyEdit.php">
                         <input type="hidden" name="editSurveyID" value="' . $row['surveyID'] . '">
                         <button type="submit" name="editSurvey">Edit</button>
-                    </form>';
-   
-                    echo'
+                    </form>
+
                     <!-- deleteSurvey button -->
                         <form method="post" action="" class="delete-method" onsubmit="return confirm(\'Are you sure you want to delete this survey?\');">
                             <input type="hidden" name="survey_id" value="' . $row['surveyID'] . '">
                             <button name="deleteSurvey" value="submit" type="submit">Delete</button>
                         </form>
                     </div> <!-- edit and delete buttons div end  -->';
+
+                        // SQL query to count the distinct rows
+                        $countQuery = "SELECT COUNT(DISTINCT `userID`) AS surveySubmissionCount FROM `user_survey` WHERE `surveyID` = '{$row['surveyID']}';";
+                        $countResult = mysqli_query($conn, $countQuery);
+
+                        // Check if the query was successful and that there are rows
+                        if ($result && $count = mysqli_fetch_assoc($countResult)) {
+
+                            // Access the count value directly
+                            $surveySubmissionCount = $count['surveySubmissionCount'];
+                            
+                            // Free the result set
+                            mysqli_free_result($countResult);
+                        } 
+                        
+                        // If the query was not successful, or there was not rows:
+                        else {
+                            $surveySubmissionCount = 0;
+                        }
+
+                    echo'
+                    <p> <b>Survey submissions:</b> '.$surveySubmissionCount.'</p>
+
+                    <div class="view-submissions-button"> <!-- view-submissions-buttons div start  -->
+                        <form method="post" class="submissions-method" action="surveyView.php">
+                            <input type="hidden" name="viewSurveyID" value="' . $row['surveyID'] . '">
+                            <button type="submit" name="viewSurvey">View Submissions</button>
+                        </form>
+                    </div>';
+
             //   }
            // }
                     // Researcher name display end
@@ -1185,11 +1226,11 @@ function surveyAnswerEdit($name, $userID, $conn) {
         <input type="hidden" name="questionCounter" value="' . ($questionCounter + 1) . '">
 
             <!-- $surveyName data as a placeholder for the name form -->
-            <label for="surveyName">Survey Name:<br>' . $surveyName . '</label>
+            <label for="surveyName"><b>Survey Name:</b><br>' . $surveyName . '</label>
             <br><br>
             
             <!-- $surveyDescription data as a placeholder for the description form -->
-            <label for="surveyDescription">Survey Description:<br>' . $surveyDescription . '</label>
+            <label for="surveyDescription"><b>Survey Description:</b><br>' . $surveyDescription . '</label>
             <br><br>';
 
     // Display question input-forms based on the number of questions
@@ -1198,18 +1239,22 @@ function surveyAnswerEdit($name, $userID, $conn) {
         $questionData = mysqli_fetch_assoc($resultSurveyQuestions);
 
         echo '
-        <label for="question">Question ' . $i . ':' . $questionData['question'] . '</label>
+        <label for="question"><b>Question ' . $i . ': </b>' . $questionData['question'] . '</label>
         <br>';
 
-        // Fetch responses associated with the current question for the user
-        $selectResponses = "SELECT * FROM `surveyresponse` WHERE `questionID` = '" . $questionData['questionID'] . "';";
-        $resultResponses = mysqli_query($conn, $selectResponses);
+    // Fetch responses associated with the current question for the user
+    $selectResponses = "SELECT * FROM `surveyresponse` 
+                        JOIN `user_survey` ON `surveyresponse`.`responseID` = `user_survey`.`responseID`
+                        WHERE `surveyresponse`.`questionID` = '" . $questionData['questionID'] . "'
+                            AND `user_survey`.`userID` = '$userID';";
+    $resultResponses = mysqli_query($conn, $selectResponses);
 
-        while ($responseData = mysqli_fetch_assoc($resultResponses)) {
-            echo '
-            <input type="text" name="response[' . $responseData['responseID'] . ']" class="form-input" value="' . $responseData['response'] . '" required>
-            <br>';
-        }
+    while ($responseData = mysqli_fetch_assoc($resultResponses)) {
+        echo '
+        <input type="text" name="response[' . $responseData['responseID'] . ']" class="form-input" value="' . $responseData['response'] . '" required>
+        <br>';
+    }
+
 
         echo '<br>';
     }
@@ -1297,13 +1342,13 @@ function surveyEdit($name, $userID, $conn) {
         <input type="hidden" name="questionCounter" value="' . ($questionCounter + 1) . '">
 
         <!--$surveyName data as a placeholder for the name form-->
-        <label for="surveyName">Survey Name:</label>
+        <label for="surveyName"><b>Survey Name:</b></label>
         <br>
         <input type="text" name="surveyName" value="' . $surveyName . '" class="form-input" required>
         <br><br>
 
         <!--$surveyDescription data as a placeholder for the description form-->
-        <label for="surveyDescription">Survey Description:</label>
+        <label for="surveyDescription"><b>Survey Description:</b></label>
         <br>
         <textarea name="surveyDescription" class="form-textarea" required>' . $surveyDescription . '</textarea>
         <br><br>';
@@ -1316,20 +1361,19 @@ for ($i = 1; $i <= $questionCounter; $i++) {
     echo '
     <div class="question-container">
         <div class="question-input-container">
-            <label for="question">Question ' . $i . ':</label>
+            <label for="question"><b>Question ' . $i . ':</b></label><br>
             <input type="text" name="question[]" class="form-input" value="' . $questionData['question'] . '" required>
         </div>
-        
+        <br>
         <!-- Delete button for each question -->
-        <form method="post" action="" class="delete-question-method" onsubmit="return confirm(\'Are you sure you want to delete this question?\');">
-            <input type="hidden" name="deleteQuestionID" value="' . $questionData['questionID'] . '">
-            <button name="deleteQuestion" value="submit" type="submit">Delete</button>
-        </form>
+
     </div>';
 }
 
-
-
+//<form method="post" action="" class="delete-question-method" onsubmit="return confirm(\'Are you sure you want to delete this question?\');">
+//    <input type="hidden" name="deleteQuestionID" value="' . $questionData['questionID'] . '">
+//    <button name="deleteQuestion" value="submit" type="submit">Delete</button>
+//</form>
     echo '
         <!-- Container for dynamically added questions -->
         <div id="questionContainer"></div>
@@ -1436,17 +1480,121 @@ for ($i = 1; $i <= $questionCounter; $i++) {
                 // Execute the third query
                 if (mysqli_query($conn, $deleteSurveyQuestionQuery)) {
                     echo "Deleted entries successfully from surveyquestion <br>";
-                } else {
+                }
+                
+                else {
                     echo "Error deleting surveyquestion entries: " . mysqli_error($conn) . "<br>";
                 }
-            } else {
+            }
+            
+            else {
                 echo "Error deleting surveyresponse entries: " . mysqli_error($conn) . "<br>";
             }
-        } else {
+        }
+        
+        else {
             echo "Error deleting user_survey entries: " . mysqli_error($conn) . "<br>";
         }
     }
 }
+
+
+/**
+ * Summary of surveyView
+ * @param mixed $name
+ * @param mixed $userID
+ * @param mixed $conn
+ * @return void
+ */
+function surveyView($name, $userID, $conn) {
+    // Used to display errors
+    if (isset($error)) {
+        foreach ($error as $error) {
+            echo '<span class="error-msg">' . $error . '</span>';
+        }
+    }
+
+    // Initialize variables with default values
+    $surveyName = '';
+    $surveyDescription = '';
+    $submittedSurveyID = '';
+
+    // Checks if surveyID to view is posted
+    if (isset($_POST['viewSurveyID'])) {
+
+        // Access and store the surveyID in a variable
+        $submittedSurveyID = $_POST['viewSurveyID'];
+
+        // Store the data for the name and description from the survey table via the $surveyID
+        $selectedSurveyData = "SELECT `name`, `description` FROM `survey` WHERE `surveyID` = '$submittedSurveyID';";
+        $resultSurveyData = mysqli_query($conn, $selectedSurveyData);
+        $selectedSurveyQuestions = "SELECT * FROM `surveyquestion` WHERE `surveyID` = '$submittedSurveyID';";
+        $resultSurveyQuestions = mysqli_query($conn, $selectedSurveyQuestions);
+
+        // If there is a result for the name & description
+        if ($resultSurveyData && mysqli_num_rows($resultSurveyData) > 0) {
+
+            // Make row variable to save name and description
+            $row = mysqli_fetch_assoc($resultSurveyData);
+
+            // Info in the row to variables
+            $surveyName = $row['name'];
+            $surveyDescription = $row['description'];
+        }
+
+        // Display survey name and description
+        echo '
+        <div class="view-submissions">
+            <h1>Hello <span>' . $name . '</span>, this is the view survey section</h1>
+
+            <b>Survey Name: </b><br>' . $surveyName . ' <br><br>
+            <b>Survey Description: </b><br>' . $surveyDescription . '<br><br>';
+
+            // Modify the query to join user_survey, surveyresponse, and surveyquestion tables
+            $selectedUserSurveys = "SELECT DISTINCT `user`.`userID`, `user`.`firstname`, `user`.`lastname`, `user`.`email`
+                                    FROM `user_survey`
+                                    JOIN `user` ON `user_survey`.`userID` = `user`.`userID`
+                                    WHERE `user_survey`.`surveyID` = '$submittedSurveyID';";
+            $resultUserSurveys = mysqli_query($conn, $selectedUserSurveys);
+            echo '
+            <div class="survey-list">';
+                // Loop through each user and display their responses
+                while ($user = mysqli_fetch_assoc($resultUserSurveys)) {
+                    $currentUserID = $user['userID'];
+
+                    $selectedUserSurveyResponses = "SELECT `surveyresponse`.`response`, `surveyresponse`.`questionID`
+                                                FROM `user_survey` 
+                                                JOIN `surveyresponse` ON `user_survey`.`responseID` = `surveyresponse`.`responseID` 
+                                                WHERE `user_survey`.`userID` = '$currentUserID' 
+                                                    AND `user_survey`.`surveyID` = '$submittedSurveyID';";
+
+                    $resultUserSurveyResponses = mysqli_query($conn, $selectedUserSurveyResponses);
+
+                    // Display responses for the current user
+                    echo '
+                    <div class="survey-item">            
+                        <b>User: </b>' . $user['firstname'] . ' ' . $user['lastname'] . '<br><b>Email: </b>' . $user['email'] . '<br><br>';
+                        while ($response = mysqli_fetch_assoc($resultUserSurveyResponses)) {
+                            $questionID = $response['questionID'];
+
+                            // Fetch the corresponding question from surveyquestion table
+                            $selectedQuestion = "SELECT `question` FROM `surveyquestion` WHERE `questionID` = '$questionID';";
+                            $resultQuestion = mysqli_query($conn, $selectedQuestion);
+                            $questionRow = mysqli_fetch_assoc($resultQuestion);
+                            $question = $questionRow['question'];
+
+                            // Display question and response
+                            echo '<b>Question:</b> ' . $question . '<br>';
+                            echo '<b>Response:</b> ' . $response['response'] . '<br><br>';
+                        }
+                echo '</div><br>'; //survey-item end
+            }
+            echo '</div> <!-- survey-list end -->
+            <input type="button" onClick="window.location.href=\'surveyModify.php\'" name="cancel" value="Return" class="return-method"></input> <!-- Return button links to surveyModify.php-->
+            </div><!-- view-submissions end -->';
+    } // Outer if end
+}
+
 
 /**
  * Summary of opportunitySearch
@@ -1454,7 +1602,7 @@ for ($i = 1; $i <= $questionCounter; $i++) {
  * @param mixed $conn
  * @return void
  */
-function opportunitySearch($name, $conn) {
+function opportunitySearch($name, $userID, $conn) {
     //Used to display errors
     if (isset($error)) {
         foreach ($error as $error) {
@@ -1467,10 +1615,10 @@ function opportunitySearch($name, $conn) {
         <h1>Hello <span>' . $name . '</span> this is the search opportunity section</h1>
         <form action="" method="post"> <!-- Buttons for the search -->
             <div class="search-boxes">
-            <p style="display: block;">Search By:</p> <br><br>
+            <p style="display: block;"><b>Search By:</b></p> <br><br>
             <!-- Added labels to the search boxes -->
-            <div class="opportunity-search-name-box"><label for="search">Name:</label><input type="text" name="searchName" placeholder="Opportunity name"></div>
-            <div class="opportunity-search-tag-box"><label for="tag"> Tags:</label><input type="text" name="searchTag" placeholder="Tag name"></div>
+            <div class="opportunity-search-name-box"><label for="search"><b>Name:</b></label><input type="text" name="searchName" placeholder="Opportunity name"></div>
+            <div class="opportunity-search-tag-box"><label for="tag"><b>Tags:</b></label><input type="text" name="searchTag" placeholder="Tag name"></div>
             <button name="opportunitySearch" value="submit" type="submit">Search</button>
             </div> <!-- search-boxes end -->
         </form>
@@ -1502,12 +1650,28 @@ function opportunitySearch($name, $conn) {
                     <b>Compensation:</b> ' . $row['compensation'] . '<br>';
 
                 // Join button to be displayed within the search section
-                echo '<br><div class="join-button"> 
-                <button class="view-btn"> Join </button>
-            </div>';
+                echo '<br>
+                                
+                <div class="join-button"> <!-- join button div start -->';
 
-              echo '  
-                </div><br>';
+                // Check if a row exists in user_opportunity for the specified userID and opportunityID
+                $checkUserOpportunity = "SELECT * FROM user_opportunity WHERE userID = '$userID' AND opportunityID = '" . $row['opportunityID'] . "'";
+                $resultUserOpportunity = mysqli_query($conn, $checkUserOpportunity);
+
+                if (mysqli_num_rows($resultUserOpportunity) == 0) {
+                    // If no row exists, display the "Join Opportunity" button
+                    echo '<form method="post" class="join-method" action="">
+                            <input type="hidden" name="joinOpportunityID" value="' . $row['opportunityID'] . '">
+                            <button type="submit" name="joinOpportunity">Join opportunity</button>
+                        </form>';
+                } else {
+                    // If a row exists, display a message
+                    echo 'You have already joined this opportunity.';
+                }
+
+                echo '</div> <!-- join button div end -->
+                </div> <!-- opportunity-item div end -->
+                <br>';
             } //While end
         } //Else if end
 
@@ -1538,9 +1702,6 @@ function opportunitySearch($name, $conn) {
             //While row in table exists via result
             while ( $row = mysqli_fetch_assoc($result) ) {
 
-    //INSERT INTO `opportunity` (`opportunityID`, `ownerID`, `name`, `description`, `location`, `date`, `compensation`)
-    //VALUES ('2', '5', 'oppasd', 'asdasdasdasd', 'denton', '2023-11-01 21:40:32', '1');
-
                 //Lists opportunities where name and tag is included in the search fields
                 echo '
                 <div class="opportunity-item">
@@ -1558,6 +1719,32 @@ function opportunitySearch($name, $conn) {
     echo'
         </div> <!-- search-opportunities-list end -->
     </div> <!-- search-opportunities-box end -->';
+    
+        // If opportunitySearch is posted
+        if (isset($_POST['joinOpportunity'])) {
+            // Access the opportunity ID from the posted data
+            $joinOpportunityID = mysqli_real_escape_string($conn, $_POST['joinOpportunityID']);
+    
+            // Insert into user_opportunity table only if not already joined
+            $checkUserOpportunity = "SELECT * FROM user_opportunity WHERE userID = '$userID' AND opportunityID = '$joinOpportunityID'";
+            $resultUserOpportunity = mysqli_query($conn, $checkUserOpportunity);
+    
+            if (mysqli_num_rows($resultUserOpportunity) == 0) {
+                // Insert into user_opportunity table
+                $insertUserOpportunity = "INSERT INTO user_opportunity (userID, opportunityID) VALUES ('$userID', '$joinOpportunityID')";
+    
+                if (mysqli_query($conn, $insertUserOpportunity)) {
+                    // Insertion successful
+                    echo "Joined opportunity successfully!";
+                } else {
+                    // Insertion failed
+                    echo "Error joining opportunity: " . mysqli_error($conn);
+                }
+            } else {
+                // Display a message if already joined
+                echo "You have already joined this opportunity.";
+            }
+        }
 }
 
 /**
@@ -1681,7 +1868,7 @@ function opportunityModify($name, $userID, $conn) {
                                 <input type="hidden" name="editOpportunityID" value="' . $row['opportunityID'] . '">
                                 <button type="submit" name="editOpportunity">Edit</button>
                         </form>';
-   
+
                     echo'
                     <!-- deleteOpportunity button -->
                         <form method="post" action="" class="delete-method" onsubmit="return confirm(\'Are you sure you want to delete this opportunity?\');">
@@ -1698,7 +1885,6 @@ function opportunityModify($name, $userID, $conn) {
             </div><br> <!-- opportunity-item end -->';
         } //While end
     } //Else if end
-
 
     /* Create opportunities can only be done by the researchers, as it is being 
     implemented here: Researcher display start */
@@ -1793,31 +1979,31 @@ function opportunityEdit($name, $userID, $conn) {
         <input type="hidden" name="editOpportunityID" value="' . $edittedOpportunityID . '">
 
         <!--$opportunityName data as a placeholder for the name form-->
-        <label for="opportunityName">Opportunity Name:</label>
+        <label for="opportunityName"><b>Opportunity Name:</b></label>
         <br>
         <input type="text" name="opportunityName" value="' . $opportunityName . '" class="form-input" required>
         <br><br>
 
         <!--$opportunityDescription data as a placeholder for the description form-->
-        <label for="opportunityDescription">Opportunity Description:</label>
+        <label for="opportunityDescription"><b>Opportunity Description:</b></label>
         <br>
         <textarea name="opportunityDescription" class="form-textarea" required>' . $opportunityDescription . '</textarea>
         <br><br>
 
         <!--$opportunityLocation data as a placeholder for the location form-->
-        <label for="opportunityLocation">Opportunity Location:</label>
+        <label for="opportunityLocation"><b>Opportunity Location:</b></label>
         <br>
         <input type="text" name="opportunityLocation" value="' . $opportunityLocation . '" class="form-input" required>
         <br><br>
 
         <!--$opportunityDate data as a placeholder for the date form-->
-        <label for="opportunityDate">Opportunity Date:</label>
+        <label for="opportunityDate"><b>Opportunity Date:</b></label>
         <br>
         <input type="datetime-local" name="opportunityDate" value="' . date('Y-m-d\TH:i', strtotime(str_replace(' ', 'T', $opportunityDate))) . '" class="form-input" required>
         <br><br>
 
         <!--$opportunityCompensation data as a placeholder for the compensation form-->
-        <label for="opportunityCompensation">Opportunity Compensation:</label>
+        <label for="opportunityCompensation"><b>Opportunity Compensation:</b></label>
         <br>
         <input type="text" name="opportunityCompensation" value="' . $opportunityCompensation . '" class="form-input">
         <br><br>
@@ -1856,8 +2042,8 @@ function opportunityEdit($name, $userID, $conn) {
             echo "Error: " . mysqli_error($conn);
         }
     } //Outer if end
-}
 
+}
 
 /**
  * Summary of supportGroupSearch
@@ -1865,7 +2051,7 @@ function opportunityEdit($name, $userID, $conn) {
  * @param mixed $conn
  * @return void
  */
-function supportGroupSearch($name, $conn) {
+function supportGroupSearch($name, $userID, $conn) {
     //Used to display errors
     if (isset($error)) {
         foreach ($error as $error) {
@@ -1877,10 +2063,10 @@ function supportGroupSearch($name, $conn) {
         <h1>Hello <span>' . $name . '</span> this is the search support group section</h1>
         <form action="" method="post"> <!-- Buttons for the search -->
             <div class="search-boxes">
-            <p style="display: block;">Search By:</p> <br><br>
+            <p style="display: block;"><b>Search By:</b></p> <br><br>
             <!-- Added labels to the search boxes -->
-            <div class="supportGroup-search-name-box"><label for="search">Name:</label><input type="text" name="searchName" placeholder="Support group name"></div>
-            <div class="supportGroup-search-tag-box"><label for="tag"> Tags:</label><input type="text" name="searchTag" placeholder="Tag name"></div>
+            <div class="supportGroup-search-name-box"><label for="search"><b>Name:</b></label><input type="text" name="searchName" placeholder="Support group name"></div>
+            <div class="supportGroup-search-tag-box"><label for="tag"><b>Tags:</b></label><input type="text" name="searchTag" placeholder="Tag name"></div>
             <button name="supportGroupSearch" value="submit" type="submit">Search</button>
             </div> <!-- search-boxes end -->
         </form>
@@ -1907,11 +2093,28 @@ function supportGroupSearch($name, $conn) {
                 echo '<b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'];
                 
                 // Join button to be displayed within the search section
-                echo '<br><br><div class="join-button"> 
-                        <button class="join-btn"> Join </button>
-                        </div>';
+                echo '<br><br>
 
-                echo '</div><br>';
+                <div class="join-button"> <!-- join button div start -->';
+
+                // Check if a row exists in user_supportGroup for the specified userID and supportGroupID
+                $checkUserSupportGroup = "SELECT * FROM user_supportGroup WHERE userID = '$userID' AND supportGroupID = '" . $row['supportGroupID'] . "'";
+                $resultUserSupportGroup = mysqli_query($conn, $checkUserSupportGroup);
+
+                if (mysqli_num_rows($resultUserSupportGroup) == 0) {
+                    // If no row exists, display the "Join support group" button
+                    echo '<form method="post" class="join-method" action="">
+                            <input type="hidden" name="joinSupportGroupID" value="' . $row['supportGroupID'] . '">
+                            <button type="submit" name="joinSupportGroup">Join Support Group</button>
+                        </form>';
+                } else {
+                    // If a row exists, display a message
+                    echo 'You have already joined this support group.';
+                }
+
+                echo '</div> <!-- join button div end -->
+                </div> <!-- supportGroup-item div end -->
+                <br>';
             } //While end
         } //Else if end
 
@@ -1953,6 +2156,32 @@ function supportGroupSearch($name, $conn) {
     echo'
         </div> <!-- search-supportGroups-list end -->
     </div> <!-- search-supportGroups-box end -->';
+
+    // If joinSupportGroup is posted
+    if (isset($_POST['joinSupportGroup'])) {
+        // Access the supportGroupID from the posted data
+        $joinSupportGroupID = mysqli_real_escape_string($conn, $_POST['joinSupportGroupID']);
+
+        // Insert into user_supportGroup table only if not already joined
+        $checkUserSupportGroup = "SELECT * FROM user_supportGroup WHERE userID = '$userID' AND supportGroupID = '$joinSupportGroupID'";
+        $resultUserSupportGroup = mysqli_query($conn, $checkUserSupportGroup);
+
+        if (mysqli_num_rows($resultUserSupportGroup) == 0) {
+            // Insert into user_supportGroup table
+            $insertUserSupportGroup = "INSERT INTO user_supportGroup (userID, supportGroupID) VALUES ('$userID', '$joinSupportGroupID')";
+
+            if (mysqli_query($conn, $insertUserSupportGroup)) {
+                // Insertion successful
+                echo "Joined support group successfully!";
+            } else {
+                // Insertion failed
+                echo "Error joining support group: " . mysqli_error($conn);
+            }
+        } else {
+            // Display a message if already joined
+            echo "You have already joined this support group.";
+        }
+    }
 }
 
 /**
@@ -2125,7 +2354,7 @@ function supportGroupModify($name, $userID, $conn) {
 }
 
 /**
- * Summary of surveyEdit
+ * Summary of suppotGroupEdit
  * @param mixed $name
  * @param mixed $userID
  * @param mixed $conn
@@ -2169,13 +2398,13 @@ function supportGroupEdit($name, $userID, $conn) {
         <input type="hidden" name="editSupportGroupID" value="' . $edittedSupportGroupID . '">
 
         <!--$supportGroupName data as a placeholder for the name form-->
-        <label for="supportGroupName">Support Group Name:</label>
+        <label for="supportGroupName"><b>Support Group Name:</b></label>
         <br>
         <input type="text" name="supportGroupName" value="' . $supportGroupName . '" class="form-input" required>
         <br><br>
 
         <!--$supportGroupDescription data as a placeholder for the description form-->
-        <label for="supportGroupDescription">SupportGroup Description:</label>
+        <label for="supportGroupDescription"><b>SupportGroup Description:</b></label>
         <br>
         <textarea name="supportGroupDescription" class="form-textarea" required>' . $supportGroupDescription . '</textarea>
         <br><br>
@@ -2213,50 +2442,51 @@ function supportGroupEdit($name, $userID, $conn) {
     } //Outer if end
 }
 
- /**
+/**
  * Summary of studySearch
  * @param mixed $name
+ * @param mixed $userID
  * @param mixed $conn
  * @return void
  */
-function studySearch($name, $conn) {
-    //Used to display errors
+function studySearch($name, $userID, $conn) {
+    // Used to display errors
     if (isset($error)) {
         foreach ($error as $error) {
             echo '<span class="error-msg">' . $error . '</span>';
         };
-    };
+    }
     echo '
     <div class="search-studies-box">
         <h1>Hello <span>' . $name . '</span> this is the search study section</h1>
         <form action="" method="post"> <!-- Buttons for the search -->
             <div class="search-boxes">
-            <p style="display: block;">Search By:</p> <br><br>
+            <p style="display: block;"><b>Search By:</b></p> <br><br>
             <!-- Added labels to the search boxes -->
-            <div class="study-search-name-box"><label for="search">Name:</label><input type="text" name="searchName" placeholder="Study name"></div>
-            <div class="study-search-tag-box"><label for="tag"> Tags:</label><input type="text" name="searchTag" placeholder="Tag name"></div>
+            <div class="study-search-name-box"><label for="search"><b>Name:</b></label><input type="text" name="searchName" placeholder="Study name"></div>
+            <div class="study-search-tag-box"><label for="tag"><b>Tags:</b></label><input type="text" name="searchTag" placeholder="Tag name"></div>
             <button name="studySearch" value="submit" type="submit">Search</button>
             </div> <!-- search-boxes end -->
         </form>
 
         <div class="study-list">';
 
-        //Select from all studies
+        // Select from all studies
         $select = "SELECT * FROM study";
         $result = mysqli_query($conn, $select);
 
-        //If there are no studies
+        // If there are no studies
         if (mysqli_num_rows($result) == 0) {
             $error[] = 'No studies were found';
         }
 
-        //If there are studies
+        // If there are studies
         else if (mysqli_num_rows($result) > 0) {
 
-            //While row in table exists via result
-            while ( $row = mysqli_fetch_assoc($result) ) {
+            // While row in table exists via result
+            while ($row = mysqli_fetch_assoc($result)) {
 
-                //Lists all studies
+                // Lists all studies
                 echo '
                 <div class="study-item">
                     <b>Name:</b> ' . $row['name'] . '<br>
@@ -2264,61 +2494,105 @@ function studySearch($name, $conn) {
                     <b>Location:</b> ' . $row['location'] . '<br>
                     <b>Date:</b> ' . date('Y-m-d H:i:s', strtotime($row['date'])) . '<br>
                     <b>Compensation:</b> ' . $row['compensation'] . '<br>';
-                    
-                    // Join button to be displayed within the search section
-                echo '<br><div class="join-button"> 
-                    <button class="join-btn"> Join </button>
-                </div>';
 
-                echo '
-                </div><br>';
-            } //While end
-        } //Else if end
+                // Join button to be displayed within the search section
+                echo '<br>
+                
+                <div class="join-button"> <!-- join button div start -->';
 
-    echo'
+                // Check if a row exists in user_study for the specified userID and studyID
+                $checkUserStudy = "SELECT * FROM user_study WHERE userID = '$userID' AND studyID = '" . $row['studyID'] . "'";
+                $resultUserStudy = mysqli_query($conn, $checkUserStudy);
+
+                if (mysqli_num_rows($resultUserStudy) == 0) {
+                    // If no row exists, display the "Join Study" button
+                    echo '<form method="post" class="join-method" action="">
+                            <input type="hidden" name="joinStudyID" value="' . $row['studyID'] . '">
+                            <button type="submit" name="joinStudy">Join study</button>
+                        </form>';
+                } else {
+                    // If a row exists, display a message
+                    echo 'You have already joined this study.';
+                }
+
+                echo '</div> <!-- join button div end -->
+                </div> <!-- study-item div end -->
+                <br>';
+            } // While end
+        } // Else if end
+
+        echo '
         </div> <!-- study-list end -->
         <div class="search-study-list" style="display: none;">';
 
-    //If studySearch is posted
-    if (isset($_POST['studySearch'])) {
-        echo '<script>hideAll();</script>';
+        // If studySearch is posted
+        if (isset($_POST['studySearch'])) {
+            echo '<script>hideAll();</script>';
 
-        //Access searchName and searchTag variables from the posted data
-        $searchName = mysqli_real_escape_string($conn, $_POST['searchName']);
-        $searchTag = mysqli_real_escape_string($conn, $_POST['searchTag']);
+            // Access searchName and searchTag variables from the posted data
+            $searchName = mysqli_real_escape_string($conn, $_POST['searchName']);
+            $searchTag = mysqli_real_escape_string($conn, $_POST['searchTag']);
 
-        //Select from study table where name variable is similar
-        $select = "SELECT * FROM study WHERE name LIKE '%$searchName%'";
-        $result = mysqli_query($conn, $select);
+            // Select from study table where name variable is similar
+            $select = "SELECT * FROM study WHERE name LIKE '%$searchName%'";
+            $result = mysqli_query($conn, $select);
 
-        //If there are no studies
-        if (mysqli_num_rows($result) == 0) {
-            $error[] = 'No studies were found';
-        }
+            // If there are no studies
+            if (mysqli_num_rows($result) == 0) {
+                $error[] = 'No studies were found';
+            }
 
-        //If there are studies
-        else if (mysqli_num_rows($result) > 0) { 
+            // If there are studies
+            else if (mysqli_num_rows($result) > 0) {
 
-            //While row in table exists via result
-            while ( $row = mysqli_fetch_assoc($result) ) {
-                
-                //Lists studies where name and tag is included in the search fields
-                echo '
-                <div class="study-item">
-                    <b>Name:</b> ' . $row['name'] . '<br>
-                    <b>Description:</b> ' . $row['description'] . '<br>
-                    <b>Location:</b> ' . $row['location'] . '<br>
-                    <b>Date:</b> ' . date('Y-m-d H:i:s', strtotime($row['date'])) . '<br>
-                    <b>Compensation:</b> ' . $row['compensation'] . '<br>
-                </div><br>';   
-            } //While end
-        } //Else if end
-        unset($_POST['studySearch']);
-    } //If end
-    echo'
+                // While row in table exists via result
+                while ($row = mysqli_fetch_assoc($result)) {
+
+                    // Lists studies where name and tag are included in the search fields
+                    echo '
+                    <div class="study-item">
+                        <b>Name:</b> ' . $row['name'] . '<br>
+                        <b>Description:</b> ' . $row['description'] . '<br>
+                        <b>Location:</b> ' . $row['location'] . '<br>
+                        <b>Date:</b> ' . date('Y-m-d H:i:s', strtotime($row['date'])) . '<br>
+                        <b>Compensation:</b> ' . $row['compensation'] . '<br>
+                    </div><br>';
+                } // While end
+            } // Else if end
+            unset($_POST['studySearch']);
+        } // If end
+
+        echo '
         </div> <!-- search-studies-list end -->
     </div> <!-- search-studies-box end -->';
+
+    // If joinStudy is posted
+    if (isset($_POST['joinStudy'])) {
+        // Access the study ID from the posted data
+        $joinStudyID = mysqli_real_escape_string($conn, $_POST['joinStudyID']);
+
+        // Insert into user_study table only if not already joined
+        $checkUserStudy = "SELECT * FROM user_study WHERE userID = '$userID' AND studyID = '$joinStudyID'";
+        $resultUserStudy = mysqli_query($conn, $checkUserStudy);
+
+        if (mysqli_num_rows($resultUserStudy) == 0) {
+            // Insert into user_study table
+            $insertUserStudy = "INSERT INTO user_study (userID, studyID) VALUES ('$userID', '$joinStudyID')";
+
+            if (mysqli_query($conn, $insertUserStudy)) {
+                // Insertion successful
+                echo "Joined study successfully!";
+            } else {
+                // Insertion failed
+                echo "Error joining study: " . mysqli_error($conn);
+            }
+        } else {
+            // Display a message if already joined
+            echo "You have already joined this study.";
+        }
+    }
 }
+
 
 /**
  * Summary of studyCreate
@@ -2429,9 +2703,7 @@ function studyModify($name, $userID, $conn) {
                     <b>Location:</b> ' . $row['location'] . '<br>
                     <b>Date:</b> ' . date('Y-m-d H:i:s', strtotime($row['date'])) . '<br>
                     <b>Compensation:</b> ' . $row['compensation'] . '<br>';
-
-
-
+                    
                 // Research name display
             if(userType() === 'researcher') {        
                 if (isset($_SESSION['researcher_name'])) {    
@@ -2470,7 +2742,7 @@ function studyModify($name, $userID, $conn) {
      } // Researcher display end
 
     echo '
-    <h1>Completed Studies:</h1>
+    <h1>Joined Studies:</h1>
         <div class="created-studies-list">';
 
     echo '
@@ -2500,7 +2772,7 @@ function studyModify($name, $userID, $conn) {
 }
 
 /**
- * Summary of surveyEdit
+ * Summary of studyEdit
  * @param mixed $name
  * @param mixed $userID
  * @param mixed $conn
@@ -2551,31 +2823,31 @@ function studyEdit($name, $userID, $conn) {
         <input type="hidden" name="editStudyID" value="' . $edittedStudyID . '">
 
         <!--$studyName data as a placeholder for the name form-->
-        <label for="studyName">Study Name:</label>
+        <label for="studyName"><b>Study Name:</b></label>
         <br>
         <input type="text" name="studyName" value="' . $studyName . '" class="form-input" required>
         <br><br>
 
         <!--$studyDescription data as a placeholder for the description form-->
-        <label for="studyDescription">Study Description:</label>
+        <label for="studyDescription"><b>Study Description:</b></label>
         <br>
         <textarea name="studyDescription" class="form-textarea" required>' . $studyDescription . '</textarea>
         <br><br>
 
         <!--$studyLocation data as a placeholder for the location form-->
-        <label for="studyLocation">Study Location:</label>
+        <label for="studyLocation"><b>Study Location:</b></label>
         <br>
         <input type="text" name="studyLocation" value="' . $studyLocation . '" class="form-input" required>
         <br><br>
 
         <!--$studyDate data as a placeholder for the date form-->
-        <label for="studyDate">Study Date:</label>
+        <label for="studyDate"><b>Study Date:</b></label>
         <br>
         <input type="datetime-local" name="studyDate" value="' . date('Y-m-d\TH:i', strtotime(str_replace(' ', 'T', $studyDate))) . '" class="form-input" required>
         <br><br>
 
         <!--$studyCompensation data as a placeholder for the compensation form-->
-        <label for="studyCompensation">Study Compensation:</label>
+        <label for="studyCompensation"><b>Study Compensation:</b></label>
         <br>
         <input type="text" name="studyCompensation" value="' . $studyCompensation . '" class="form-input">
         <br><br>
@@ -2615,6 +2887,4 @@ function studyEdit($name, $userID, $conn) {
         }
     } //Outer if end
 }
-
-
 ?>
