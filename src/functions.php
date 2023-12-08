@@ -78,6 +78,24 @@ function chooseFile() {
 }
 /* Created by Geary -  End of retrieval functions for account page */
 
+/* TEST Function */
+/* Created by Geary */
+function getUserData($conn, $email) {
+    // email that will be used to execute SQL query
+    $email = mysqli_real_escape_string($conn, $email);
+    
+    // The query
+    $select = "SELECT * FROM user WHERE email = '$email'";
+    // queried result
+    $result = mysqli_query($conn, $select);
+
+    if ($result && $row = mysqli_fetch_assoc($result)) {
+        return $row;  // Return the user data
+    } else {
+        return false; // Return false if no data is found or an error occurs
+    }
+}
+
 /**
  * Uses the input to return a result through $conn
  * 
@@ -86,18 +104,29 @@ function chooseFile() {
  */
 function validate($conn)
 {
-    //Declares variables from the user table via $conn
-    $first_name = mysqli_real_escape_string($conn, $_POST['firstname']);
-    $last_name = mysqli_real_escape_string($conn, $_POST['lastname']);
     $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $pass = md5($_POST['password']);
-    $confirmpass = md5($_POST['confirmpassword']);
-    $user_type = $_POST['user_type'];
+    $password = $_POST['password'];
 
-    //Variables for validation
-    $select = " SELECT * FROM user WHERE email = '$email' && password = '$pass' ";
+
+    // Retrieve the hashed password from the database
+    $select = "SELECT * FROM user WHERE email = '$email'";
     $result = mysqli_query($conn, $select);
-    return $result;
+
+    // if query is successful and there are rows
+   if ($result && $row = mysqli_fetch_array($result)) {
+        // retrieval of the hashed password
+        $hashedPasswordFromDB = $row['password'];
+        // Verify the entered password using password_verify
+       if (password_verify(trim($password), $hashedPasswordFromDB)) {
+            // Password is correct
+            echo "Congratulations!The password is correct!";
+            return true; 
+        } else {
+            echo "<br>Password verification failed";
+        }
+    }    
+    // Either email doesn't exist or password is incorrect
+        return false; 
 }
 
 //**************************************************

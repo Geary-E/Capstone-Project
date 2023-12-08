@@ -1,64 +1,59 @@
 <?php
-//PHP coded by Jeremy Tollison
-
-//Start the session
+// PHP coded by Jeremy Tollison
+// Start the session
 session_start();
 
-//Include config file for database connection and functions
+// Include config file for database connection and functions
 @include 'config.php';
 
-//If the form is submitted
+// If the form is submitted
 if (isset($_POST['submit'])) {
 
-    $result = validate($conn);
+    // Call the validate function to check the login
+    $userValidation = validate($conn);
 
-    //If the user exists
-    if (mysqli_num_rows($result) > 0) {
+    // If the login is successful
+    if ($userValidation === true) {
 
-        //Saves the row where user info is stored
-        $row = mysqli_fetch_array($result);
+        // Fetch the user data
+        $row = getUserData($conn, $_POST['email']); // Assuming you have a function to get user data
 
-        //Set the userID as a session variable
-        $_SESSION['userID'] = $row['userID'];
+         //Set the userID as a session variable
+         $_SESSION['userID'] = $row['userID'];
 
-        //If the user_type is researcher
-        if ($row['user_type'] == 'researcher') {
+        if($row['user_type'] === 'researcher') {
 
-            //Set the researcher_name session variable to firstname
-           $_SESSION['researcher_name'] = $row['firstname'];
+            $_SESSION['researcher_name'] = $row['firstname'];    
+            // Set session variables
+            $_SESSION['firstName'] = $row['firstname'];
+            $_SESSION['lastName'] = $row['lastname'];
+            $_SESSION['email'] = $row['email'];
+            $_SESSION['user_type'] = $row['user_type'];
 
-           /* Created session variales for the retrieval of information on account page */
-           $_SESSION['firstName'] = $row['firstname'];
-           $_SESSION['lastName'] = $row['lastname'];
-           $_SESSION['email'] = $row['email']; 
-           $_SESSION['user_type'] = $row['user_type'];
-           /* Ending of creation of session variables for account page */
-
-           //Send to dashboard.php
-            header('location:dashboard.php');
-
-        //If the user_type is person
-        } elseif ($row['user_type'] == 'person') {
-
-           //Set the person_name session variable to firstname
-           $_SESSION['person_name'] = $row['firstname'];
+            // Redirect to the dashboard
+            header('location: dashboard.php');
+            exit();
+        } elseif ($row['user_type'] === 'person') {
+            
+            //Set the person_name session variable to firstname
+            $_SESSION['person_name'] = $row['firstname'];
 
             /* Created session variales for the retrieval of information on account page */
-           $_SESSION['firstName'] = $row['firstname'];
-           $_SESSION['lastName'] = $row['lastname'];
-           $_SESSION['email'] = $row['email'];  
-           $_SESSION['user_type'] = $row['user_type'];
-          /* Ending of creation of session variables for account page */
+            $_SESSION['firstName'] = $row['firstname'];
+            $_SESSION['lastName'] = $row['lastname'];
+            $_SESSION['email'] = $row['email'];  
+            $_SESSION['user_type'] = $row['user_type'];
+            /* Ending of creation of session variables for account page */
 
-           //Send to dashboard.php
+            //Send to dashboard.php
             header('location:dashboard.php');
+            }
         }
-
-    //If user does not exist
-    } else {
-        $error[] = 'Incorrect email or password';
-    }
-};
+            else {
+                // If user does not exist or password is incorrect
+                $error[] = 'Incorrect email or password';
+            }
+}
 ?>
 
 <!DOCTYPE html> <!--HTML coded by Geary -->
