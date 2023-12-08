@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 01, 2023 at 11:08 AM
+-- Generation Time: Dec 08, 2023 at 09:55 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.0.25
 
@@ -176,7 +176,6 @@ INSERT INTO `surveyquestion` (`questionID`, `surveyID`, `question`, `questionNum
 (1, 25, 'What is your name?', 1),
 (2, 25, 'What is your age?', 2),
 (3, 25, 'Where do you live?', 3),
-(9, 25, 'Question 4 test', 4),
 (10, 1, 'survey 1 first question', 1),
 (11, 1, 'survey 1 second question', 2);
 
@@ -201,7 +200,10 @@ INSERT INTO `surveyresponse` (`responseID`, `surveyID`, `questionID`, `response`
 (36, 25, 1, 'Jeremy'),
 (37, 25, 2, '29'),
 (38, 25, 3, 'McKinney'),
-(39, 25, 9, 'its working');
+(40, 1, 10, 'test 1'),
+(41, 1, 11, 'test 2'),
+(42, 1, 10, 'FUCK'),
+(43, 1, 11, 'YES');
 
 -- --------------------------------------------------------
 
@@ -305,9 +307,17 @@ INSERT INTO `user` (`userID`, `firstname`, `lastname`, `email`, `password`, `use
 --
 
 CREATE TABLE `user_opportunity` (
+  `userOpportunityID` int(11) NOT NULL,
   `userID` int(255) NOT NULL,
   `opportunityID` int(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user_opportunity`
+--
+
+INSERT INTO `user_opportunity` (`userOpportunityID`, `userID`, `opportunityID`) VALUES
+(1, 5, 1);
 
 -- --------------------------------------------------------
 
@@ -316,9 +326,17 @@ CREATE TABLE `user_opportunity` (
 --
 
 CREATE TABLE `user_study` (
+  `userStudyID` int(11) NOT NULL,
   `userID` int(255) NOT NULL,
   `studyID` int(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user_study`
+--
+
+INSERT INTO `user_study` (`userStudyID`, `userID`, `studyID`) VALUES
+(3, 5, 1);
 
 -- --------------------------------------------------------
 
@@ -327,9 +345,18 @@ CREATE TABLE `user_study` (
 --
 
 CREATE TABLE `user_supportgroup` (
+  `userSupportGroupID` int(11) NOT NULL,
   `userID` int(255) NOT NULL,
   `supportGroupID` int(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user_supportgroup`
+--
+
+INSERT INTO `user_supportgroup` (`userSupportGroupID`, `userID`, `supportGroupID`) VALUES
+(1, 5, 1),
+(2, 5, 2);
 
 -- --------------------------------------------------------
 
@@ -353,7 +380,10 @@ INSERT INTO `user_survey` (`userSurveyID`, `userID`, `surveyID`, `questionID`, `
 (26, 5, 25, 1, 36),
 (27, 5, 25, 2, 37),
 (28, 5, 25, 3, 38),
-(29, 5, 25, 9, 39);
+(30, 5, 1, 10, 40),
+(31, 5, 1, 11, 41),
+(32, 8, 1, 10, 42),
+(33, 8, 1, 11, 43);
 
 --
 -- Indexes for dumped tables
@@ -478,6 +508,7 @@ ALTER TABLE `user`
 -- Indexes for table `user_opportunity`
 --
 ALTER TABLE `user_opportunity`
+  ADD PRIMARY KEY (`userOpportunityID`),
   ADD KEY `userid` (`userID`),
   ADD KEY `opportunityID` (`opportunityID`);
 
@@ -485,6 +516,7 @@ ALTER TABLE `user_opportunity`
 -- Indexes for table `user_study`
 --
 ALTER TABLE `user_study`
+  ADD PRIMARY KEY (`userStudyID`),
   ADD KEY `userid` (`userID`),
   ADD KEY `studyid` (`studyID`);
 
@@ -492,6 +524,7 @@ ALTER TABLE `user_study`
 -- Indexes for table `user_supportgroup`
 --
 ALTER TABLE `user_supportgroup`
+  ADD PRIMARY KEY (`userSupportGroupID`),
   ADD KEY `userid` (`userID`),
   ADD KEY `supportgroupID` (`supportGroupID`);
 
@@ -561,7 +594,7 @@ ALTER TABLE `surveyquestion`
 -- AUTO_INCREMENT for table `surveyresponse`
 --
 ALTER TABLE `surveyresponse`
-  MODIFY `responseID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `responseID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `tag`
@@ -576,10 +609,28 @@ ALTER TABLE `user`
   MODIFY `userID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
+-- AUTO_INCREMENT for table `user_opportunity`
+--
+ALTER TABLE `user_opportunity`
+  MODIFY `userOpportunityID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `user_study`
+--
+ALTER TABLE `user_study`
+  MODIFY `userStudyID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `user_supportgroup`
+--
+ALTER TABLE `user_supportgroup`
+  MODIFY `userSupportGroupID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `user_survey`
 --
 ALTER TABLE `user_survey`
-  MODIFY `userSurveyID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `userSurveyID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- Constraints for dumped tables
