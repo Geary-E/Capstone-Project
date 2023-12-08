@@ -297,8 +297,8 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`userID`, `firstname`, `lastname`, `email`, `password`, `user_type`, `accessibility`, `notifications`, `tags`) VALUES
 (2, 'flumped', '', 'jrtollison@yahoo.com', 'bd5135bbbeabfc06d5ed458d76509793', 'researcher', 0, 0, 0),
 (4, 'sarah', 'o', 'saraho@google.com', '827ccb0eea8a706c4c34a16891f84e7b', 'person', 0, 0, 0),
-(5, 'adminFirstName', 'adminLastName', 'admin@1', '21232f297a57a5a743894a0e4a801fc3', 'researcher', 0, 0, 0),
-(8, 'userFirstName', 'userLastName', 'user@1', 'ee11cbb19052e40b07aac0ca060c23ee', 'person', 0, 0, 0);
+(5, 'adminFirstName', 'adminLastName', 'admin@1', '$2y$10$R7chH/menwPLoyFafPsXUebMDxPsvohOgCTHkPQv/1mspGGpkw5ci', 'researcher', 0, 0, 0),
+(8, 'userFirstName', 'userLastName', 'user@1', '$2y$10$jQfx0GD/cxsquNSfDD/W8uaYw27GHN6GO4CKi2Pz6XgwmZwffyPXG', 'person', 0, 0, 0);
 
 -- --------------------------------------------------------
 
