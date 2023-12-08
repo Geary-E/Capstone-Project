@@ -97,7 +97,8 @@ function addQuestionHere() {
     // Create new label element and set to "question #:" using var questionCounter
     var label = document.createElement('label');
     label.setAttribute('for', 'question');
-    label.textContent = 'Question ' + questionCounter.value + ':';
+    label.innerHTML = '<b>Question ' + questionCounter.value + ':</b>';
+
 
     // Create form-input elements
     var input = document.createElement('input');
