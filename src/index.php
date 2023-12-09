@@ -51,7 +51,7 @@ if (isset($_POST['submit'])) {
         }
             else {
                 // If user does not exist or password is incorrect
-                $error[] = 'Incorrect email or password';
+                $error[] = '<br>Incorrect email or password';
             }
 }
 ?>

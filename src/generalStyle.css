@@ -334,7 +334,7 @@ h1 {
 }
 
 /* Styling of the survey list class */
-.survey-list, .opportunity-list, .supportGroup-list, .study-list, .search-survey-list, .search-opportunity-list, .search-supportGroup-list, .search-study-list {
+.survey-list, .opportunity-list, .supportGroup-list, .study-list, .search-survey-list, .search-opportunity-list, .search-supportGroup-list, .search-study-list, .post-list {
     display: flex;
     padding: 20px;
     justify-content: center;
@@ -344,13 +344,17 @@ h1 {
 }
 
 /* styling of the individual queried searched  results */
-.survey-item, .opportunity-item, .supportGroup-item, .study-item {
+.survey-item, .opportunity-item, .supportGroup-item, .study-item, .post-box, .comment-item {
     width: 50%;
     padding: 15px;
     border: solid 1px black;
     cursor: pointer;
 }
-
+.comment-box {
+    padding: 15px;
+    border: solid 1px black;
+    cursor: pointer;
+}
 /* styling of the individual queried searched results when hovered over */
 .survey-item:hover, .study-item:hover, .supportGroup-item:hover, .opportunity-item:hover, .create-btn:hover{
     background-color: var(--green);
@@ -362,13 +366,13 @@ h1 {
     display: block; 
 }
 
-.edit-delete-buttons, .view-join-buttons, .submit-cancel-buttons {
+.edit-delete-buttons, .view-join-buttons, .view-leave-buttons, .submit-cancel-buttons, .create-method, .cancel-button {
     display: flex;
     justify-content: center;
     padding: 0px;
 }
 
-.edit-method, .delete-method, .complete-method, .return-method {
+.edit-method, .delete-method, .complete-method, .return-method, .viewPost-method, .leave-method {
     margin: 0 5px;
 }
 
@@ -401,7 +405,7 @@ h1 {
     text-align: center;
 }
 
-.complete-surveys, .view-submissions, .edit-opportunities, .edit-surveys, .edit-studies, .edit-supportGroups {
+.complete-surveys, .view-submissions, .edit-opportunities, .edit-surveys, .edit-studies, .edit-supportGroups, .view-posts {
     display: block;
     text-align: center;
 }

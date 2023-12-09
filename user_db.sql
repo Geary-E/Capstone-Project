@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 08, 2023 at 09:55 PM
+-- Generation Time: Dec 09, 2023 at 07:03 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.0.25
 
@@ -43,7 +43,8 @@ CREATE TABLE `opportunity` (
 
 INSERT INTO `opportunity` (`opportunityID`, `ownerID`, `name`, `description`, `location`, `date`, `compensation`) VALUES
 (1, 5, 'testOpportunity', 'testOpportunityDescription', 'Denton, TX', '2023-11-23 23:59:00.000000', 1),
-(2, 5, 'oppasd', 'asdasdasdasd', 'denton', '2023-11-14 21:40:00.000000', 0);
+(2, 5, 'oppasd', 'asdasdasdasd', 'denton', '2023-11-14 21:40:00.000000', 0),
+(6, 11, 'opp create test', 'opp create test des2', 'dent', '2023-12-24 14:00:00.000000', 7);
 
 -- --------------------------------------------------------
 
@@ -114,9 +115,19 @@ CREATE TABLE `supportgroupcomment` (
   `supportGroupID` int(255) NOT NULL,
   `postID` int(255) NOT NULL,
   `userID` int(255) NOT NULL,
-  `comment` varchar(255) NOT NULL,
-  `commentNum` int(255) NOT NULL
+  `comment` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `supportgroupcomment`
+--
+
+INSERT INTO `supportgroupcomment` (`commentID`, `supportGroupID`, `postID`, `userID`, `comment`) VALUES
+(1, 1, 19, 5, 'test'),
+(2, 1, 19, 5, 'potatoes'),
+(7, 1, 1, 5, 'broccoli '),
+(8, 1, 1, 5, 'squash'),
+(9, 1, 1, 11, 'broccoli ');
 
 -- --------------------------------------------------------
 
@@ -129,8 +140,17 @@ CREATE TABLE `supportgrouppost` (
   `supportGroupID` int(255) NOT NULL,
   `userID` int(255) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `post` varchar(255) NOT NULL
+  `description` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `supportgrouppost`
+--
+
+INSERT INTO `supportgrouppost` (`postID`, `supportGroupID`, `userID`, `name`, `description`) VALUES
+(19, 1, 5, 'name test', 'description test'),
+(20, 1, 5, 'name test 2', 'description test 2'),
+(21, 1, 11, 'name testing', 'hello');
 
 -- --------------------------------------------------------
 
@@ -197,13 +217,8 @@ CREATE TABLE `surveyresponse` (
 --
 
 INSERT INTO `surveyresponse` (`responseID`, `surveyID`, `questionID`, `response`) VALUES
-(36, 25, 1, 'Jeremy'),
-(37, 25, 2, '29'),
-(38, 25, 3, 'McKinney'),
 (40, 1, 10, 'test 1'),
-(41, 1, 11, 'test 2'),
-(42, 1, 10, 'FUCK'),
-(43, 1, 11, 'YES');
+(41, 1, 11, 'test 2');
 
 -- --------------------------------------------------------
 
@@ -298,7 +313,9 @@ INSERT INTO `user` (`userID`, `firstname`, `lastname`, `email`, `password`, `use
 (2, 'flumped', '', 'jrtollison@yahoo.com', 'bd5135bbbeabfc06d5ed458d76509793', 'researcher', 0, 0, 0),
 (4, 'sarah', 'o', 'saraho@google.com', '827ccb0eea8a706c4c34a16891f84e7b', 'person', 0, 0, 0),
 (5, 'adminFirstName', 'adminLastName', 'admin@1', '$2y$10$R7chH/menwPLoyFafPsXUebMDxPsvohOgCTHkPQv/1mspGGpkw5ci', 'researcher', 0, 0, 0),
-(8, 'userFirstName', 'userLastName', 'user@1', '$2y$10$jQfx0GD/cxsquNSfDD/W8uaYw27GHN6GO4CKi2Pz6XgwmZwffyPXG', 'person', 0, 0, 0);
+(8, 'userFirstName', 'userLastName', 'user@1', '$2y$10$jQfx0GD/cxsquNSfDD/W8uaYw27GHN6GO4CKi2Pz6XgwmZwffyPXG', 'person', 0, 0, 0),
+(10, 'Jeremy', 'Tollison', 'email@yahoo.com', '$2y$10$6aFuaQnFh4bMLw/jcOH.T.QjRSjrNgNagcx8JRKle9n/y2pyspAZ.', 'researcher', 0, 0, 0),
+(11, 'jeremy1', 'tollison1', 'test@hello.com1', '$2y$10$98gsQvEmgnSNZYTgGXomRu.K3uRDJbVuL3RQwixB6AvugaV92PLdu', 'researcher', 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -317,7 +334,7 @@ CREATE TABLE `user_opportunity` (
 --
 
 INSERT INTO `user_opportunity` (`userOpportunityID`, `userID`, `opportunityID`) VALUES
-(1, 5, 1);
+(4, 5, 1);
 
 -- --------------------------------------------------------
 
@@ -336,7 +353,7 @@ CREATE TABLE `user_study` (
 --
 
 INSERT INTO `user_study` (`userStudyID`, `userID`, `studyID`) VALUES
-(3, 5, 1);
+(7, 5, 1);
 
 -- --------------------------------------------------------
 
@@ -355,8 +372,8 @@ CREATE TABLE `user_supportgroup` (
 --
 
 INSERT INTO `user_supportgroup` (`userSupportGroupID`, `userID`, `supportGroupID`) VALUES
-(1, 5, 1),
-(2, 5, 2);
+(4, 5, 1),
+(6, 11, 1);
 
 -- --------------------------------------------------------
 
@@ -377,13 +394,8 @@ CREATE TABLE `user_survey` (
 --
 
 INSERT INTO `user_survey` (`userSurveyID`, `userID`, `surveyID`, `questionID`, `responseID`) VALUES
-(26, 5, 25, 1, 36),
-(27, 5, 25, 2, 37),
-(28, 5, 25, 3, 38),
 (30, 5, 1, 10, 40),
-(31, 5, 1, 11, 41),
-(32, 8, 1, 10, 42),
-(33, 8, 1, 11, 43);
+(31, 5, 1, 11, 41);
 
 --
 -- Indexes for dumped tables
@@ -423,7 +435,6 @@ ALTER TABLE `supportgroup`
 --
 ALTER TABLE `supportgroupcomment`
   ADD PRIMARY KEY (`commentID`),
-  ADD KEY `supportGroupID` (`supportGroupID`),
   ADD KEY `postID` (`postID`),
   ADD KEY `userID` (`userID`);
 
@@ -432,7 +443,6 @@ ALTER TABLE `supportgroupcomment`
 --
 ALTER TABLE `supportgrouppost`
   ADD PRIMARY KEY (`postID`),
-  ADD KEY `supportGroupID` (`supportGroupID`),
   ADD KEY `userid` (`userID`);
 
 --
@@ -546,7 +556,7 @@ ALTER TABLE `user_survey`
 -- AUTO_INCREMENT for table `opportunity`
 --
 ALTER TABLE `opportunity`
-  MODIFY `opportunityID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `opportunityID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `opportunitycomment`
@@ -570,19 +580,19 @@ ALTER TABLE `supportgroup`
 -- AUTO_INCREMENT for table `supportgroupcomment`
 --
 ALTER TABLE `supportgroupcomment`
-  MODIFY `commentID` int(255) NOT NULL AUTO_INCREMENT;
+  MODIFY `commentID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `supportgrouppost`
 --
 ALTER TABLE `supportgrouppost`
-  MODIFY `postID` int(255) NOT NULL AUTO_INCREMENT;
+  MODIFY `postID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `survey`
 --
 ALTER TABLE `survey`
-  MODIFY `surveyID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `surveyID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `surveyquestion`
@@ -594,7 +604,7 @@ ALTER TABLE `surveyquestion`
 -- AUTO_INCREMENT for table `surveyresponse`
 --
 ALTER TABLE `surveyresponse`
-  MODIFY `responseID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `responseID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `tag`
@@ -606,31 +616,31 @@ ALTER TABLE `tag`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `userID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `user_opportunity`
 --
 ALTER TABLE `user_opportunity`
-  MODIFY `userOpportunityID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `userOpportunityID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `user_study`
 --
 ALTER TABLE `user_study`
-  MODIFY `userStudyID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `userStudyID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `user_supportgroup`
 --
 ALTER TABLE `user_supportgroup`
-  MODIFY `userSupportGroupID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `userSupportGroupID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `user_survey`
 --
 ALTER TABLE `user_survey`
-  MODIFY `userSurveyID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `userSurveyID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- Constraints for dumped tables
@@ -662,19 +672,10 @@ ALTER TABLE `supportgroup`
   ADD CONSTRAINT `supportgroup_ibfk_1` FOREIGN KEY (`ownerID`) REFERENCES `user` (`userID`);
 
 --
--- Constraints for table `supportgroupcomment`
---
-ALTER TABLE `supportgroupcomment`
-  ADD CONSTRAINT `supportgroupcomment_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`),
-  ADD CONSTRAINT `supportgroupcomment_ibfk_2` FOREIGN KEY (`supportGroupID`) REFERENCES `supportgroup` (`supportGroupID`),
-  ADD CONSTRAINT `supportgroupcomment_ibfk_3` FOREIGN KEY (`postID`) REFERENCES `supportgrouppost` (`postID`);
-
---
 -- Constraints for table `supportgrouppost`
 --
 ALTER TABLE `supportgrouppost`
-  ADD CONSTRAINT `supportgrouppost_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`),
-  ADD CONSTRAINT `supportgrouppost_ibfk_2` FOREIGN KEY (`supportGroupID`) REFERENCES `supportgroup` (`supportGroupID`);
+  ADD CONSTRAINT `supportgrouppost_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`);
 
 --
 -- Constraints for table `survey`
