@@ -107,7 +107,6 @@ function validate($conn)
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $password = $_POST['password'];
 
-
     // Retrieve the hashed password from the database
     $select = "SELECT * FROM user WHERE email = '$email'";
     $result = mysqli_query($conn, $select);
@@ -115,18 +114,20 @@ function validate($conn)
     // if query is successful and there are rows
    if ($result && $row = mysqli_fetch_array($result)) {
         // retrieval of the hashed password
+
         $hashedPasswordFromDB = $row['password'];
+
         // Verify the entered password using password_verify
+        // If password is correct
        if (password_verify(trim($password), $hashedPasswordFromDB)) {
-            // Password is correct
+
+            // password is correct
             echo "Congratulations!The password is correct!";
             return true; 
-        } else {
-            echo "<br>Password verification failed";
         }
-    }    
+    }
     // Either email doesn't exist or password is incorrect
-        return false; 
+    return false; 
 }
 
 //**************************************************
@@ -326,6 +327,21 @@ function pageNavbar($conn, $pageName, $name, $userID)
             </div>
         </div>';
     }//Navbar for opportunitiesEdit end
+    elseif($pageName=='OpportunitiesView') //Navbar for opportunitiesView start
+    {
+        $pageNameDisplay='Opportunities';
+        echo '
+        <div class="navbar-content-container">
+            <div class="navbar"> <!-- Links for each module -->
+            <a href="opportunity.php">Search ' . $pageNameDisplay . '</a>
+            <a href="opportunityModify.php">Manage ' . $pageNameDisplay . '</a>
+            </div>
+            <div class="page-content">  <!-- Container for all the content -->';
+                opportunityView($name, $userID, $conn); //Displays the opportunitityView content
+                echo '
+            </div>
+        </div>';
+    }//Navbar for opportunitiesView end
     elseif($pageName=='Support Groups') //Navbar Support Groups start
     {
         echo '
@@ -373,6 +389,66 @@ function pageNavbar($conn, $pageName, $name, $userID)
             </div>
         </div>';
     }//Navbar for supportGroupEdit end
+    elseif($pageName=='SupportGroupsView') //Navbar for supportGroupView start
+    {
+        $pageNameDisplay='Support Groups';
+        echo '
+        <div class="navbar-content-container">
+            <div class="navbar"> <!-- Links for each module -->
+            <a href="supportGroup.php">Search ' . $pageNameDisplay . '</a>
+            <a href="supportGroupModify.php">Manage ' . $pageNameDisplay . '</a>
+            </div>
+            <div class="page-content">  <!-- Container for all the content -->';
+                supportGroupView($name, $userID, $conn); //Displays the supportGroupView content
+                echo '
+            </div>
+        </div>';
+    }//Navbar for supportGroupView end
+    elseif($pageName=='SupportGroupsPost') //Navbar for supportGroupPost start
+    {
+        $pageNameDisplay='Support Groups';
+        echo '
+        <div class="navbar-content-container">
+            <div class="navbar"> <!-- Links for each module -->
+            <a href="supportGroup.php">Search ' . $pageNameDisplay . '</a>
+            <a href="supportGroupModify.php">Manage ' . $pageNameDisplay . '</a>
+            </div>
+            <div class="page-content">  <!-- Container for all the content -->';
+                supportGroupPost($name, $userID, $conn); //Displays the supportGroupPost content
+                echo '
+            </div>
+        </div>';
+    }//Navbar for supportGroupPost end
+    elseif($pageName=='SupportGroupsPostCreate') //Navbar for supportGroupPostCreate start
+    {
+        $pageNameDisplay='Support Groups';
+        echo '
+        <div class="navbar-content-container">
+            <div class="navbar"> <!-- Links for each module -->
+            <a href="supportGroup.php">Search ' . $pageNameDisplay . '</a>
+            <a href="supportGroupModify.php">Manage ' . $pageNameDisplay . '</a>
+            </div>
+            <div class="page-content">  <!-- Container for all the content -->';
+                supportGroupPostCreate($name, $userID, $conn); //Displays the supportGroupPostCreate content
+                echo '
+            </div>
+        </div>';
+    }//Navbar for supportGroupPostCreate end
+    elseif($pageName=='SupportGroupsPostComment') //Navbar for supportGroupPostComment start
+    {
+        $pageNameDisplay='Support Groups';
+        echo '
+        <div class="navbar-content-container">
+            <div class="navbar"> <!-- Links for each module -->
+            <a href="supportGroup.php">Search ' . $pageNameDisplay . '</a>
+            <a href="supportGroupModify.php">Manage ' . $pageNameDisplay . '</a>
+            </div>
+            <div class="page-content">  <!-- Container for all the content -->';
+                supportGroupPostComment($name, $userID, $conn); //Displays the supportGroupPostComment content
+                echo '
+            </div>
+        </div>';
+    }//Navbar for supportGroupPost end
     if($pageName=='Studies') //Navbar for surveys start
     {
         echo '
@@ -422,6 +498,22 @@ function pageNavbar($conn, $pageName, $name, $userID)
             </div>
         </div>';
     }//Navbar for studiesEdit end
+    elseif($pageName=='StudiesView') //Navbar for studiesView start
+    {
+        $pageNameDisplay='Studies';
+        echo '
+        <div class="navbar-content-container">
+            <div class="navbar"> <!-- Links for each module -->
+            <a href="study.php">Search ' . $pageNameDisplay . '</a>
+            <a href="studyModify.php">Manage ' . $pageNameDisplay . '</a>
+            </div>
+
+            <div class="page-content">  <!-- Container for all the content -->';
+                studyView($name, $userID, $conn); //Displays the studyView content
+                echo '
+            </div>
+        </div>';
+    }//Navbar for studiesView end
     elseif($pageName=='Account Page') { //Navbar for Account Page start
 
         echo '
@@ -1498,7 +1590,6 @@ for ($i = 1; $i <= $questionCounter; $i++) {
     }
 }
 
-
 /**
  * Summary of surveyView
  * @param mixed $name
@@ -1879,8 +1970,35 @@ function opportunityModify($name, $userID, $conn) {
                 </div> <!-- edit and delete buttons div start  -->';
                 }
             } 
-            // Researcher display end
+            
+            // SQL query to count the distinct rows
+            $countQuery = "SELECT COUNT(DISTINCT `userID`) AS opportunitySubmissionCount FROM `user_opportunity` WHERE `opportunityID` = '{$row['opportunityID']}';";
+            $countResult = mysqli_query($conn, $countQuery);
 
+            // Check if the query was successful and that there are rows
+            if ($result && $count = mysqli_fetch_assoc($countResult)) {
+
+                // Access the count value directly
+                $opportunitySubmissionCount = $count['opportunitySubmissionCount'];
+                
+                // Free the result set
+                mysqli_free_result($countResult);
+            } 
+
+            // If the query was not successful, or there was not rows:
+            else {
+                $opportunitySubmissionCount = 0;
+            }
+
+            echo'
+            <p> <b>Opportunity members:</b> '.$opportunitySubmissionCount.'</p>
+
+            <div class="view-submissions-button"> <!-- view-submissions-buttons div start  -->
+                <form method="post" class="submissions-method" action="opportunityView.php">
+                    <input type="hidden" name="viewOpportunityID" value="' . $row['opportunityID'] . '">
+                    <button type="submit" name="viewOpportunity">View joined members</button>
+                </form>
+            </div>';
              echo '   
             </div><br> <!-- opportunity-item end -->';
         } //While end
@@ -1899,10 +2017,46 @@ function opportunityModify($name, $userID, $conn) {
 
     echo '
     <h1>Joined Opportunities:</h1>
-        <div class="created-opportunities-list">';
+    <div class="opportunity-list">';
+    
+        // Select opportunities that the user has joined
+        $selectJoinedOpportunities = "SELECT s.* FROM opportunity s
+                                INNER JOIN user_opportunity us ON s.opportunityID = us.opportunityID
+                                WHERE us.userID = '$userID'";
+        $resultJoinedOpportunities = mysqli_query($conn, $selectJoinedOpportunities);
 
-    echo '
-    </div> <!-- created-opportunities-list end -->
+        // If there are no opportunities
+        if (mysqli_num_rows($resultJoinedOpportunities) == 0) {
+            echo 'You have not joined any opportunities yet.';
+        }
+
+        // If there are opportunities
+        else if (mysqli_num_rows($resultJoinedOpportunities) > 0) {
+
+            // While row in table exists via result
+            while ($row = mysqli_fetch_assoc($resultJoinedOpportunities)) {
+
+                // Lists all opportunities
+                echo '
+                <div class="opportunity-item">
+                    <b>Name:</b> ' . $row['name'] . '<br>
+                    <b>Description:</b> ' . $row['description'] . '<br>
+                    <b>Location:</b> ' . $row['location'] . '<br>
+                    <b>Date:</b> ' . date('Y-m-d H:i:s', strtotime($row['date'])) . '<br>
+                    <b>Compensation:</b> ' . $row['compensation'] . '<br><br>';
+
+                    echo '<form method="post" class="leave-method" action="">
+                            <input type="hidden" name="leaveOpportunityID" value="' . $row['opportunityID'] . '">
+                            <button type="submit" name="leaveOpportunity">Leave opportunity</button>
+                        </form>';
+
+                echo '</div> <!-- opportunity-item div end -->
+                <br>';
+            } // While end
+        } // Else if end
+        
+        echo '
+    </div> <!-- opportunity-list end -->
     </div> <!-- modify-opportunities end -->
     ';
 
@@ -1925,6 +2079,23 @@ function opportunityModify($name, $userID, $conn) {
             echo "Error: " . mysqli_error($conn);
         }
     } //If end
+
+    // If leaveOpportunity is posted
+    if (isset($_POST['leaveOpportunity'])) {
+        // Access the leaveOpportunityID and sanitize the data
+        $leaveOpportunityID = mysqli_real_escape_string($conn, $_POST['leaveOpportunityID']);
+
+        // Delete from user_opportunity where userID equals $userID and opportunityID equals $leaveOpportunityID
+        $deleteUserOpportunityQuery = "DELETE FROM user_opportunity WHERE userID = '$userID' AND opportunityID = '$leaveOpportunityID'";
+
+        // If the deletion query was successful
+        if (mysqli_query($conn, $deleteUserOpportunityQuery)) {
+            echo "Left opportunity successfully!";
+        } else {
+            // If the deletion query failed
+            echo "Error leaving opportunity: " . mysqli_error($conn);
+        }
+    }
 }
 
 /**
@@ -2044,6 +2215,90 @@ function opportunityEdit($name, $userID, $conn) {
     } //Outer if end
 
 }
+/**
+ * Summary of opportunityView
+ * @param mixed $name
+ * @param mixed $userID
+ * @param mixed $conn
+ * @return void
+ */
+function opportunityView($name, $userID, $conn) {
+    // Used to display errors
+    if (isset($error)) {
+        foreach ($error as $error) {
+            echo '<span class="error-msg">' . $error . '</span>';
+        }
+    }
+
+    // Initialize variables with default values
+    $opportunityName = '';
+    $opportunityDescription = '';
+    $opportunityLocation = '';
+    $opportunityDate = '';
+    $opportunityCompensation = '';
+    $submittedOpportunityID = '';
+
+    // Checks if opportunityID to view is posted
+    if (isset($_POST['viewOpportunityID'])) {
+
+        // Access and store the opportunityID in a variable
+        $submittedOpportunityID = $_POST['viewOpportunityID'];
+
+        // Store the data for the name and description from the support group table via the $opportunityID
+        $selectedOpportunityData = "SELECT * FROM `opportunity` WHERE `opportunityID` = '$submittedOpportunityID';";
+        $resultOpportunityData = mysqli_query($conn, $selectedOpportunityData);
+
+        // If there is a result for the name & description
+        if ($resultOpportunityData && mysqli_num_rows($resultOpportunityData) > 0) {
+
+            // Make row variable to save name and description
+            $row = mysqli_fetch_assoc($resultOpportunityData);
+
+            // Info in the row to variables
+            $opportunityName = $row['name'];
+            $opportunityDescription = $row['description'];
+            $opportunityLocation = $row['location'];
+            $opportunityDate = $row['date'];
+            $opportunityCompensation = $row['compensation'];
+        }
+
+        // Display support group name and description
+        echo '
+        <div class="view-submissions">
+            <h1>Hello <span>' . $name . '</span>, this is the view support group section</h1>
+            <div class="opportunity-list">
+                <div class="opportunity-item">
+                    <b>Name: </b><br>' . $opportunityName . ' <br><br>
+                    <b>Description: </b><br>' . $opportunityDescription . '<br><br>
+                    <b>Location: </b><br>' . $opportunityLocation . '<br><br>
+                    <b>Date: </b><br>' . date('Y-m-d H:i:s', strtotime($opportunityDate)) . '<br><br>
+                    <b>Compensation: </b><br>' . $opportunityCompensation . '<br><br>';
+
+        // Select user details from user_opportunity and user tables
+        $selectUserOpportunity = "SELECT u.firstName, u.lastName, u.email
+                                   FROM user_opportunity us
+                                   INNER JOIN user u ON us.userID = u.userID
+                                   WHERE us.opportunityID = '$submittedOpportunityID'";
+        $resultUserOpportunity = mysqli_query($conn, $selectUserOpportunity);
+
+        // If there are user details
+        if ($resultUserOpportunity && mysqli_num_rows($resultUserOpportunity) > 0) {
+            echo '<b>Members: </b><br>';
+
+            // Loop through each user and display their first name and last name
+            while ($userRow = mysqli_fetch_assoc($resultUserOpportunity)) {
+                echo '<b>Name: </b>' . $userRow['firstName'] . ' ' . $userRow['lastName'] . '<b> Email: </b>' . $userRow['email'] . '<br>';
+            }
+        }
+
+        echo '
+                </div><!-- opportunity-item end -->
+            </div><!-- opportunity-list end -->
+
+            <input type="button" onClick="window.location.href=\'opportunityModify.php\'" name="cancel" value="Return" class="return-method"></input> <!-- Return button links to opportunityModify.php-->
+        </div><!-- view-submissions end -->';
+    } // Outer if end
+}
 
 /**
  * Summary of supportGroupSearch
@@ -2124,7 +2379,7 @@ function supportGroupSearch($name, $userID, $conn) {
 
     //If supportGroupSearch is posted
     if (isset($_POST['supportGroupSearch'])) {
-        echo '<script>hideAll();</script>';
+        echo '<script>hideSupportGroup();</script>';
 
         //Access searchName and searchTag variables from the posted data
         $searchName = mysqli_real_escape_string($conn, $_POST['searchName']);
@@ -2148,7 +2403,31 @@ function supportGroupSearch($name, $userID, $conn) {
                 //Lists support groups where name and tag is included in the search fields
                 echo '<div class="supportGroup-item"> ';
                 echo '<b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'];
-                echo '</div><br>';       
+                
+                // Join button to be displayed within the search section
+                echo '<br><br>
+
+                <div class="join-button"> <!-- join button div start -->';
+
+                // Check if a row exists in user_supportGroup for the specified userID and supportGroupID
+                $checkUserSupportGroup = "SELECT * FROM user_supportGroup WHERE userID = '$userID' AND supportGroupID = '" . $row['supportGroupID'] . "'";
+                $resultUserSupportGroup = mysqli_query($conn, $checkUserSupportGroup);
+
+                if (mysqli_num_rows($resultUserSupportGroup) == 0) {
+                    // If no row exists, display the "Join support group" button
+                    echo '<form method="post" class="join-method" action="">
+                            <input type="hidden" name="joinSupportGroupID" value="' . $row['supportGroupID'] . '">
+                            <button type="submit" name="joinSupportGroup">Join Support Group</button>
+                        </form>';
+                } else {
+                    // If a row exists, display a message
+                    echo 'You have already joined this support group.';
+                }
+
+                echo '</div> <!-- join button div end -->
+                </div> <!-- supportGroup-item div end -->
+                <br>';
+                
             } //While end
         } //Else if end
         unset($_POST['supportGroupSearch']);
@@ -2278,36 +2557,51 @@ function supportGroupModify($name, $userID, $conn) {
             if(userType() === 'researcher') {     
                if (isset($_SESSION['researcher_name'])) {
                     echo '
-                        <div class="edit-delete-buttons"> <!-- edit and delete buttons div start  -->
+                    <div class="edit-delete-buttons"> <!-- edit and delete buttons div start  -->
             
-                     <form method="post" class="edit-method" action="supportGroupEdit.php">
-                      <input type="hidden" name="editSupportGroupID" value="' . $row['supportGroupID'] . '">
-                        <button type="submit" name="editSupportGroup">Edit</button>
-                    </form>';
-   
-                    echo'
+                        <form method="post" class="edit-method" action="supportGroupEdit.php">
+                            <input type="hidden" name="editSupportGroupID" value="' . $row['supportGroupID'] . '">
+                            <button type="submit" name="editSupportGroup">Edit</button>
+                        </form>
+
                         <!-- deleteSupportGroup button -->
-                            <form method="post" action="" class="delete-method" onsubmit="return confirm(\'Are you sure you want to delete this support group?\');">
-                              <input type="hidden" name="supportGroup_id" value="' . $row['supportGroupID'] . '"> 
-                                <button name="deleteSupportGroup" value="submit" type="submit">Delete</button>
-                            </form>
-                            </div> <!-- edit and delete buttons div end  -->
-                            <!-- Display for researcher end -->';
+                        <form method="post" action="" class="delete-method" onsubmit="return confirm(\'Are you sure you want to delete this support group?\');">
+                            <input type="hidden" name="supportGroup_id" value="' . $row['supportGroupID'] . '"> 
+                            <button name="deleteSupportGroup" value="submit" type="submit">Delete</button>
+                        </form>
+                    </div> <!-- edit and delete buttons div end  -->
+                    <!-- Display for researcher end -->';
                }
             }
-               // Display for researcher end
 
-               /* View and Join buttons commented out 
-               if(isset($_SESSION['person_name'])) {    // Display for person name
-                    echo '
-                        <div class="view-join-buttons"> <!-- View and join buttons -->
-                            <button type="submit" class="view" name="view"> View </button>
-                            <button type="submit" class="join" name="join"> Join </button>
-                            </div>
-                            <!-- Display for person end -->';
-               }    // Display for person name end: Commented out */
+            // SQL query to count the distinct rows
+            $countQuery = "SELECT COUNT(DISTINCT `userID`) AS supportGroupSubmissionCount FROM `user_supportGroup` WHERE `supportGroupID` = '{$row['supportGroupID']}';";
+            $countResult = mysqli_query($conn, $countQuery);
 
-            echo '   
+            // Check if the query was successful and that there are rows
+            if ($result && $count = mysqli_fetch_assoc($countResult)) {
+
+                // Access the count value directly
+                $supportGroupSubmissionCount = $count['supportGroupSubmissionCount'];
+                
+                // Free the result set
+                mysqli_free_result($countResult);
+            } 
+
+            // If the query was not successful, or there was not rows:
+            else {
+                $supportGroupSubmissionCount = 0;
+            }
+
+            echo'
+            <p> <b>Support group members:</b> '.$supportGroupSubmissionCount.'</p>
+
+            <div class="view-submissions-button"> <!-- view-submissions-buttons div start  -->
+                <form method="post" class="submissions-method" action="supportGroupView.php">
+                    <input type="hidden" name="viewSupportGroupID" value="' . $row['supportGroupID'] . '">
+                    <button type="submit" name="viewSupportGroup">View members</button>
+                </form>
+            </div>
             </div><br> <!-- supportGroup-item end -->';
         } //While end
     } //Else if end
@@ -2325,10 +2619,50 @@ function supportGroupModify($name, $userID, $conn) {
 
     echo '
     <h1>Joined Support Groups:</h1>
-        <div class="created-supportGroups-list">';
+    <div class="supportGroup-list">';
+    
+        // Select support groups that the user has joined
+        $selectJoinedSupportGroups = "SELECT s.* FROM supportGroup s
+                                INNER JOIN user_supportGroup us ON s.supportGroupID = us.supportGroupID
+                                WHERE us.userID = '$userID'";
+        $resultJoinedSupportGroups = mysqli_query($conn, $selectJoinedSupportGroups);
+    
+        // If there are no support groups
+        if (mysqli_num_rows($resultJoinedSupportGroups) == 0) {
+            echo 'You have not joined any support groups yet.';
+        }
+    
+        // If there are support groups
+        else if (mysqli_num_rows($resultJoinedSupportGroups) > 0) {
+    
+            // While row in table exists via result
+            while ($row = mysqli_fetch_assoc($resultJoinedSupportGroups)) {
+    
+                // Lists all support groups found
+                echo '
+                <div class="supportGroup-item">
+                
+                    <b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'] . '<br><br>
 
-    echo '
-    </div> <!-- created-supportGroups-list end -->
+                    <div class="view-leave-buttons"> <!-- viewPost and leave buttons div start -->
+
+                        <br><br><form method="post" class="viewPost-method" action="supportGroupPost.php">
+                            <input type="hidden" name="viewSupportGroupID" value="' . $row['supportGroupID'] . '">
+                            <button type="submit" name="viewSupportGroup">View posts</button>
+                        </form>
+                        
+                        <form method="post" class="leave-method" action="">
+                            <input type="hidden" name="leaveSupportGroupID" value="' . $row['supportGroupID'] . '">
+                            <button type="submit" name="leaveSupportGroup">Leave support group</button>
+                        </form>
+                    </div> <!-- viewPost and leave buttons div start -->
+                </div> <!-- supportGroup-item div end -->
+                <br>';
+            } // While end
+        } // Else if end
+        
+        echo '
+    </div> <!-- supportGroup-list end -->
     </div> <!-- modify-supportGroups end -->
     ';
 
@@ -2351,10 +2685,27 @@ function supportGroupModify($name, $userID, $conn) {
             echo "Error: " . mysqli_error($conn);
         }
     } //If end
+
+    // If leaveSupportGroup is posted
+    if (isset($_POST['leaveSupportGroup'])) {
+        // Access the leaveSupportGroupID and sanitize the data
+        $leaveSupportGroupID = mysqli_real_escape_string($conn, $_POST['leaveSupportGroupID']);
+
+        // Delete from user_supportGroup where userID equals $userID and supportGroupID equals $leaveSupportGroupID
+        $deleteUserSupportGroupQuery = "DELETE FROM user_supportGroup WHERE userID = '$userID' AND supportGroupID = '$leaveSupportGroupID'";
+
+        // If the deletion query was successful
+        if (mysqli_query($conn, $deleteUserSupportGroupQuery)) {
+            echo "Left support group successfully!";
+        } else {
+            // If the deletion query failed
+            echo "Error leaving support group: " . mysqli_error($conn);
+        }
+    }
 }
 
 /**
- * Summary of suppotGroupEdit
+ * Summary of supportGroupEdit
  * @param mixed $name
  * @param mixed $userID
  * @param mixed $conn
@@ -2430,7 +2781,7 @@ function supportGroupEdit($name, $userID, $conn) {
         
         //If query was successful
         if (mysqli_query($conn, $editQuery)) {
-            echo "update successful ";
+            echo "update successful";
             //header('location: supportGroupModify.php');
             //exit(); // Important to prevent further execution after the redirect
         }
@@ -2441,6 +2792,425 @@ function supportGroupEdit($name, $userID, $conn) {
         }
     } //Outer if end
 }
+
+/**
+ * Summary of supportGroupView
+ * @param mixed $name
+ * @param mixed $userID
+ * @param mixed $conn
+ * @return void
+ */
+function supportGroupView($name, $userID, $conn) {
+    // Used to display errors
+    if (isset($error)) {
+        foreach ($error as $error) {
+            echo '<span class="error-msg">' . $error . '</span>';
+        }
+    }
+
+    // Initialize variables with default values
+    $supportGroupName = '';
+    $supportGroupDescription = '';
+    $submittedSupportGroupID = '';
+
+    // Checks if supportGroupID to view is posted
+    if (isset($_POST['viewSupportGroupID'])) {
+
+        // Access and store the supportGroupID in a variable
+        $submittedSupportGroupID = $_POST['viewSupportGroupID'];
+
+        // Store the data for the name and description from the support group table via the $supportGroupID
+        $selectedSupportGroupData = "SELECT `name`, `description` FROM `supportGroup` WHERE `supportGroupID` = '$submittedSupportGroupID';";
+        $resultSupportGroupData = mysqli_query($conn, $selectedSupportGroupData);
+
+        // If there is a result for the name & description
+        if ($resultSupportGroupData && mysqli_num_rows($resultSupportGroupData) > 0) {
+
+            // Make row variable to save name and description
+            $row = mysqli_fetch_assoc($resultSupportGroupData);
+
+            // Info in the row to variables
+            $supportGroupName = $row['name'];
+            $supportGroupDescription = $row['description'];
+        }
+
+        // Display support group name and description
+        echo '
+        <div class="view-submissions">
+            <h1>Hello <span>' . $name . '</span>, this is the view support group section</h1>
+            <div class="supportGroup-list">
+                <div class="supportGroup-item">
+                    <b>Name: </b><br>' . $supportGroupName . ' <br><br>
+                    <b>Description: </b><br>' . $supportGroupDescription . '<br><br>';
+
+        // Select user details from user_supportGroup and user tables
+        $selectUserSupportGroup = "SELECT u.firstName, u.lastName, u.email
+                                   FROM user_supportGroup usg
+                                   INNER JOIN user u ON usg.userID = u.userID
+                                   WHERE usg.supportGroupID = '$submittedSupportGroupID'";
+        $resultUserSupportGroup = mysqli_query($conn, $selectUserSupportGroup);
+
+        // If there are user details
+        if ($resultUserSupportGroup && mysqli_num_rows($resultUserSupportGroup) > 0) {
+            echo '<b>Members: </b><br>';
+
+            // Loop through each user and display their first name and last name
+            while ($userRow = mysqli_fetch_assoc($resultUserSupportGroup)) {
+                echo '<b>Name: </b>' . $userRow['firstName'] . ' ' . $userRow['lastName'] . '<b> Email: </b>' . $userRow['email'] . '<br>';
+            }
+        }
+
+        echo '
+                </div><!-- supportGroup-item end -->
+            </div><!-- supportGroup-list end -->
+
+            <input type="button" onClick="window.location.href=\'supportGroupModify.php\'" name="cancel" value="Return" class="return-method"></input> <!-- Return button links to supportGroupModify.php-->
+        </div><!-- view-submissions end -->';
+    } // Outer if end
+}
+
+/**
+ * Summary of supportGroupPost
+ * @param mixed $name
+ * @param mixed $userID
+ * @param mixed $conn
+ * @return void
+ */
+function supportGroupPost($name, $userID, $conn) {
+    // Used to display errors
+    if (isset($error)) {
+        foreach ($error as $error) {
+            echo '<span class="error-msg">' . $error . '</span>';
+        };
+    }
+    $submittedSupportGroupID = '';
+
+    // Checks if supportGroupID to view is posted
+    if (isset($_POST['viewSupportGroupID'])) {
+
+        // Access and store the supportGroupID in a variable
+        $submittedSupportGroupID = $_POST['viewSupportGroupID'];
+    }
+    elseif (isset($_POST['supportGroupID'])) {
+
+        // Access and store the supportGroupID in a variable
+        $submittedSupportGroupID = $_POST['supportGroupID'];
+    }
+
+    echo '
+    <div class="search-supportGroups-box">
+        <h1>Hello <span>' . $name . '</span>, this is the view support group posts section</h1>
+        
+        <form method="post" class="create-method" action="supportGroupPostCreate.php">
+        <input type="hidden" name="supportGroupID" value="' . $submittedSupportGroupID . '">
+        <button type="submit" name="createSupportGroup">Create post</button>
+        </form>
+
+        <form action="" method="post"> <!-- Buttons for the search -->
+            <div class="search-boxes">
+            <p style="display: block;"><b>Search By:</b></p> <br><br>
+            <!-- Added labels to the search boxes -->
+            <div class="supportGroup-search-name-box"><label for="search"><b>Name:</b></label><input type="text" name="searchName" placeholder="Support group name"></div>
+            <div class="supportGroup-search-tag-box"><label for="tag"><b>Tags:</b></label><input type="text" name="searchTag" placeholder="Tag name"></div>
+            <button name="supportGroupSearch" value="submit" type="submit">Search</button>
+            </div> <!-- search-boxes end -->
+        </form>
+
+        <div class="supportGroup-list">';
+
+        //Select from all support group posts
+        $select = "SELECT * FROM supportgrouppost WHERE supportGroupID = '$submittedSupportGroupID';";
+        $result = mysqli_query($conn, $select);
+
+        //If there are no support group posts
+        if (mysqli_num_rows($result) == 0) {
+            $error[] = 'No support groups were found';
+        }
+
+        //If there are support group posts
+        else if (mysqli_num_rows($result) > 0) {
+
+            //While row in table exists via result
+            while ( $row = mysqli_fetch_assoc($result) ) {
+
+                //Lists all support group posts
+                echo '<div class="supportGroup-item"> ';
+                echo '<b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'];
+                
+                // Join button to be displayed within the search section
+                echo '<br><br>
+
+                <div class="view-button"> <!-- view button div start -->';
+
+                    echo '<form method="post" class="view-method" action="supportGroupPostComment.php">
+                            <input type="hidden" name="supportGroupPostID" value="' . $row['postID'] . '">
+                            <button type="submit" name="viewSupportGroup">View Comments</button>
+                        </form>';
+
+                echo '</div> <!-- view button div end -->
+                </div> <!-- supportGroup-item div end -->
+                <br>';
+            } //While end
+        } //Else if end
+
+    echo'
+        </div> <!-- supportGroup-list end -->
+        <div class="search-supportGroup-list" style="display: none;">';
+
+    //If supportGroupSearch is posted
+    if (isset($_POST['supportGroupSearch'])) {
+        echo '<script>hideSupportGroup();</script>';
+
+        //Access searchName and searchTag variables from the posted data
+        $searchName = mysqli_real_escape_string($conn, $_POST['searchName']);
+        $searchTag = mysqli_real_escape_string($conn, $_POST['searchTag']);
+
+        //Select from supportgroup table where name variable is similar
+        $select = "SELECT * FROM supportgroup WHERE name LIKE '%$searchName%'";
+        $result = mysqli_query($conn, $select);
+
+        //If there are no support groups
+        if (mysqli_num_rows($result) == 0) {
+            $error[] = 'No support groups were found';
+        }
+
+        //If there are support groups
+        else if (mysqli_num_rows($result) > 0) { 
+
+            //While row in table exists via result
+            while ( $row = mysqli_fetch_assoc($result) ) {
+                
+                //Lists support groups where name and tag is included in the search fields
+                echo '<div class="supportGroup-item"> ';
+                echo '<b>Name:</b> ' . $row['name'] . '<br>  <b>Description:</b> ' . $row['description'];
+
+                // Join button to be displayed within the search section
+                echo '<br><br>
+
+                <div class="view-button"> <!-- view button div start -->';
+
+
+                    echo '<form method="post" class="view-method" action="supportGroupPostComment.php">
+                            <input type="hidden" name="supportGroupPostID" value="' . $row['supportGroupID'] . '">
+                            <button type="submit" name="viewSupportGroup">View Comments</button>
+                        </form>';
+
+                echo '</div> <!-- view button div end -->
+                </div> <!-- supportGroup-item div end -->
+                <br>';
+            } //While end
+        } //Else if end
+        unset($_POST['supportGroupSearch']);
+    } //If end
+    echo'
+        </div> <!-- search-supportGroups-list end -->
+    </div> <!-- search-supportGroups-box end -->';
+
+    // If joinSupportGroup is posted
+    if (isset($_POST['joinSupportGroup'])) {
+        // Access the supportGroupID from the posted data
+        $joinSupportGroupID = mysqli_real_escape_string($conn, $_POST['joinSupportGroupID']);
+
+        // Insert into user_supportGroup table only if not already joined
+        $checkUserSupportGroup = "SELECT * FROM user_supportGroup WHERE userID = '$userID' AND supportGroupID = '$joinSupportGroupID'";
+        $resultUserSupportGroup = mysqli_query($conn, $checkUserSupportGroup);
+
+        if (mysqli_num_rows($resultUserSupportGroup) == 0) {
+            // Insert into user_supportGroup table
+            $insertUserSupportGroup = "INSERT INTO user_supportGroup (userID, supportGroupID) VALUES ('$userID', '$joinSupportGroupID')";
+
+            if (mysqli_query($conn, $insertUserSupportGroup)) {
+                // Insertion successful
+                echo "Joined support group successfully!";
+            } else {
+                // Insertion failed
+                echo "Error joining support group: " . mysqli_error($conn);
+            }
+        } else {
+            // Display a message if already joined
+            echo "You have already joined this support group.";
+        }
+    }
+}
+/**
+ * Summary of supportGroupPostCreate
+ * @param mixed $name
+ * @param mixed $userID
+ * @param mixed $conn
+ * @return void
+ */
+function supportGroupPostCreate($name, $userID, $conn) {
+
+    $submittedSupportGroupID = '';
+
+    if (isset($_POST['createSupportGroup'])) {
+        $submittedSupportGroupID = $_POST['supportGroupID'];
+    }
+
+    echo '
+    <div class="modify-supportGroups">
+        <div class="view-submissions">
+        <h1>Hello <span>' . $name . '</span> this is the create support group post section</h1>
+
+        <form action="" method="post"> <!-- form for create supportGroup info start-->
+            <input type="hidden" name="supportGroupID" value="' . $submittedSupportGroupID . '">
+
+            <label for="supportGroup_name"><b>Post name:</b></label><br>
+            <input type="text" id="supportGroup_name" name="supportGroup_name" required placeholder="Support group name">
+            <br><br>
+        
+            <label for="supportGroup_description"><b>Post description:</b></label><br>
+            <input type="text" id="supportGroup_description" name="supportGroup_description" required placeholder="Support group description">
+            <br><br>
+        
+            <input type="submit" name="createSupportGroupPost" value="Create post" class="form-btn">
+        </form> <!-- form for create supportGroup info end-->
+
+        <form method="post" class="cancel-button" action="supportGroupPost.php">
+            <input type="hidden" name="supportGroupID" value="' . $submittedSupportGroupID . '">
+        <button type="submit" name="cancelSupportGroup">Cancel</button>
+
+        </form>
+        </div> <!-- view-submissions end -->
+    </div> <!-- modify-supportGroups end -->';
+
+    //If createSupportGroup is posted
+    if (isset($_POST['createSupportGroupPost'])) {
+
+        //Create name and description variables from the posted data
+        $name = mysqli_real_escape_string($conn, $_POST['supportGroup_name']);
+        $description = mysqli_real_escape_string($conn, $_POST['supportGroup_description']);
+        $supportgroupID = mysqli_real_escape_string($conn, $_POST['supportGroupID']);
+
+    // Insert into supportgrouppost table with explicit column names
+    $insert = "INSERT INTO `supportgrouppost` (`postID`, `supportGroupID`, `userID`, `name`, `description`) VALUES (NULL, '$supportgroupID', '$userID', '$name', '$description');";
+       
+        //If query was successful
+        if (mysqli_query($conn, $insert)) {
+            echo "Support group post inserted successfully!";
+        }
+
+        //If query was not successful
+        else { 
+            echo "Error: " . mysqli_error($conn);
+        }
+        unset($_POST['createSupportGroupPost']);
+    } //If end
+}
+
+/**
+ * Summary of supportGroupPostComment
+ * @param mixed $name
+ * @param mixed $userID
+ * @param mixed $conn
+ * @return void
+ */
+function supportGroupPostComment($name, $userID, $conn) {
+    // Checks if supportGroupPostID to view is posted
+    if (isset($_POST['supportGroupPostID'])) {
+        // Access and store the supportGroupPostID in a variable
+        $supportGroupPostID = mysqli_real_escape_string($conn, $_POST['supportGroupPostID']);
+    } elseif (isset($_POST['postID'])) {
+        $supportGroupPostID = mysqli_real_escape_string($conn, $_POST['postID']);
+    } else {
+        // Display an error message if supportGroupPostID is not set
+        echo '<div class="error-msg">Post ID not set</div>';
+    }
+
+    // Select data from supportgrouppost based on the supportGroupPostID
+    $selectResponse = "SELECT * FROM supportgrouppost WHERE postID = '$supportGroupPostID'";
+    $resultResponse = mysqli_query($conn, $selectResponse);
+
+    // Display post information if available
+    if ($row = mysqli_fetch_assoc($resultResponse)) {
+        $postName = $row['name'];
+        $postDescription = $row['description'];
+        $supportGroupID = $row['supportGroupID'];
+    } else {
+        // Display an error message if no matching supportgrouppost record is found
+        echo '<div class="error-msg">Post not found</div>';
+    }
+
+    echo '
+    <div class="modify-supportGroups">
+        <div class="view-submissions">
+            <h1>Hello <span>' . $name . '</span>, this is the create support group post comment section</h1>
+            <div class="post-list"> 
+                <div class="post-box">                    
+                    <p>Post Name: ' . $postName . '</p>
+                    <p>Post Description: ' . $postDescription . '</p>
+                    ' . $supportGroupPostID . '' . $supportGroupID . '
+                </div> <!-- post-box end -->';
+
+    // Select data from supportgrouppost based on the supportGroupPostID
+    $selectComments = "SELECT * FROM supportgroupcomment WHERE postID = '$supportGroupPostID'";
+    $result = mysqli_query($conn, $selectComments);
+
+    //If there are no support groups
+    if (mysqli_num_rows($result) == 0) {
+        $error[] = 'No support groups were found';
+    }
+
+    //If there are support groups
+    else if (mysqli_num_rows($result) > 0) {
+
+        //While row in the table exists via result
+        while ($row = mysqli_fetch_assoc($result)) {
+            $commentUserID = $row['userID'];
+
+            // Fetch user's first and last names based on commentUserID
+            $selectUser = "SELECT firstName, lastName FROM user WHERE userID = '$commentUserID'";
+            $resultUser = mysqli_query($conn, $selectUser);
+            $rowUser = mysqli_fetch_assoc($resultUser);
+
+            // Display user's first and last names above the comment
+            $commentUserName = $rowUser['firstName'] . ' ' . $rowUser['lastName'];
+
+            // Lists support groups where name and tag are included in the search fields
+            echo '
+                <div class="post-list"> 
+                    <div class="comment-box"> 
+                        <p>' . $commentUserName . ' said: <br>' . $row['comment'] . '</p>
+                    </div>
+                </div>';
+        }
+    }
+    echo '
+            <!-- Form for adding a comment -->
+            <form method="post" action="">
+                <input type="hidden" name="supportGroupID" value="' . $supportGroupID . '">
+                <input type="hidden" name="postID" value="' . $supportGroupPostID . '">
+                <label for="question">Add a comment:<br></label>
+                <input type="text" id="question" name="question" required placeholder="Type your comment here"><br><br>
+                <button type="submit" name="submitComment">Submit Comment</button>
+            </form>
+            <br>       
+            <!-- Form for canceling -->
+            <form method="post" class="cancel-button" action="supportGroupPost.php">
+                <input type="hidden" name="supportGroupID" value="' . $supportGroupID . '">
+                <button type="submit" name="cancelSupportGroup">Cancel</button>
+            </form>
+        </div> <!-- view-submissions end -->
+    </div> <!-- modify-supportGroups end -->';
+
+    // Check if the comment is set in the $_POST data
+    if (isset($_POST['submitComment'])) {
+        // Access and store the comment in a variable
+        $comment = mysqli_real_escape_string($conn, $_POST['question']);
+        $supportGroupNewID = mysqli_real_escape_string($conn, $_POST['supportGroupID']);
+        $postID = mysqli_real_escape_string($conn, $_POST['supportGroupID']);
+
+        // Insert the comment into the supportgroupcomment table
+        $insertComment = "INSERT INTO supportgroupcomment (commentID, supportGroupID, postID, userID, comment) VALUES (NULL, '$supportGroupNewID', '$postID', '$userID', '$comment')";
+
+        if (mysqli_query($conn, $insertComment)) {
+            echo '<div class="success-msg">Comment submitted successfully!</div>';
+        } else {
+            echo '<div class="error-msg">Error submitting comment: ' . mysqli_error($conn) . '</div>';
+        }
+    }
+}
+
 
 /**
  * Summary of studySearch
@@ -2724,9 +3494,36 @@ function studyModify($name, $userID, $conn) {
                         </div> <!-- edit and delete buttons div start  -->';
                 }
             } 
-                // Researcher name display 
-             echo '   
-            </div><br> <!-- study-item end -->';
+            // SQL query to count the distinct rows
+            $countQuery = "SELECT COUNT(DISTINCT `userID`) AS studySubmissionCount FROM `user_study` WHERE `studyID` = '{$row['studyID']}';";
+            $countResult = mysqli_query($conn, $countQuery);
+
+            // Check if the query was successful and that there are rows
+            if ($result && $count = mysqli_fetch_assoc($countResult)) {
+
+                // Access the count value directly
+                $studySubmissionCount = $count['studySubmissionCount'];
+                
+                // Free the result set
+                mysqli_free_result($countResult);
+            } 
+            
+            // If the query was not successful, or there was not rows:
+            else {
+                $studySubmissionCount = 0;
+            }
+
+            echo'
+            <p> <b>Study members:</b> '.$studySubmissionCount.'</p>
+
+            <div class="view-submissions-button"> <!-- view-submissions-buttons div start  -->
+                <form method="post" class="submissions-method" action="studyView.php">
+                    <input type="hidden" name="viewStudyID" value="' . $row['studyID'] . '">
+                    <button type="submit" name="viewStudy">View joined members</button>
+                </form>
+            </div>';
+            echo '   
+            </div><br> <!-- study-item end -->'; 
         } //While end
     } //Else if end
 
@@ -2735,18 +3532,55 @@ function studyModify($name, $userID, $conn) {
     if(userType() === 'researcher') {
         if (isset($_SESSION['researcher_name'])) {
             echo '
-                <!-- Create study button -->
-                <button onclick="studyCreate()" class="create-btn"> <b>Create New Study</b>  </button>
-                </div> <!-- created-studies-list end -->';
+            <!-- Create study button -->
+            <button onclick="studyCreate()" class="create-btn"> <b>Create New Study</b>  </button>
+            </div> <!-- created-studies-list end -->';
         }
      } // Researcher display end
 
     echo '
     <h1>Joined Studies:</h1>
-        <div class="created-studies-list">';
+    <div class="study-list">';
+    
+        // Select studies that the user has joined
+        $selectJoinedStudies = "SELECT s.* FROM study s
+                                INNER JOIN user_study us ON s.studyID = us.studyID
+                                WHERE us.userID = '$userID'";
+        $resultJoinedStudies = mysqli_query($conn, $selectJoinedStudies);
+    
+        // If there are no studies
+        if (mysqli_num_rows($resultJoinedStudies) == 0) {
+            echo 'You have not joined any studies yet.';
+        }
+    
+        // If there are studies
+        else if (mysqli_num_rows($resultJoinedStudies) > 0) {
+    
+            // While row in table exists via result
+            while ($row = mysqli_fetch_assoc($resultJoinedStudies)) {
+    
+                // Lists all studies
+                echo '
+                <div class="study-item">
+                    <b>Name:</b> ' . $row['name'] . '<br>
+                    <b>Description:</b> ' . $row['description'] . '<br>
+                    <b>Location:</b> ' . $row['location'] . '<br>
+                    <b>Date:</b> ' . date('Y-m-d H:i:s', strtotime($row['date'])) . '<br>
+                    <b>Compensation:</b> ' . $row['compensation'] . '<br><br>';
+    
+                    echo '<form method="post" class="leave-method" action="">
+                            <input type="hidden" name="leaveStudyID" value="' . $row['studyID'] . '">
+                            <button type="submit" name="leaveStudy">Leave study</button>
+                        </form>';
 
-    echo '
-    </div> <!-- created-studies-list end -->
+                echo '</div> <!-- study-item div end -->
+                <br>';
+            } // While end
+        } // Else if end
+        
+        echo '
+    </div> <!-- study-list end -->
+    
     </div> <!-- modify-studies end -->
     ';
 
@@ -2769,6 +3603,23 @@ function studyModify($name, $userID, $conn) {
             echo "Error: " . mysqli_error($conn);
         }
     } //If end
+
+    // If leaveStudy is posted
+    if (isset($_POST['leaveStudy'])) {
+        // Access the leaveStudyID and sanitize the data
+        $leaveStudyID = mysqli_real_escape_string($conn, $_POST['leaveStudyID']);
+
+        // Delete from user_study where userID equals $userID and studyID equals $leaveStudyID
+        $deleteUserStudyQuery = "DELETE FROM user_study WHERE userID = '$userID' AND studyID = '$leaveStudyID'";
+
+        // If the deletion query was successful
+        if (mysqli_query($conn, $deleteUserStudyQuery)) {
+            echo "Left study successfully!";
+        } else {
+            // If the deletion query failed
+            echo "Error leaving study: " . mysqli_error($conn);
+        }
+    }
 }
 
 /**
@@ -2886,5 +3737,90 @@ function studyEdit($name, $userID, $conn) {
             echo "Error: " . mysqli_error($conn);
         }
     } //Outer if end
+}
+
+/**
+ * Summary of studyView
+ * @param mixed $name
+ * @param mixed $userID
+ * @param mixed $conn
+ * @return void
+ */
+function studyView($name, $userID, $conn) {
+    // Used to display errors
+    if (isset($error)) {
+        foreach ($error as $error) {
+            echo '<span class="error-msg">' . $error . '</span>';
+        }
+    }
+
+    // Initialize variables with default values
+    $studyName = '';
+    $studyDescription = '';
+    $studyLocation = '';
+    $studyDate = '';
+    $studyCompensation = '';
+    $submittedStudyID = '';
+
+    // Checks if studyID to view is posted
+    if (isset($_POST['viewStudyID'])) {
+
+        // Access and store the studyID in a variable
+        $submittedStudyID = $_POST['viewStudyID'];
+
+        // Store the data for the name and description from the support group table via the $studyID
+        $selectedStudyData = "SELECT * FROM `study` WHERE `studyID` = '$submittedStudyID';";
+        $resultStudyData = mysqli_query($conn, $selectedStudyData);
+
+        // If there is a result for the name & description
+        if ($resultStudyData && mysqli_num_rows($resultStudyData) > 0) {
+
+            // Make row variable to save name and description
+            $row = mysqli_fetch_assoc($resultStudyData);
+
+            // Info in the row to variables
+            $studyName = $row['name'];
+            $studyDescription = $row['description'];
+            $studyLocation = $row['location'];
+            $studyDate = $row['date'];
+            $studyCompensation = $row['compensation'];
+        }
+
+        // Display support group name and description
+        echo '
+        <div class="view-submissions">
+            <h1>Hello <span>' . $name . '</span>, this is the view support group section</h1>
+            <div class="study-list">
+                <div class="study-item">
+                    <b>Name: </b><br>' . $studyName . ' <br><br>
+                    <b>Description: </b><br>' . $studyDescription . '<br><br>
+                    <b>Location: </b><br>' . $studyLocation . '<br><br>
+                    <b>Date: </b><br>' . date('Y-m-d H:i:s', strtotime($studyDate)) . '<br><br>
+                    <b>Compensation: </b><br>' . $studyCompensation . '<br><br>';
+
+        // Select user details from user_study and user tables
+        $selectUserStudy = "SELECT u.firstName, u.lastName, u.email
+                                   FROM user_study us
+                                   INNER JOIN user u ON us.userID = u.userID
+                                   WHERE us.studyID = '$submittedStudyID'";
+        $resultUserStudy = mysqli_query($conn, $selectUserStudy);
+
+        // If there are user details
+        if ($resultUserStudy && mysqli_num_rows($resultUserStudy) > 0) {
+            echo '<b>Members: </b><br>';
+
+            // Loop through each user and display their first name and last name
+            while ($userRow = mysqli_fetch_assoc($resultUserStudy)) {
+                echo '<b>Name: </b>' . $userRow['firstName'] . ' ' . $userRow['lastName'] . '<b> Email: </b>' . $userRow['email'] . '<br>';
+            }
+        }
+
+        echo '
+                </div><!-- study-item end -->
+            </div><!-- study-list end -->
+
+            <input type="button" onClick="window.location.href=\'studyModify.php\'" name="cancel" value="Return" class="return-method"></input> <!-- Return button links to studyModify.php-->
+        </div><!-- view-submissions end -->';
+    } // Outer if end
 }
 ?>

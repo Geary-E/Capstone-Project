@@ -41,7 +41,11 @@ function hideAll() {
     document.querySelector('.search-study-list').style.display = 'flex';
     document.querySelector('.study-item').style.width = '50%';
 }
-
+function hideSupportGroup() {
+    document.querySelector('.supportGroup-list').style.display = 'none'
+    document.querySelector('.search-supportGroup-list').style.display = 'flex';
+    document.querySelector('.supportGroup-item').style.width = '50%';
+}
 // Used to display the FAQ section when clicked on in the Account Page 
 function faq() {
     document.querySelector('.faq-section').style.display = 'block';
